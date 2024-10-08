@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import { dateActions } from "../../store/dateHandler";
 import { useDispatch } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
+import SearchIcon from "@mui/icons-material/Search";
 
 const SearchCard = ({ onChange }) => {
   const [chosenDates, setChosenDates] = useState({
@@ -46,8 +47,21 @@ const SearchCard = ({ onChange }) => {
   };
 
   return (
-    <Grid container spacing={1} class="searchCardGrid">
-      <Grid item xs={12} className="subGridSearchCard">
+    <Grid
+      container
+      spacing={1}
+      className="searchCardGrid"
+      sx={(theme) => ({
+        backgroundColor:
+          theme.palette.mode === "dark"
+            ? "rgba(51, 51, 51, 0.8)"
+            : "rgba(255, 255, 255, 0.8)",
+        justifyContent: "center",
+        alignItems: "center",
+        textAlign: "center",
+      })}
+    >
+      <Grid item xs={12} className="searchCardGridItem">
         <Typography variant="h4" component="h6" sx={{ fontWeight: "bold" }}>
           יאללה סע! השכרת קרוואנים
         </Typography>
@@ -55,22 +69,33 @@ const SearchCard = ({ onChange }) => {
           השכרת קרוואנים בכל הארץ. במחיר הטוב ביותר!
         </Typography>
       </Grid>
-      <Grid item xs={12} className="subGridSearchCard">
+      <Grid item xs={12} className="searchCardGridItem">
         <DatePickers dateText="מתי אוספים?" onChange={handleDateChange} />
-      </Grid>
-      <Grid item xs={12} className="subGridSearchCard">
         <DatePickers dateText="מתי מתי מחזירים?" onChange={handleDateChange} />
       </Grid>
-      <Grid item xs={12} className="subGridSearchCard">
+      <Grid item xs={12} className="searchCardGridItem">
         <Button
           variant="contained"
           onClick={handleSearchClick}
-          style={{ width: "10em", height: "4em" }}
+          style={{
+            width: "10em",
+            height: "4em",
+          }}
         >
-          <Typography variant="body1" className={"mainButton"}>
-            SEARCH
-          </Typography>
+          <Typography variant="body1">חיפוש&nbsp;</Typography>
+          <SearchIcon />
         </Button>
+      </Grid>
+      <Grid item xs={6} className="searchCardGridItem"></Grid>
+
+      <Grid item xs={12} className="searchCardGridItem">
+        <Typography
+          variant="body1"
+          className="homepageSignUpLink"
+          sx={{ marginBottom: "1em" }}
+        >
+          <Link to="/register">להצטרפות הרשמו עכשיו!</Link>
+        </Typography>
       </Grid>
     </Grid>
   );

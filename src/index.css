@@ -2,8 +2,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Belanosima&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Belanosima&display=swap");
 .gridContainerHomePage {
-  height: 100%;
-  background-image: url("../public/imgs/caravanPhotos/caravanGolan09.jpg");
+  min-height: 100vh;
+  background-image: url("../public/imgs/caravanPhotos/caravanGolan09_180.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -21,13 +21,8 @@
   font-size: 3.5em !important;
 }
 
-.mainButton {
-  font-family: belanosima !important;
-  font-size: 1em;
-}
-
 .homepageHeaderBox {
-  border-radius: 0.5em;
+  border-radius: 0.2em;
 }
 
 .datePicker {
@@ -76,10 +71,6 @@
   align-items: center !important;
 }
 
-.navBar {
-  margin-bottom: 1.5em;
-}
-
 .navLink {
   margin: 0 0.2em 0 0.2em;
   font-family: belanosima !important;
@@ -110,11 +101,6 @@
   display: block;
 }
 
-@media (max-width: 400px) {
-  .searchPartial {
-    display: none !important;
-  }
-}
 .img {
   max-width: 100px !important;
   border-radius: 100%;
@@ -506,24 +492,6 @@
   justify-content: center;
 }
 
-.searchCardGrid {
-  /* .MuiOutlinedInput-root {
-     fieldset {
-       border-color: gray; 
-     }
-
-     &:hover fieldset {
-       border-color: rgb(92, 92, 92); 
-     }
-
-     &.Mui-focused fieldset {
-       border-color: rgb(92, 92, 92); 
-     }
-   }
-  */
-  /* Style when the label is focused */
-  /* Optional: Style the shrink label (when the text field is filled or focused) */
-}
 .searchCardGrid .MuiInputLabel-root {
   font-weight: bold; /* Make the label bold */
   font-size: 1rem; /* Adjust font size */
@@ -532,8 +500,8 @@
   font-size: 0.875rem; /* Adjust size when shrunk */
 }
 
-.subGridSearchCard {
-  border: 1px solid #4dff00;
+.searchCardGridItem {
+  width: 100%;
 }
 
 * {

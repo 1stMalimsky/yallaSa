@@ -41,7 +41,7 @@ const MuiNavbar = () => {
   };
 
   return (
-    <AppBar position="static" className="navBar">
+    <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar>
           <NavLink to={ROUTES.HOME}>
@@ -70,7 +70,7 @@ const MuiNavbar = () => {
             )}
           </NavLink>
 
-          <Box sx={{ flexGrow: 1, display: { xs: "none", lg: "flex" } }}>
+          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
               <NavLinkComponent
                 key={page.label}
@@ -113,7 +113,7 @@ const MuiNavbar = () => {
               )}
             </IconButton>
           </Box>
-          <Box sx={{ display: { xs: "none", lg: "flex" } }}>
+          <Box sx={{ display: { xs: "none", md: "flex" } }}>
             {user.isLoggedIn
               ? loggedInPages.map((page) =>
                   page.label === "LIKED CARS" ? (

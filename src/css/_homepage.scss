@@ -1,8 +1,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Belanosima&display=swap");
 
 .gridContainerHomePage {
-  height: 100%;
-  background-image: url("../public/imgs/caravanPhotos/caravanGolan09.jpg");
+  min-height: 100vh;
+  background-image: url("../public/imgs/caravanPhotos/caravanGolan09_180.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -20,14 +20,8 @@
   font-size: 3.5em !important;
 }
 
-.mainButton {
-  font-family: belanosima !important;
-  font-size: 1em;
-}
-
 .homepageHeaderBox {
-  //background-color: rgba(255, 255, 255, 0.74);
-  border-radius: 0.5em;
+  border-radius: 0.2em;
 }
 
 .datePicker {

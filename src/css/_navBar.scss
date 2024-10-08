@@ -1,9 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Belanosima&display=swap");
 
-.navBar {
-  margin-bottom: 1.5em;
-}
-
 .navLink {
   margin: 0 0.2em 0 0.2em;
   font-family: belanosima !important;
@@ -32,10 +28,4 @@
 
 .searchPartial {
   display: block;
-}
-
-@media (max-width: 400px) {
-  .searchPartial {
-    display: none !important;
-  }
 }
