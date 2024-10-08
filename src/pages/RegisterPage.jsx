@@ -14,6 +14,7 @@ import RegisterFieldComponent from "../components/RegisterFieldComponent";
 import registerInputs from "./registerInputs";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
+import SignUpCardComponent from "../components/newComponents/SignUpCard";
 
 const RegisterPage = () => {
   const [inputState, setInputState] = useState(
@@ -83,6 +84,7 @@ const RegisterPage = () => {
   return (
     <Container component="main" maxWidth="lg">
       <Box className="registerBox">
+        <SignUpCardComponent />
         <Box className="headerBox">
           <Grid container>
             <Grid

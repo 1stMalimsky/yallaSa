@@ -17,6 +17,21 @@ const light = createTheme({
   palette: {
     mode: "light",
   },
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          // General button styling
+          fontWeight: "bold",
+        },
+        disabled: {
+          backgroundColor: "#cccccc", // Set a custom background color for disabled buttons
+          color: "#666666", // Set a custom text color for disabled buttons
+          opacity: 1, // Override default transparency
+        },
+      },
+    },
+  },
 });
 
 const dark = createTheme({

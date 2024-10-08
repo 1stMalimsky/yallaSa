@@ -504,6 +504,15 @@
   width: 100%;
 }
 
+.singInCardContainer {
+  width: 100vw !important;
+  min-height: 100vh;
+  background-image: url("../public/imgs/caravanPhotos/caravanGolan08.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
 * {
   margin: 0;
   padding: 0;
