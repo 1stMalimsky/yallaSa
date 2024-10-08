@@ -1,0 +1,48 @@
+.img {
+  max-width: 100px !important;
+  border-radius: 100%;
+}
+
+.registerBox {
+  margin-top: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.registerTitle {
+  font-family: "belanosima" !important;
+  font-size: large;
+  padding: 0.1em 0.5em 0.1em 0.5em;
+  margin: 0 0.8em 0 0;
+}
+
+.headerBox {
+  width: 100%;
+  height: 25em;
+  background-image: url("../public/imgs/registerHeader.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  .registerHeaderBox {
+    background-color: rgba(255, 255, 255, 0.6);
+    max-width: 30em;
+    display: block;
+  }
+
+  .registerHeaderBoxDark {
+    background-color: rgba(0, 0, 0, 0.6);
+    max-width: 30em;
+    display: block;
+  }
+
+  .registerHeader {
+    padding: 0.1em 0.5em 0.1em 0.5em;
+    margin: 0 0.8em 0 0;
+
+    &.MuiTypography-body1 {
+      font-size: 1.5em;
+    }
+  }
+}

@@ -1,0 +1,37 @@
+.footerContact {
+  display: flex;
+  align-content: center;
+  margin-bottom: 1em !important;
+}
+
+.footerHeader {
+  text-align: center;
+  text-decoration: underline;
+}
+
+.gridContainer {
+  margin-top: 2em;
+  background-color: rgb(228, 228, 228);
+}
+.gridContainerDark {
+  margin-top: 2em;
+  background-color: rgba(44, 44, 44, 0.814);
+}
+
+@media (max-width: 600px) {
+  .gridContainer {
+    display: flex;
+    flex-direction: column !important;
+
+    align-content: center;
+    margin-top: 2em;
+    background-color: rgb(228, 228, 228);
+  }
+  .gridContainerDark {
+    display: flex;
+
+    flex-direction: column !important;
+    margin-top: 2em;
+    background-color: rgba(44, 44, 44, 0.814);
+  }
+}

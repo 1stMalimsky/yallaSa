@@ -1,0 +1,96 @@
+@import url("https://fonts.googleapis.com/css2?family=Belanosima&family=Roboto&display=swap");
+@import "./css/homepage";
+@import "./css/navBar";
+@import "./css/registerPage";
+@import "./css/carCard";
+@import "./css/carInv";
+@import "./css/checkoutCard";
+@import "./css/ourCarsPage";
+@import "./css/aboutUs";
+@import "./css//checkout";
+@import "./css/paymentPage";
+@import "./css/footer";
+@import "./css/adminControls";
+@import "./css/searchCardGrid";
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: roboto, sans-serif;
+}
+
+.centerContent {
+  display: flex;
+  justify-content: center;
+  //flex-direction: column;
+}
+
+.boxHeader {
+  padding: 10px;
+  background-color: red;
+}
+
+.pageTitle {
+  font-family: "belanosima" !important;
+  font-size: large;
+  padding: 0 1em 0 1em;
+}
+
+.pageSubtitle {
+  font-family: roboto;
+  font-size: 1.3em !important;
+  padding: 0.5em 1em 0.5em 1em;
+}
+
+.smallImg {
+  width: 30%;
+}
+
+.modalBox {
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 40%;
+  background-color: rgba(255, 255, 255, 0.693);
+}
+.modalBoxDark {
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 40%;
+  background-color: rgba(0, 0, 0, 0.615);
+}
+
+@media (max-width: 600px) {
+  .modalBox {
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 80%;
+    background-color: rgba(255, 255, 255, 0.693);
+  }
+  .modalBoxDark {
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 80%;
+    background-color: rgba(0, 0, 0, 0.615);
+  }
+
+  .pageTitle {
+    font-family: "belanosima" !important;
+    font-size: medium;
+    padding: 0 1em 0 1em;
+  }
+
+  .pageSubtitle {
+    font-family: roboto;
+    font-size: 1em !important;
+    padding: 0.5em 1em 0.5em 1em;
+  }
+}

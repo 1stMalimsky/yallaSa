@@ -1,0 +1,41 @@
+@import url("https://fonts.googleapis.com/css2?family=Belanosima&display=swap");
+
+.navBar {
+  margin-bottom: 1.5em;
+}
+
+.navLink {
+  margin: 0 0.2em 0 0.2em;
+  font-family: belanosima !important;
+  font-size: 1.1em !important;
+  text-decoration: none;
+}
+
+.logoImgDark {
+  margin-right: 1em;
+  margin-left: -1em;
+  width: 7em;
+}
+
+.logoImg {
+  margin-right: 1em;
+  margin-left: -1em;
+  width: 7em;
+  border-radius: 5px;
+  background-color: rgb(180, 220, 255);
+}
+
+.font {
+  font-family: belanosima !important;
+  text-decoration: none;
+}
+
+.searchPartial {
+  display: block;
+}
+
+@media (max-width: 400px) {
+  .searchPartial {
+    display: none !important;
+  }
+}

@@ -1,0 +1,48 @@
+.aboutUsHeader {
+  width: 100%;
+  height: 25em !important;
+  background-image: url("../public/imgs/aboutPageImg3.jpg");
+  background-size: cover;
+  background-position: top;
+  background-repeat: no-repeat;
+}
+
+.aboutUsHeaderBox {
+  background-color: rgba(255, 255, 255, 0.6);
+  max-width: 40em;
+  display: block;
+}
+.aboutUsHeaderBoxDark {
+  background-color: rgba(0, 0, 0, 0.6);
+  max-width: 30em;
+  display: block;
+}
+
+.aboutPageGridContainer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.aboutUsDarkTab {
+  background-color: rgba(196, 196, 196, 0.3);
+}
+
+.aboutSmTitle {
+  font-size: 1.5em !important;
+  text-decoration: underline;
+}
+
+.aboutTxt {
+  font-size: 1.2em !important;
+}
+
+@media (max-width: 600px) {
+  .aboutSmTitle {
+    font-size: 1.2em !important;
+    text-decoration: underline;
+  }
+  .aboutTxt {
+    font-size: 0.8em !important;
+  }
+}

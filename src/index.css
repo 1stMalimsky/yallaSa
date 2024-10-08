@@ -1,13 +1,617 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@import url("https://fonts.googleapis.com/css2?family=Belanosima&family=Roboto&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Belanosima&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Belanosima&display=swap");
+.gridContainerHomePage {
+  height: 100%;
+  background-image: url("../public/imgs/caravanPhotos/caravanGolan09.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  text-align: center;
+  padding: 1em;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.mainHeader {
+  margin-top: 0.3em !important;
+  padding: 0em 0 0.2em 0 !important;
+  font-family: belanosima !important;
+  font-size: 3.5em !important;
 }
+
+.mainButton {
+  font-family: belanosima !important;
+  font-size: 1em;
+}
+
+.homepageHeaderBox {
+  border-radius: 0.5em;
+}
+
+.datePicker {
+  background-color: rgba(255, 255, 255, 0.811);
+  /* Align the input text and calendar icon */
+  /* Align the calendar icon (Input adornment) on the right */
+}
+.datePicker .MuiInputLabel-root {
+  text-align: left !important; /* Align label text to the left */
+  direction: rtl !important; /* Ensure LTR direction for the label */
+}
+.datePicker .MuiInputBase-root {
+  direction: ltr !important; /* Ensure input field is LTR */
+  text-align: right !important; /* Align input text to the left */
+}
+.datePicker .MuiInputAdornment-root {
+  direction: ltr !important; /* Ensure the calendar icon stays on the right */
+}
+
+.datePickerDark {
+  background-color: rgba(56, 56, 56, 0.811);
+  /* Align the input text and calendar icon */
+  /* Align the calendar icon (Input adornment) on the right */
+}
+.datePickerDark .MuiInputLabel-root {
+  text-align: left !important;
+  direction: rtl !important;
+}
+.datePickerDark .MuiInputBase-root {
+  direction: ltr !important;
+  text-align: left !important;
+}
+.datePickerDark .MuiInputAdornment-root {
+  direction: ltr !important; /* Ensure the calendar icon stays on the right */
+}
+
+.homepageSignUpLink {
+  display: inline-block;
+  padding: 0 0.4em 0 0.4em;
+  background-color: rgba(255, 255, 255, 0.2);
+  box-shadow: -2px -2px 5px 6px rgba(255, 255, 255, 0.2);
+}
+
+.alignItems {
+  display: flex;
+  align-items: center !important;
+}
+
+.navBar {
+  margin-bottom: 1.5em;
+}
+
+.navLink {
+  margin: 0 0.2em 0 0.2em;
+  font-family: belanosima !important;
+  font-size: 1.1em !important;
+  text-decoration: none;
+}
+
+.logoImgDark {
+  margin-right: 1em;
+  margin-left: -1em;
+  width: 7em;
+}
+
+.logoImg {
+  margin-right: 1em;
+  margin-left: -1em;
+  width: 7em;
+  border-radius: 5px;
+  background-color: rgb(180, 220, 255);
+}
+
+.font {
+  font-family: belanosima !important;
+  text-decoration: none;
+}
+
+.searchPartial {
+  display: block;
+}
+
+@media (max-width: 400px) {
+  .searchPartial {
+    display: none !important;
+  }
+}
+.img {
+  max-width: 100px !important;
+  border-radius: 100%;
+}
+
+.registerBox {
+  margin-top: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.registerTitle {
+  font-family: "belanosima" !important;
+  font-size: large;
+  padding: 0.1em 0.5em 0.1em 0.5em;
+  margin: 0 0.8em 0 0;
+}
+
+.headerBox {
+  width: 100%;
+  height: 25em;
+  background-image: url("../public/imgs/registerHeader.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.headerBox .registerHeaderBox {
+  background-color: rgba(255, 255, 255, 0.6);
+  max-width: 30em;
+  display: block;
+}
+.headerBox .registerHeaderBoxDark {
+  background-color: rgba(0, 0, 0, 0.6);
+  max-width: 30em;
+  display: block;
+}
+.headerBox .registerHeader {
+  padding: 0.1em 0.5em 0.1em 0.5em;
+  margin: 0 0.8em 0 0;
+}
+.headerBox .registerHeader.MuiTypography-body1 {
+  font-size: 1.5em;
+}
+
+.cardGridContainer {
+  display: flex;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+.carCardItem {
+  padding: 0.6em;
+}
+
+.aboutCarCardItem {
+  padding: 0.6em;
+}
+
+.carCardImgItem {
+  padding: 0.6em;
+  max-width: 20em !important;
+  max-height: 15em !important;
+}
+
+.cardGridListContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+.cardModalList {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.carCardBtnSection {
+  padding: 0.6em;
+  display: flex;
+  align-items: center;
+}
+.carCardBtnSection .profileAv {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+}
+
+.myCarCardBtnSection {
+  padding: 0.6em;
+  display: flex;
+  align-items: center;
+}
+.myCarCardBtnSection .profileAv {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+}
+
+.imgURL {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: fit;
+     object-fit: fit;
+}
+
+.cardBtn {
+  margin-right: 0.8em !important;
+}
+
+.imgXpand {
+  max-width: 100%;
+}
+
+@media (max-width: 900px) {
+  .cardGridContainer {
+    display: flex;
+    flex-direction: column;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+  }
+  .aboutCarCardItem {
+    margin-top: 4.2em !important;
+  }
+}
+@media (max-width: 600px) {
+  .myCarCardBtnSection {
+    padding: 0.6em;
+    display: flex;
+    flex-direction: column !important;
+  }
+  .cardBtn {
+    width: 80% !important;
+    margin-bottom: 0.8em !important;
+  }
+  .cardModalList {
+    display: flex;
+    flex-direction: column !important;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+  }
+}
+.cardGridItem {
+  display: flex;
+  margin-bottom: 1em !important;
+  flex-direction: column;
+  margin-left: auto !important;
+}
+
+.sideGridItem {
+  margin-bottom: 0.8em !important;
+}
+
+.ourCarsSideGridItem {
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+@media (max-width: 600px) {
+  .ourCarsSideGridItem {
+    display: none !important;
+  }
+  .ourCarsSideGridContainer {
+    display: none;
+  }
+  .cardGridItem {
+    margin: 0 auto;
+  }
+}
+.checkoutCardGridContainer {
+  display: flex;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+.checkoutCarCardItem {
+  padding: 0.6em;
+}
+
+.checkoutCarCardImgItem {
+  padding: 0.6em;
+  max-width: 20em !important;
+  max-height: 15em !important;
+}
+
+.checkoutCarCardBtnSection {
+  padding: 0.6em;
+  display: flex;
+  align-items: center;
+}
+.checkoutCarCardBtnSection .checkoutCardBtn {
+  margin-right: 0.3em !important;
+}
+
+.checkoutImgURL {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.checkoutPrice {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  padding: 0.5em;
+  background-color: rgba(4, 4, 4, 0.1);
+  box-shadow: -2px -2px 3px 2px rgba(4, 4, 4, 0.1);
+  margin-left: auto;
+}
+
+.img {
+  max-width: 100px !important;
+  border-radius: 100%;
+}
+
+.ourCarsBox {
+  margin-top: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.modalHeaderBoxDark {
+  background-color: rgba(0, 0, 0, 0.6);
+  max-width: 30em;
+  display: block;
+}
+
+.modalHeaderBox {
+  background-color: rgba(255, 255, 255, 0.6);
+  max-width: 30em;
+  display: block;
+}
+
+.ourCarsHeaderBigBox {
+  width: 100%;
+  height: 20em;
+  background-image: url("../public/imgs/ourCars.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.ourCarsHeaderBigBox .HeaderBoxDark {
+  background-color: rgba(0, 0, 0, 0.6);
+  max-width: 30em;
+  display: block;
+}
+.ourCarsHeaderBigBox .ourCarsHeaderBox {
+  background-color: rgba(255, 255, 255, 0.6);
+  max-width: 30em;
+  display: block;
+}
+.ourCarsHeaderBigBox .ourCarsHeader {
+  padding: 0.1em 0.5em 0.1em 0.5em;
+  margin: 0 0.8em 0 0;
+}
+.ourCarsHeaderBigBox .ourCarsHeader.MuiTypography-body1 {
+  font-size: 1.5em;
+}
+
+.carInfoModalBox {
+  max-width: 75%;
+  display: flex;
+  flex-direction: column;
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+.carInfoModalBoxDark {
+  max-width: 75%;
+  display: flex;
+  flex-direction: column;
+  background-color: rgba(0, 0, 0, 0.75);
+}
+
+.infoModal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.aboutUsHeader {
+  width: 100%;
+  height: 25em !important;
+  background-image: url("../public/imgs/aboutPageImg3.jpg");
+  background-size: cover;
+  background-position: top;
+  background-repeat: no-repeat;
+}
+
+.aboutUsHeaderBox {
+  background-color: rgba(255, 255, 255, 0.6);
+  max-width: 40em;
+  display: block;
+}
+
+.aboutUsHeaderBoxDark {
+  background-color: rgba(0, 0, 0, 0.6);
+  max-width: 30em;
+  display: block;
+}
+
+.aboutPageGridContainer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.aboutUsDarkTab {
+  background-color: rgba(196, 196, 196, 0.3);
+}
+
+.aboutSmTitle {
+  font-size: 1.5em !important;
+  text-decoration: underline;
+}
+
+.aboutTxt {
+  font-size: 1.2em !important;
+}
+
+@media (max-width: 600px) {
+  .aboutSmTitle {
+    font-size: 1.2em !important;
+    text-decoration: underline;
+  }
+  .aboutTxt {
+    font-size: 0.8em !important;
+  }
+}
+.extraComp {
+  display: flex;
+  margin: 0.2em 0 0.5em 0;
+  align-items: center;
+}
+.extraComp .btn {
+  margin-right: 0.5em;
+}
+
+.textFieldContainer {
+  margin: 0.5em 0.5em 0 0.5em !important;
+}
+
+.finalizeBtn {
+  display: flex;
+  margin-right: 1.5em !important;
+  justify-content: flex-end;
+}
+
+.footerContact {
+  display: flex;
+  align-content: center;
+  margin-bottom: 1em !important;
+}
+
+.footerHeader {
+  text-align: center;
+  text-decoration: underline;
+}
+
+.gridContainer {
+  margin-top: 2em;
+  background-color: rgb(228, 228, 228);
+}
+
+.gridContainerDark {
+  margin-top: 2em;
+  background-color: rgba(44, 44, 44, 0.814);
+}
+
+@media (max-width: 600px) {
+  .gridContainer {
+    display: flex;
+    flex-direction: column !important;
+    align-content: center;
+    margin-top: 2em;
+    background-color: rgb(228, 228, 228);
+  }
+  .gridContainerDark {
+    display: flex;
+    flex-direction: column !important;
+    margin-top: 2em;
+    background-color: rgba(44, 44, 44, 0.814);
+  }
+}
+.adminGridContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.searchCardGrid {
+  /* .MuiOutlinedInput-root {
+     fieldset {
+       border-color: gray; 
+     }
+
+     &:hover fieldset {
+       border-color: rgb(92, 92, 92); 
+     }
+
+     &.Mui-focused fieldset {
+       border-color: rgb(92, 92, 92); 
+     }
+   }
+  */
+  /* Style when the label is focused */
+  /* Optional: Style the shrink label (when the text field is filled or focused) */
+}
+.searchCardGrid .MuiInputLabel-root {
+  font-weight: bold; /* Make the label bold */
+  font-size: 1rem; /* Adjust font size */
+}
+.searchCardGrid .MuiInputLabel-shrink {
+  font-size: 0.875rem; /* Adjust size when shrunk */
+}
+
+.subGridSearchCard {
+  border: 1px solid #4dff00;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: roboto, sans-serif;
+}
+
+.centerContent {
+  display: flex;
+  justify-content: center;
+}
+
+.boxHeader {
+  padding: 10px;
+  background-color: red;
+}
+
+.pageTitle {
+  font-family: "belanosima" !important;
+  font-size: large;
+  padding: 0 1em 0 1em;
+}
+
+.pageSubtitle {
+  font-family: roboto;
+  font-size: 1.3em !important;
+  padding: 0.5em 1em 0.5em 1em;
+}
+
+.smallImg {
+  width: 30%;
+}
+
+.modalBox {
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 40%;
+  background-color: rgba(255, 255, 255, 0.693);
+}
+
+.modalBoxDark {
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 40%;
+  background-color: rgba(0, 0, 0, 0.615);
+}
+
+@media (max-width: 600px) {
+  .modalBox {
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 80%;
+    background-color: rgba(255, 255, 255, 0.693);
+  }
+  .modalBoxDark {
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 80%;
+    background-color: rgba(0, 0, 0, 0.615);
+  }
+  .pageTitle {
+    font-family: "belanosima" !important;
+    font-size: medium;
+    padding: 0 1em 0 1em;
+  }
+  .pageSubtitle {
+    font-family: roboto;
+    font-size: 1em !important;
+    padding: 0.5em 1em 0.5em 1em;
+  }
+}/*# sourceMappingURL=index.css.map */

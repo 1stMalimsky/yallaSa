@@ -1,0 +1,81 @@
+@import url("https://fonts.googleapis.com/css2?family=Belanosima&display=swap");
+
+.gridContainerHomePage {
+  height: 100%;
+  background-image: url("../public/imgs/caravanPhotos/caravanGolan09.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  text-align: center;
+  padding: 1em;
+}
+
+.mainHeader {
+  margin-top: 0.3em !important;
+  padding: 0em 0 0.2em 0 !important;
+  font-family: belanosima !important;
+  font-size: 3.5em !important;
+}
+
+.mainButton {
+  font-family: belanosima !important;
+  font-size: 1em;
+}
+
+.homepageHeaderBox {
+  //background-color: rgba(255, 255, 255, 0.74);
+  border-radius: 0.5em;
+}
+
+.datePicker {
+  background-color: rgba(255, 255, 255, 0.811);
+  .MuiInputLabel-root {
+    text-align: left !important; /* Align label text to the left */
+    direction: rtl !important; /* Ensure LTR direction for the label */
+  }
+
+  /* Align the input text and calendar icon */
+  .MuiInputBase-root {
+    direction: ltr !important; /* Ensure input field is LTR */
+    text-align: right !important; /* Align input text to the left */
+  }
+
+  /* Align the calendar icon (Input adornment) on the right */
+  .MuiInputAdornment-root {
+    direction: ltr !important; /* Ensure the calendar icon stays on the right */
+  }
+}
+
+.datePickerDark {
+  background-color: rgba(56, 56, 56, 0.811);
+
+  .MuiInputLabel-root {
+    text-align: left !important;
+    direction: rtl !important;
+  }
+
+  /* Align the input text and calendar icon */
+  .MuiInputBase-root {
+    direction: ltr !important;
+    text-align: left !important;
+  }
+
+  /* Align the calendar icon (Input adornment) on the right */
+  .MuiInputAdornment-root {
+    direction: ltr !important; /* Ensure the calendar icon stays on the right */
+  }
+}
+.homepageSignUpLink {
+  display: inline-block;
+  padding: 0 0.4em 0 0.4em;
+  background-color: rgba(255, 255, 255, 0.2);
+  box-shadow: -2px -2px 5px 6px rgba(255, 255, 255, 0.2);
+}
+
+.alignItems {
+  display: flex;
+  align-items: center !important;
+}

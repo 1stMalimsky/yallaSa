@@ -1,0 +1,28 @@
+.cardGridItem {
+  display: flex;
+  margin-bottom: 1em !important;
+  flex-direction: column;
+  margin-left: auto !important;
+}
+
+.sideGridItem {
+  margin-bottom: 0.8em !important;
+}
+
+.ourCarsSideGridItem {
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+@media (max-width: 600px) {
+  .ourCarsSideGridItem {
+    display: none !important;
+  }
+
+  .ourCarsSideGridContainer {
+    display: none;
+  }
+  .cardGridItem {
+    margin: 0 auto;
+  }
+}

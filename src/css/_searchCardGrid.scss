@@ -1,0 +1,36 @@
+.searchCardGrid {
+  /* .MuiOutlinedInput-root {
+    fieldset {
+      border-color: gray; 
+    }
+
+    &:hover fieldset {
+      border-color: rgb(92, 92, 92); 
+    }
+
+    &.Mui-focused fieldset {
+      border-color: rgb(92, 92, 92); 
+    }
+  }
+ */
+  .MuiInputLabel-root {
+    //color: rgb(44, 44, 44); /* Default label color */
+    font-weight: bold; /* Make the label bold */
+    font-size: 1rem; /* Adjust font size */
+  }
+
+  /* Style when the label is focused */
+  .Mui-focused {
+    //  color: rgb(44, 44, 44); /* Change label color when focused */
+  }
+
+  /* Optional: Style the shrink label (when the text field is filled or focused) */
+  .MuiInputLabel-shrink {
+    //  color: rgb(0, 0, 0); /* Change color when label shrinks */
+    font-size: 0.875rem; /* Adjust size when shrunk */
+  }
+}
+
+.subGridSearchCard {
+  border: 1px solid #4dff00;
+}
