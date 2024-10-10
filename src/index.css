@@ -101,49 +101,24 @@
   display: block;
 }
 
-.img {
-  max-width: 100px !important;
-  border-radius: 100%;
-}
-
-.registerBox {
-  margin-top: 5;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.registerTitle {
-  font-family: "belanosima" !important;
-  font-size: large;
-  padding: 0.1em 0.5em 0.1em 0.5em;
-  margin: 0 0.8em 0 0;
-}
-
-.headerBox {
-  width: 100%;
-  height: 25em;
-  background-image: url("../public/imgs/registerHeader.png");
+.registerContainer {
+  background-image: url("../public/imgs/caravanPhotos/caravanGolan08.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  min-height: 100vh;
 }
-.headerBox .registerHeaderBox {
-  background-color: rgba(255, 255, 255, 0.6);
-  max-width: 30em;
-  display: block;
+
+.signupGridItem {
+  display: flex;
+  justify-content: center;
+  margin: 1em !important;
 }
-.headerBox .registerHeaderBoxDark {
-  background-color: rgba(0, 0, 0, 0.6);
-  max-width: 30em;
-  display: block;
-}
-.headerBox .registerHeader {
-  padding: 0.1em 0.5em 0.1em 0.5em;
-  margin: 0 0.8em 0 0;
-}
-.headerBox .registerHeader.MuiTypography-body1 {
-  font-size: 1.5em;
+
+.registerGridPageContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .cardGridContainer {
@@ -504,13 +479,13 @@
   width: 100%;
 }
 
-.singInCardContainer {
-  width: 100vw !important;
-  min-height: 100vh;
-  background-image: url("../public/imgs/caravanPhotos/caravanGolan08.jpg");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+.signupCardContainer {
+  text-align: center;
+  border-radius: 0.2em;
+}
+
+.signUpCardInputs {
+  width: 70% !important;
 }
 
 * {

@@ -82,108 +82,13 @@ const RegisterPage = () => {
   };
 
   return (
-    <Container component="main" maxWidth="lg">
-      <Box className="registerBox">
-        <SignUpCardComponent />
-        <Box className="headerBox">
-          <Grid container>
-            <Grid
-              item
-              xs={12}
-              md={7}
-              className={
-                isDarkTheme ? "registerHeaderBoxDark" : "registerHeaderBox"
-              }
-            >
-              <Typography component="h1" variant="h2" className="pageTitle">
-                Register Page
-              </Typography>
-              <Typography variant="body1" className="registerHeader">
-                Let's get started!If you'd like to join our community, we'll
-                need some basic information about you. Please fill in the boxes
-                below.
-              </Typography>
-            </Grid>
-          </Grid>
-        </Box>
-
-        <Box component="div" noValidate sx={{ mt: 3 }}>
-          <Grid container spacing={2}>
-            {registerInputs.map((item) => (
-              <Grid
-                item
-                xs={12}
-                sm={6}
-                lg={4}
-                key={item.inputName + " registerPage"}
-              >
-                <RegisterFieldComponent
-                  input={item.inputName}
-                  required={item.required}
-                  value={inputState[item.stateName]}
-                  id={item.stateName}
-                  onChange={handleInputChange}
-                />
-                {inputsErrorsState && inputsErrorsState[item.stateName] && (
-                  <Alert severity="warning">
-                    {inputsErrorsState[item.stateName].map((err) => (
-                      <div key={item.stateName + err}>
-                        {err === "pattern error" ? (
-                          <div>
-                            Password must contain:
-                            <br />
-                            - Uppercase letter
-                            <br />
-                            - Lowercase letter
-                            <br />
-                            - 4 consecutive numbers
-                            <br />
-                            - Special character (@#$%^&*()_)
-                            <br />- At least 8 characters
-                          </div>
-                        ) : (
-                          err
-                        )}
-                      </div>
-                    ))}
-                  </Alert>
-                )}
-              </Grid>
-            ))}
-
-            <Grid item xs={6}>
-              <Button
-                variant="contained"
-                fullWidth
-                onClick={() => navigate(ROUTES.HOME)}
-              >
-                Cancel
-              </Button>
-            </Grid>
-            <Grid item xs={6}>
-              <Button variant="contained" fullWidth onClick={handleResetBtn}>
-                <CachedIcon />
-              </Button>
-            </Grid>
-            <Grid item xs={12}>
-              <Button
-                variant="contained"
-                disabled={disableButtonState}
-                fullWidth
-                onClick={handleBtnClick}
-              >
-                SUBMIT
-              </Button>
-            </Grid>
-          </Grid>
-          <Grid container justifyContent="flex-end">
-            <Grid item>
-              <Link to={ROUTES.LOGIN}>Already have an account? Sign in</Link>
-            </Grid>
-          </Grid>
-        </Box>
-      </Box>
-    </Container>
+    <div className="registerContainer">
+      <Grid container className="registerGridPageContainer">
+        <Grid item xs={12} className="signupGridItem" sx={{ border: 2 }}>
+          <SignUpCardComponent />
+        </Grid>
+      </Grid>
+    </div>
   );
 };
 export default RegisterPage;

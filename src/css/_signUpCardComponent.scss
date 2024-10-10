@@ -1,12 +1,9 @@
-.singInCardContainer {
-  width: 100vw !important;
-  min-height: 100vh;
-  background-image: url("../public/imgs/caravanPhotos/caravanGolan08.jpg");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+.signupCardContainer {
+  //display: flex;
+  //justify-content: center;
+  text-align: center;
+  border-radius: 0.2em;
 }
-
 .signUpCardInputs {
-  //max-width: 80%;
+  width: 70% !important;
 }

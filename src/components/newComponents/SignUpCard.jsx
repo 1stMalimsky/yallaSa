@@ -53,22 +53,21 @@ const SignInCardComponent = () => {
   };
 
   return (
-    <Box className="singInCardContainer" sx={{ border: 1 }}>
+    <div>
+      {/* GRID CONTAINER */}
       <Grid
         container
+        className="signupCardContainer"
         maxWidth="sm"
         sx={(theme) => ({
           backgroundColor:
             theme.palette.mode === "dark"
               ? "rgba(51, 51, 51, 0.8)"
               : "rgba(255, 255, 255, 0.8)",
-          justifyContent: "center",
-          alignItems: "center",
-          textAlign: "center",
-          borderRadius: "0.5em",
         })}
       >
-        <Grid item xs={12}>
+        {/* HEADER AND CHECKBOX */}
+        <Grid item xs={12} sx={{ padding: 2 }}>
           <Typography variant="h4" component="h6" sx={{ fontWeight: "bold" }}>
             עמוד הרשמה
           </Typography>
@@ -83,10 +82,10 @@ const SignInCardComponent = () => {
                 onChange={handleRulesCheckboxChange}
               />
             }
-            label="אני מאשר את תאני השימוש והפרטיות שלנו"
+            label="אני מאשר את תנאי השימוש והפרטיות שלנו"
           />
         </Grid>
-
+        {/* {/* INPUTS */}
         <Grid container spacing={0.5}>
           <Grid item xs={12}>
             <TextField
@@ -120,7 +119,7 @@ const SignInCardComponent = () => {
             />
           </Grid>
         </Grid>
-
+        {/* BUTTON */}
         <Grid item xs={12} sx={{ marginBottom: "0.5em" }}>
           <Button
             variant="contained"
@@ -134,7 +133,7 @@ const SignInCardComponent = () => {
           </Button>
         </Grid>
       </Grid>
-    </Box>
+    </div>
   );
 };
 export default SignInCardComponent;
