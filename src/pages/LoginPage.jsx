@@ -16,6 +16,7 @@ import ROUTES from "../routes/ROUTES";
 import validateLoginSchema from "../validation/loginValidation";
 import useLogin from "../hooks/useLogin";
 import { useSelector } from "react-redux";
+import LoginCardComponent from "../components/newComponents/logInCardComponent";
 
 const LoginPage = () => {
   const [inputState, setInputState] = useState({
@@ -70,95 +71,13 @@ const LoginPage = () => {
     setInputsErrorsState(null);
   };
   return (
-    <Container component="main" maxWidth="xs">
-      <Box
-        sx={{
-          marginTop: 8,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-      >
-        <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h4">
-          Log In Page
-        </Typography>
-        <Box component="div" noValidate sx={{ mt: 3 }}>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <TextField
-                required
-                fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
-                value={inputState.email}
-                onChange={handleInputChange}
-              />
-              {inputsErrorsState && inputsErrorsState.email && (
-                <Alert severity="warning">
-                  {inputsErrorsState.email.map((item) => (
-                    <div key={"email-errors" + item}>{item}</div>
-                  ))}
-                </Alert>
-              )}
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="new-password"
-                value={inputState.password}
-                onChange={handleInputChange}
-              />
-              {inputsErrorsState && inputsErrorsState.password && (
-                <Alert severity="warning">
-                  {inputsErrorsState.password.map((item) => (
-                    <div key={"password-errors" + item}>{item}</div>
-                  ))}
-                </Alert>
-              )}
-            </Grid>
-            <Grid item xs={6}>
-              <Button
-                variant="contained"
-                fullWidth
-                onClick={() => navigate(ROUTES.HOME)}
-              >
-                Cancel
-              </Button>
-            </Grid>
-            <Grid item xs={6}>
-              <Button variant="contained" fullWidth onClick={handleResetBtn}>
-                <CachedIcon />
-              </Button>
-            </Grid>
-            <Grid item xs={12}>
-              <Button
-                fullWidth
-                variant="contained"
-                onClick={handleSignInBtnClick}
-                disabled={buttonDisabledState}
-              >
-                Log In
-              </Button>
-            </Grid>
-          </Grid>
-          <Grid container justifyContent="flex-end">
-            <Grid item>
-              <Link to={ROUTES.REGISTER}>Did not have an account? Sign up</Link>
-            </Grid>
-          </Grid>
-        </Box>
-      </Box>
-    </Container>
+    <div>
+      <Grid container className="loginGridContainer">
+        <Grid item xs={12} sx={{ marginTop: "1em" }}>
+          <LoginCardComponent />
+        </Grid>
+      </Grid>
+    </div>
   );
 };
 

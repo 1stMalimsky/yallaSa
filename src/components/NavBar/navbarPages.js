@@ -14,6 +14,10 @@ const pages = [
     label: "הקרוואנים שלנו",
     url: ROUTES.OURCARS,
   },
+  {
+    label: "test",
+    url: "/test",
+  },
 ];
 //not logged in users
 const notAuthPages = [

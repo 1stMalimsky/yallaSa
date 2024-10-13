@@ -1,35 +1,38 @@
 import Joi from "joi";
-import validUrl from 'valid-url';
 import validation from "./validation";
 
-const validateURL = (value) => {
-  if (validUrl.isWebUri(value)) {
-    return value;
-  } else {
-    return null;
-  }
-};
 const registerSchema = Joi.object({
-  firstName: Joi.string().min(2).max(100).required(),
-  lastName: Joi.string().min(2).max(100).required(),
-  middleName: Joi.string().min(2).max(100).allow(""),
+  fullName: Joi.string().min(2).max(100).required().messages({
+    "any.required": "אנא הזן שם מלא",
+    "string.min": "שם מלא חייב להכיל לפחות 2 תווים",
+    "string.max": "שם מלא חייב להכיל לכל היותר 100 תווים",
+  }),
   phone: Joi.string()
     .regex(new RegExp(/0[0-9]{1,2}\-?\s?[0-9]{3}\s?[0-9]{4}/))
-    .required(),
+    .required()
+    .messages({
+      "string.pattern.base": "מספר טלפון לא תקין",
+      "any.required": "אנא הזן מספר טלפון",
+    }),
   email: Joi.string()
     .email({ tlds: { allow: false } })
-    .required(),
+    .required()
+    .messages({
+      "string.email": "אנא הזן כתובת מייל תקינה",
+      "any.required": "אנא הזן כתובת מייל",
+    }),
   password: Joi.string()
-    .pattern(new RegExp("^(?=(?:[^A-Z]*[A-Z]))(?=(?:[^0-9]*[0-9]){4})(?=.*[-!@#$%^&*_]).{8,}$"))
-    .required().messages({ "string.pattern.base": "pattern error", "any.required": "Password is required" }),
-  imageUrl: Joi.string().custom(validateURL).required(),
-  imageAlt: Joi.string().min(0).max(15).required(),
-  state: Joi.string().min(0).max(15),
-  country: Joi.string().min(2).max(20).required(),
-  city: Joi.string().min(2).max(30).required(),
-  street: Joi.string().min(2).max(30).required(),
-  houseNumber: Joi.number().required(),
-  zip: Joi.number().min(5).required(),
+    .pattern(
+      new RegExp(
+        "^(?=(?:[^A-Z]*[A-Z]))(?=(?:[^0-9]*[0-9]){4})(?=.*[-!@#$%^&*_]).{8,}$"
+      )
+    )
+    .required()
+    .messages({
+      "string.pattern.base":
+        "הסיסמא חייבת להכיל לפחות 8 תווים, ספרה אחת, אות גדולה אחת וסימן מיוחד אחד",
+      "any.required": "אנא בחר סיסמא",
+    }),
 });
 
 const validateRegisterSchema = (userInput) =>

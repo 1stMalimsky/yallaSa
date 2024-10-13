@@ -17,10 +17,18 @@ import AddNewCarPage from "../pages/AddNewCarPage";
 import LikedCarsPage from "../pages/LikedCarsPage";
 import FinalizePage from "../pages/FinalizePage";
 import ProtectedRoute from "../components/ProtectedRoute";
+/* test components */
+import NewCheckoutPage from "../pages/newPages/NewCheckoutPage";
+import CaravanCard from "../components/newComponents/CaravanCard";
+/* test component */
 
 const Router = () => {
   return (
     <Routes>
+      {/*   TEST */}
+      <Route path={"/test"} element={<NewCheckoutPage />} />
+      {/*   TEST */}
+
       <Route path={ROUTES.HOME} element={<Homepage />} />
       <Route path={ROUTES.REGISTER} element={<RegisterPage />} />
       <Route path={ROUTES.LOGIN} element={<LoginPage />} />
