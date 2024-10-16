@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import { Grid, Typography } from "@mui/material";
 import CheckoutSummaryComponent from "../../components/newComponents/CheckoutSummaryComponent";
 import CheckoutUserDetailsComponent from "../../components/newComponents/CheckoutUserDetailsComponent";

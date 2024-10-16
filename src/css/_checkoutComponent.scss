@@ -13,3 +13,46 @@
   justify-content: space-between;
   width: 100%;
 }
+
+/* PANEL1 */
+
+.datePickerInput .MuiInputLabel-root {
+  left: unset;
+  right: 0;
+  margin-right: 10px;
+}
+
+.textFieldInputsFullName {
+  .MuiInputLabel-root {
+    left: unset;
+    right: 0;
+    margin-right: 2em;
+  }
+  .MuiInputLabel-shrink {
+    margin-right: 1em;
+  }
+}
+
+.textFieldInputsPhone {
+  .MuiInputLabel-root {
+    left: unset;
+    right: 0;
+    margin-right: 2.1em;
+  }
+  .MuiInputLabel-shrink {
+    margin-right: 0.3em;
+  }
+}
+
+.selectInputField {
+  &.MuiInputLabel-root {
+    left: unset;
+    right: 0;
+    margin-right: 3em;
+  }
+  &.MuiInputLabel-shrink {
+    margin-right: 0.3em;
+    background-color: #fff;
+    padding: 0 0.3em 0 0.3em;
+  }
+}

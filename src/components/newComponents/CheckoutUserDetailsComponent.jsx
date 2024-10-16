@@ -20,8 +20,22 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 const CheckoutUserDetailsComponent = () => {
   const [isExpanded, setIsExpanded] = useState("panel1");
+  const [panelData, setPanelData] = useState({
+    1: null,
+    2: null,
+    3: null,
+    4: null,
+    5: null,
+    6: null,
+  });
 
-  const [pickupTime, setpickupTime] = useState("");
+  const handlePanelData = (panelNumber, data) => {
+    setPanelData((prevData) => ({
+      ...prevData,
+      [panelNumber]: data,
+    }));
+    console.log(`Panel ${panelNumber} data:`, data);
+  };
 
   const handleNextBtn = () => {
     let currentPanel = parseInt(isExpanded.slice(-1));
@@ -34,6 +48,8 @@ const CheckoutUserDetailsComponent = () => {
 
     setIsExpanded("panel" + (panelToChange - 1));
   };
+
+  console.log("panel data:", panelData);
 
   return (
     <Box>
@@ -51,7 +67,7 @@ const CheckoutUserDetailsComponent = () => {
             1. מידע אישי
           </Typography>
           {isExpanded === "panel2" ? (
-            <ButtonBase onClick={handleChangeBtn}>
+            <ButtonBase onClick={() => handleChangeBtn}>
               <Typography variant="h6" id="changePanel1">
                 שינוי
               </Typography>
@@ -65,6 +81,7 @@ const CheckoutUserDetailsComponent = () => {
             expandedState={isExpanded}
             setExpanded={setIsExpanded}
             handleNextButton={handleNextBtn}
+            onSubmit={(data) => handlePanelData(1, data)}
           />
         </AccordionDetails>
       </Accordion>

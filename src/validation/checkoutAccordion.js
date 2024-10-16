@@ -8,16 +8,19 @@ const panel1Schema = Joi.object({
     .required()
     .regex(/^\S+\s+\S+/)
     .messages({
-      "string.pattern.base": "אנא הכנס שם מלא",
+      "string.empty": "אנא הכנס שם מלא",
+      "string.pattern.base": "אנא הכנס שם מלא תקין",
       "any.required": "אנא ודא שמילאת שם מלא",
     }),
   resident: Joi.boolean().required().messages({
+    "boolean.base": "אנא עדכן אם אתה תושב ישראל",
     "any.required": "אנא ודא שמילאת את כל הפרטים",
   }),
   phone: Joi.string()
     .pattern(/^05[0-9]{8}$/)
     .messages({
-      "string.pattern.base": "אנא הכנס מספר תקין, ללא מקווים",
+      "string.empty": "אנא הכנס מספר טלפון",
+      "string.pattern.base": "אנא הכנס מספר תקין - 10 מספרים, ללא מקווים",
     })
     .required(),
   birthDate: Joi.date().required().messages({
@@ -25,7 +28,7 @@ const panel1Schema = Joi.object({
     "date.base": "אנא הכנס תאריך לידה תקין",
   }),
   age: Joi.number().integer().min(25).max(70).required().messages({
-    "any.required": "",
+    "number.base": "age error",
     "number.min": "הנך חייב להיות מעל גיל 25 להזמנה",
     "number.max": "הנך חייב להיות מתחת לגיל 70 להזמנה",
   }),

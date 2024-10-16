@@ -544,6 +544,42 @@
   width: 100%;
 }
 
+/* PANEL1 */
+.datePickerInput .MuiInputLabel-root {
+  left: unset;
+  right: 0;
+  margin-right: 10px;
+}
+
+.textFieldInputsFullName .MuiInputLabel-root {
+  left: unset;
+  right: 0;
+  margin-right: 2em;
+}
+.textFieldInputsFullName .MuiInputLabel-shrink {
+  margin-right: 1em;
+}
+
+.textFieldInputsPhone .MuiInputLabel-root {
+  left: unset;
+  right: 0;
+  margin-right: 2.1em;
+}
+.textFieldInputsPhone .MuiInputLabel-shrink {
+  margin-right: 0.3em;
+}
+
+.selectInputField.MuiInputLabel-root {
+  left: unset;
+  right: 0;
+  margin-right: 3em;
+}
+.selectInputField.MuiInputLabel-shrink {
+  margin-right: 0.3em;
+  background-color: #fff;
+  padding: 0 0.3em 0 0.3em;
+}
+
 .image-gallery-icon {
   color: #fff;
   transition: all 0.3s ease-out;

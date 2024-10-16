@@ -1,6 +1,5 @@
 const calculateAge = (birthDateString) => {
   const birthDate = new Date(birthDateString);
-  console.log("birthdate", birthDate);
 
   const today = new Date();
 
@@ -14,7 +13,6 @@ const calculateAge = (birthDateString) => {
   ) {
     age--;
   }
-  console.log("age", age);
 
   return age;
 };
