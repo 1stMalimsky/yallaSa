@@ -20,13 +20,14 @@ import ProtectedRoute from "../components/ProtectedRoute";
 /* test components */
 import NewCheckoutPage from "../pages/newPages/NewCheckoutPage";
 import CaravanCard from "../components/newComponents/CaravanCard";
+import CheckoutUserDetailsComponent from "../components/newComponents/CheckoutUserDetailsComponent";
 /* test component */
 
 const Router = () => {
   return (
     <Routes>
       {/*   TEST */}
-      <Route path={"/test"} element={<NewCheckoutPage />} />
+      <Route path={"/test"} element={<CheckoutUserDetailsComponent />} />
       {/*   TEST */}
 
       <Route path={ROUTES.HOME} element={<Homepage />} />

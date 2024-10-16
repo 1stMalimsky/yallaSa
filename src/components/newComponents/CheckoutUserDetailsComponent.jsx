@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import {
   Typography,
   Accordion,
@@ -13,68 +13,74 @@ import {
   Select,
   MenuItem,
   Button,
-  Hidden,
+  ButtonBase,
 } from "@mui/material";
+import Panel1 from "./checkoutAccordion/Panel1";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 const CheckoutUserDetailsComponent = () => {
   const [isExpanded, setIsExpanded] = useState("panel1");
 
-  const [pickupTime, setpickupTime] = useState("בחר שעת איסוף");
+  const [pickupTime, setpickupTime] = useState("");
+
+  const handleNextBtn = () => {
+    let currentPanel = parseInt(isExpanded.slice(-1));
+    setIsExpanded("panel" + (currentPanel + 1));
+  };
+
+  const handleChangeBtn = () => {
+    let panelToChange = isExpanded.slice(-1);
+    console.log(panelToChange);
+
+    setIsExpanded("panel" + (panelToChange - 1));
+  };
 
   return (
     <Box>
       {/* PANEL1 */}
-      <Accordion defaultExpanded id="panel1">
-        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-          <Typography variant="h6">1. מידע אישי</Typography>
+      <Accordion defaultExpanded expanded={isExpanded === "panel1"} id="panel1">
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            width: "100%",
+          }}
+        >
+          <Typography variant="h6" sx={{ flexGrow: 1 }}>
+            1. מידע אישי
+          </Typography>
+          {isExpanded === "panel2" ? (
+            <ButtonBase onClick={handleChangeBtn}>
+              <Typography variant="h6" id="changePanel1">
+                שינוי
+              </Typography>
+            </ButtonBase>
+          ) : (
+            ""
+          )}
         </AccordionSummary>
         <AccordionDetails>
-          <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
-              <TextField label="Full name" variant="outlined" fullWidth />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <FormControl fullWidth>
-                <InputLabel>תושב ישראלי</InputLabel>
-                <Select label="Country of residence" defaultValue="yes">
-                  <MenuItem value="yes">כן</MenuItem>
-                  <MenuItem value="No">לא</MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                label="Phone number"
-                variant="outlined"
-                fullWidth
-                inputProps={{
-                  type: "number",
-                  inputMode: "numeric",
-                  style: { appearance: "textfield" },
-                }}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                label="Date of Birth"
-                variant="outlined"
-                fullWidth
-                placeholder="YYYY-MM-DD"
-              />
-            </Grid>
-          </Grid>
-          <Box sx={{ textAlign: "center", marginTop: 2 }}>
-            <Button variant="contained" color="primary">
-              Next
-            </Button>
-          </Box>
+          <Panel1
+            expandedState={isExpanded}
+            setExpanded={setIsExpanded}
+            handleNextButton={handleNextBtn}
+          />
         </AccordionDetails>
       </Accordion>
       {/* PANEL2 */}
-      <Accordion id="panel2">
+      <Accordion expanded={isExpanded === "panel2"} id="panel2">
         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
           <Typography variant="h6">מקום ושעת איסוף</Typography>
+          {isExpanded === "panel3" ? (
+            <ButtonBase onClick={handleChangeBtn}>
+              <Typography variant="h6" id="changePanel1">
+                שינוי
+              </Typography>
+            </ButtonBase>
+          ) : (
+            ""
+          )}
         </AccordionSummary>
         <AccordionDetails>
           <Grid container spacing={2}>
@@ -85,7 +91,7 @@ const CheckoutUserDetailsComponent = () => {
             <Grid item xs={12} sm={6}>
               <FormControl fullWidth>
                 <InputLabel>בחר שעת איסוף</InputLabel>
-                <Select label="pickupTime" defaulValue="08:00">
+                <Select label="pickupTime" defaultValue="08:00">
                   <MenuItem value="08:00">08:00</MenuItem>
                   <MenuItem value="09:00">09:00</MenuItem>
                 </Select>
@@ -93,8 +99,8 @@ const CheckoutUserDetailsComponent = () => {
             </Grid>
           </Grid>
           <Box sx={{ textAlign: "center", marginTop: 2 }}>
-            <Button variant="contained" color="primary">
-              Next
+            <Button variant="contained" color="primary" onClick={handleNextBtn}>
+              הבא
             </Button>
           </Box>
         </AccordionDetails>
