@@ -33,6 +33,7 @@ const Panel1 = ({ setExpanded, handleNextButton, onSubmit }) => {
 
   const [errorState, setErrorState] = useState("");
   const [isError, setIsError] = useState(false);
+
   const handleInputChange = (e, inputName) => {
     const value = e.target.value;
     setInputState((prevState) => ({
@@ -120,7 +121,7 @@ const Panel1 = ({ setExpanded, handleNextButton, onSubmit }) => {
                 MenuProps={{
                   PaperProps: {
                     sx: {
-                      direction: "rtl", // Ensure the menu is right-to-left
+                      direction: "rtl",
                     },
                   },
                 }}

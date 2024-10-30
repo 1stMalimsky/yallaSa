@@ -27,7 +27,8 @@ const Router = () => {
   return (
     <Routes>
       {/*   TEST */}
-      <Route path={"/test"} element={<CheckoutUserDetailsComponent />} />
+      <Route path="/test" element={<CheckoutUserDetailsComponent />} />
+
       {/*   TEST */}
 
       <Route path={ROUTES.HOME} element={<Homepage />} />

@@ -1,6 +1,8 @@
 import Joi from "joi";
-import validation from "./validation";
 
+import generateTimeOptions from "../utils/generateTimeOptions";
+
+/* SCHEMA FOR PANEL 1 */
 const panel1Schema = Joi.object({
   fullName: Joi.string()
     .min(2)
@@ -38,10 +40,41 @@ const validatePanel1 = (userInput) => {
   return panel1Schema.validate(userInput, { abortEarly: false });
 };
 
-export { validatePanel1 };
+/* SCHEMA FOR PANEL 2  & PANEL 3*/
+
+const validTimeOptions = generateTimeOptions();
+
+const earliestTime = "08:00";
+const latestTime = "20:00";
+
+const panel2Schema = Joi.string()
+  .valid(...validTimeOptions)
+  .custom((value, helpers) => {
+    if (value < earliestTime || value > latestTime) {
+      return helpers.message(
+        `The time must be between ${earliestTime} and ${latestTime}`
+      );
+    }
+    return value;
+  })
+  .empty("")
+  .messages({
+    "any.only": "אנא הכנס שעת איסוף תקינה",
+    "string.base": "שעת האיסוף חייבת להיות מחרוזת תקינה",
+    "string.empty": "אנא הכנס שעת איסוף",
+    "any.required": "אנא ודא שמילאת את הפרטים",
+  })
+  .required();
+
+const validatePanel2 = (userInput) => {
+  return panel2Schema.validate(userInput, { abortEarly: false });
+};
+
+export { validatePanel1, validatePanel2 };
 
 const validations = {
   validatePanel1,
+  validatePanel2,
 };
 
 export default validations;

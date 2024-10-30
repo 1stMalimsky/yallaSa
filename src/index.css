@@ -580,6 +580,18 @@
   padding: 0 0.3em 0 0.3em;
 }
 
+/* PANEL2 */
+.pickupTimeInput.MuiInputLabel-root {
+  left: unset;
+  right: 0;
+  margin-right: 3em;
+}
+.pickupTimeInput.MuiInputLabel-shrink {
+  margin-right: -0.2em;
+  background-color: #fff;
+  padding: 0 0.2em 0 0.3em;
+}
+
 .image-gallery-icon {
   color: #fff;
   transition: all 0.3s ease-out;
