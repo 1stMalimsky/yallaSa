@@ -4,6 +4,16 @@ import CheckoutSummaryComponent from "../../components/newComponents/CheckoutSum
 import CheckoutUserDetailsComponent from "../../components/newComponents/CheckoutUserDetailsComponent";
 
 const NewCheckoutPage = () => {
+  const [panelData, setPanelData] = useState([]);
+  const [totalPrice, setTotalPrice] = useState(0);
+
+  const handlePanelDataChange = (newPanelData) => {
+    setPanelData(newPanelData.panelData);
+    setTotalPrice(newPanelData.totalPrice);
+  };
+
+  //console.log("panelData NewChcekoutPage", panelData);
+
   return (
     <div className="checkoutdivContainer">
       <h1 style={{ textAlign: "center" }}>יאללה! בואו ניסע</h1>
@@ -23,14 +33,21 @@ const NewCheckoutPage = () => {
             </Grid>
             {/* USER DETAILS */}
             <Grid item xs={12} sx={{ padding: 1 }}>
-              <Typography variant="h4">User details</Typography>
-              <CheckoutUserDetailsComponent />
+              <Typography variant="h5" sx={{ textDecoration: "underline" }}>
+                פרטים אישיים
+              </Typography>
+              <CheckoutUserDetailsComponent
+                sendDataUp={handlePanelDataChange}
+              />
             </Grid>
           </Grid>
         </Grid>
         {/* CHECKOUT DETAILS */}
         <Grid item xs={12} sm={4} sx={{ padding: 1 }}>
-          <CheckoutSummaryComponent />
+          <CheckoutSummaryComponent
+            checkoutCompData={panelData}
+            totalPrice={totalPrice}
+          />
         </Grid>
       </Grid>
     </div>

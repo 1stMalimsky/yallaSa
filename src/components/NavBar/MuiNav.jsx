@@ -1,9 +1,8 @@
 import * as React from "react";
-import { Fragment } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { darkThemeActions } from "../../store/darkTheme";
 import { authActions } from "../../store/auth";
-import { Container, AppBar, Box, Hidden } from "@mui/material";
+import { Container, AppBar, Box } from "@mui/material";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
@@ -14,7 +13,6 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import LightModeIcon from "@mui/icons-material/LightMode";
 import ROUTES from "../../routes/ROUTES";
 import NavLinkComponent from "./NavLinkComponent";
-import SearchPartial from "./SearchPartial";
 import MiniMenuNavLink from "./MiniMenuNavLink";
 import { pages, loggedInPages, notAuthPages, adminPages } from "./navbarPages";
 import logo from "../../assets/imgs/logo.png";

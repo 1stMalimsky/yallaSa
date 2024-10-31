@@ -8,28 +8,17 @@ import {
   Grid,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import extractDataToArr from "./helpers/extractDataToArr";
 
-const Panel7 = ({ prevInputData, grandTotal, handleNextButton, onSubmit }) => {
+const Panel7 = ({ prevInputData, grandTotal, onSubmit }) => {
   //console.log("panelData", prevInputData, "Gradn Total", grandTotal);
 
   const [extrasDetails, setExtrasDetails] = useState(null);
 
-  const extractExtras = (extras) => {
-    const extraArr = [];
-    for (const [name, details] of Object.entries(extras)) {
-      extraArr.push({
-        name: name,
-        extraSum: details.extraSum,
-        extraPrice: details.totalPrice,
-      });
-    }
-    console.log("extraArr", extraArr);
-
-    setExtrasDetails(extraArr);
-  };
   useEffect(() => {
-    extractExtras(prevInputData[5]);
-  }, [prevInputData[5]]);
+    if (prevInputData[5] === undefined) return;
+    else setExtrasDetails(extractDataToArr(prevInputData[5]));
+  }, [prevInputData]);
 
   return (
     <div>
@@ -108,7 +97,7 @@ const Panel7 = ({ prevInputData, grandTotal, handleNextButton, onSubmit }) => {
                     X {extra.extraSum} {extra.name}
                   </Typography>
                   <Typography key={extra.name + "1"} variant="body1">
-                    {extra.extraPrice} &#8362;
+                    {extra.totalPrice} &#8362;
                   </Typography>
                 </Grid>
               ))}
@@ -132,21 +121,60 @@ const Panel7 = ({ prevInputData, grandTotal, handleNextButton, onSubmit }) => {
               שירותים נוספים
             </Typography>
             <Typography id="total3" variant="h6">
-              Total
+              {grandTotal.totalInsurance + grandTotal.totalCancellation}
             </Typography>
           </Box>
         </AccordionSummary>
-        <AccordionDetails></AccordionDetails>
+        <AccordionDetails>
+          <Box>
+            {prevInputData[4] && grandTotal.totalInsurance > 0 && (
+              <Box
+                sx={{
+                  width: "93%",
+                  display: "flex",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Typography variant="body1" sx={{ marginBottom: "10px" }}>
+                  ביטוח <br />
+                  {prevInputData[4].insuranceType}
+                </Typography>
+                <Typography variant="body1">
+                  {grandTotal.totalInsurance}
+                </Typography>
+              </Box>
+            )}
+            {prevInputData[6] && grandTotal.totalCancellation > 0 && (
+              <Box
+                sx={{
+                  width: "93%",
+                  display: "flex",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Typography variant="body1">
+                  מדיניות ביטולים <br />
+                  {prevInputData[6].policyChoice}
+                </Typography>
+                <Typography variant="body1">
+                  {grandTotal.totalCancellation}
+                </Typography>
+              </Box>
+            )}
+          </Box>
+        </AccordionDetails>
       </Accordion>
+      {/* GRAND TOTAL */}
       <Box
         sx={{
+          mt: 3,
           width: "95%",
           display: "flex",
           justifyContent: "space-between",
         }}
       >
         <Typography variant="h5">סה"כ להזמנה</Typography>
-        <Typography variant="h5">&#8362;</Typography>
+        <Typography variant="h5">&#8362;{grandTotal.grandTotal}</Typography>
       </Box>
     </div>
   );

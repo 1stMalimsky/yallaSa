@@ -13,14 +13,14 @@ import {
 import generateTimeOptions from "../../../utils/generateTimeOptions";
 import { validatePanel2 } from "../../../validation/checkoutAccordion";
 
-const Panel2 = ({ setExpanded, handleNextButton, onSubmit }) => {
+const Panel2 = ({ setExpanded, onSubmit }) => {
   const [inputState, setInputState] = useState({
     pickupLocation: "",
     pickupTime: "",
     pickupDate: null,
   });
 
-  const [isError, setIsError] = useState("");
+  const [isError, setIsError] = useState(false);
 
   const handleInputChange = (e) => {
     const value = e.target.value;
@@ -30,16 +30,21 @@ const Panel2 = ({ setExpanded, handleNextButton, onSubmit }) => {
     }));
   };
 
-  const handlePanel2Submit = () => {
+  const validateInputs = () => {
     const { error } = validatePanel2(inputState.pickupTime);
     if (error) {
-      setIsError(error.message);
-      //console.log("error", error.message);
+      //setIsError(error.message);
+      setIsError(true);
+      return false;
     } else {
-      handleNextButton();
+      setIsError(false);
+      return true;
+    }
+  };
+  const handlePanel2Submit = () => {
+    if (validateInputs()) {
       onSubmit(inputState);
       setExpanded("panel3");
-      setIsError(null);
     }
   };
 
@@ -75,7 +80,7 @@ const Panel2 = ({ setExpanded, handleNextButton, onSubmit }) => {
                 </MenuItem>
               ))}
             </Select>
-            {isError && <Alert severity="error">{isError}</Alert>}
+            {isError && <Alert severity="error">אנא בחרו שעת איסוף</Alert>}
           </FormControl>
         </Grid>
       </Grid>
@@ -84,6 +89,7 @@ const Panel2 = ({ setExpanded, handleNextButton, onSubmit }) => {
           variant="contained"
           color="primary"
           onClick={handlePanel2Submit}
+          disabled={!inputState.pickupTime}
         >
           הבא
         </Button>

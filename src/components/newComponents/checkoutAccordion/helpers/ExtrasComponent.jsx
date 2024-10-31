@@ -6,6 +6,7 @@ import {
   Typography,
   IconButton,
   Grid,
+  Box,
 } from "@mui/material";
 import SimplePopover from "./SimplePopover";
 import AddBoxIcon from "@mui/icons-material/AddBox";
@@ -47,7 +48,7 @@ const ExtrasComponent = ({
   };
 
   return (
-    <Card sx={{ maxWidth: "15em" }}>
+    <Card sx={{ width: "12em", height: "15em" }}>
       <CardHeader
         title={<Typography variant="h6">{extraName}</Typography>}
         action={
@@ -56,10 +57,28 @@ const ExtrasComponent = ({
       />
       <CardContent>
         <Grid container spacing={1}>
+          {/* EXTRA'S IMG */}
+          <Grid item xs={12}>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <img src={iconImg} alt="hello" style={{ maxWidth: "4em" }} />
+              <Typography variant="h5">&#8362;{inputState.price}</Typography>
+            </Box>
+          </Grid>
+          {/* EXTRA'S PRICE */}
+          {/* <Grid item xs={6}>
+             
+            </Grid> */}
+          {/* </Grid> */}
           {/* +/- BUTTONS */}
           <Grid
             item
-            xs={6}
+            xs={12}
             sx={{
               display: "flex",
               alignItems: "center",
@@ -95,14 +114,6 @@ const ExtrasComponent = ({
             >
               <IndeterminateCheckBoxIcon fontSize="large" />
             </IconButton>
-          </Grid>
-          {/* EXTRA'S IMG */}
-          <Grid item xs={6} sx={{ display: "flex", justifyContent: "center" }}>
-            <img src={iconImg} alt="hello" style={{ maxWidth: "4em" }} />
-          </Grid>
-          {/* EXTRA'S PRICE */}
-          <Grid item xs={12}>
-            <Typography variant="h5">&#8362;{inputState.price}</Typography>
           </Grid>
         </Grid>
       </CardContent>

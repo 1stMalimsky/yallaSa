@@ -30,7 +30,7 @@ const LoginCardComponent = () => {
       if (joiResponse) {
         let firstError = Object.keys(joiResponse)[0];
         let firstErrorValue = String(joiResponse[firstError]);
-        console.log("joiResponse", firstErrorValue);
+        //console.log("joiResponse", firstErrorValue);
         toast.error(firstErrorValue);
         return;
       }

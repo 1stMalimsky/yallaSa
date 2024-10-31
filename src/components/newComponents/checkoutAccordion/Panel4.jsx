@@ -16,19 +16,21 @@ import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
 import Panel4Dialog from "./helpers/Panel4Dialog";
 
-const Panel4 = ({ setExpanded, handleNextButton, onSubmit }) => {
+const Panel4 = ({ setExpanded, onSubmit }) => {
   const [inputState, setInputState] = useState({
     insuranceType: null,
     insuranceAmount: "",
   });
+  const [isChecked, setIsChecked] = useState(true);
 
   const handlePanel4Submit = () => {
     if (inputState.insuranceType === null) {
+      setIsChecked(false);
       return;
     }
-    handleNextButton();
     onSubmit(inputState);
     setExpanded("panel5");
+    setIsChecked(true);
   };
 
   const handlePickInsurance = (e) => {
@@ -143,15 +145,14 @@ const Panel4 = ({ setExpanded, handleNextButton, onSubmit }) => {
           </div>
         </Card>
       </RadioGroup>
-      {inputState.insuranceType === null && (
-        <Alert severity="error">אנא בחר סוג ביטוח</Alert>
-      )}
+      {!isChecked && <Alert severity="error">אנא בחר סוג ביטוח</Alert>}
       <Box sx={{ textAlign: "center", marginTop: 2 }}>
         <Button
           variant="contained"
           color="primary"
           onClick={handlePanel4Submit}
           sx={{ align: "center" }}
+          disabled={inputState.insuranceType === null}
         >
           הבא
         </Button>

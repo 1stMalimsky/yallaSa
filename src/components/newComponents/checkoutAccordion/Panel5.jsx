@@ -3,7 +3,7 @@ import ExtrasComponent from "./helpers/ExtrasComponent";
 import extrasList from "./helpers/extrasList";
 import { Grid, Button } from "@mui/material";
 
-const Panel5 = ({ setExpanded, handleNextButton, onSubmit }) => {
+const Panel5 = ({ setExpanded, onSubmit }) => {
   const [inputState, setInputState] = useState({});
 
   const handleExtrasUpdate = (name, extraSum, price) => {
@@ -25,7 +25,6 @@ const Panel5 = ({ setExpanded, handleNextButton, onSubmit }) => {
   };
 
   const handlePanel5Submit = () => {
-    handleNextButton();
     onSubmit(inputState);
     setExpanded("panel6");
     //console.log("inputState", inputState);
@@ -40,14 +39,16 @@ const Panel5 = ({ setExpanded, handleNextButton, onSubmit }) => {
             item
             xs={12}
             sm={6}
-            md={3}
-            lg={2}
+            md={4}
+            lg={3}
             sx={{
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
               border: "1px solid white",
               borderRadius: "10px",
+              height: "15em",
+              mb: 1,
             }}
           >
             <ExtrasComponent

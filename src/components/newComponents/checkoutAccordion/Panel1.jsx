@@ -22,7 +22,7 @@ import calculateAge from "../../../utils/ageCalculator";
 /* SET HEBREW DATE */
 dayjs.locale("he");
 
-const Panel1 = ({ setExpanded, handleNextButton, onSubmit }) => {
+const Panel1 = ({ setExpanded, onSubmit }) => {
   const [inputState, setInputState] = useState({
     fullName: "",
     resident: "",
@@ -61,15 +61,21 @@ const Panel1 = ({ setExpanded, handleNextButton, onSubmit }) => {
       error.details.forEach((detail) => {
         errorMessages[detail.path[0]] = detail.message;
       });
-      // console.log(errorMessages);
+      console.log("error", errorMessages);
+
       setIsError(true);
       setErrorState(errorMessages);
-      return;
+      return false;
     } else {
       setIsError(false);
+      return true;
+    }
+  };
+
+  const submitData = () => {
+    if (validateInputs()) {
       setExpanded("panel2");
       onSubmit(inputState);
-      handleNextButton();
     }
   };
 
@@ -184,8 +190,8 @@ const Panel1 = ({ setExpanded, handleNextButton, onSubmit }) => {
               onChange={handleDateChange}
             />
             {isError ? (
-              errorState.birthDate ? (
-                <Alert severity="error">{errorState.birthDate}</Alert>
+              errorState.age ? (
+                <Alert severity="error">{errorState.age}</Alert>
               ) : (
                 <Alert
                   severity="error"
@@ -203,7 +209,7 @@ const Panel1 = ({ setExpanded, handleNextButton, onSubmit }) => {
             id="panel1"
             variant="contained"
             color="primary"
-            onClick={validateInputs}
+            onClick={submitData}
           >
             הבא
           </Button>

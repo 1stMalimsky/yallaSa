@@ -13,7 +13,7 @@ import {
 import generateTimeOptions from "../../../utils/generateTimeOptions";
 import { validatePanel2 } from "../../../validation/checkoutAccordion";
 
-const Panel3 = ({ setExpanded, handleNextButton, onSubmit }) => {
+const Panel3 = ({ setExpanded, onSubmit }) => {
   const [inputState, setInputState] = useState({
     dropoffLocation: "",
     dropoffTime: "",
@@ -30,16 +30,20 @@ const Panel3 = ({ setExpanded, handleNextButton, onSubmit }) => {
     }));
   };
 
-  const handlePanel3Submit = () => {
+  const validateInputs = () => {
     const { error } = validatePanel2(inputState.dropoffTime);
     if (error) {
-      console.log("error", error.message);
-      setIsError(error.message);
+      setIsError(true);
+      return false;
     } else {
-      handleNextButton();
+      setIsError(false);
+      return true;
+    }
+  };
+  const handlePanel3Submit = () => {
+    if (validateInputs()) {
       onSubmit(inputState);
       setExpanded("panel4");
-      setIsError(null);
     }
   };
 
@@ -84,6 +88,7 @@ const Panel3 = ({ setExpanded, handleNextButton, onSubmit }) => {
           variant="contained"
           color="primary"
           onClick={handlePanel3Submit}
+          disabled={!inputState.dropoffTime}
         >
           הבא
         </Button>

@@ -15,33 +15,29 @@ import Panel5 from "./checkoutAccordion/Panel5";
 import Panel6 from "./checkoutAccordion/Panel6";
 import Panel7 from "./checkoutAccordion/Panel7";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { calculateTotalPrice } from "./checkoutAccordion/helpers/extrasCalculator";
+import {
+  calculateExtrasTotal,
+  calculateTotalPrice,
+} from "./checkoutAccordion/helpers/extrasCalculator";
 
 import daysCalculator from "../../utils/daysCalculator";
 
-const CheckoutUserDetailsComponent = ({
-  sendDataUp,
-  rentalDates /*CARAVANDETAILS*/,
-}) => {
-  const [isExpanded, setIsExpanded] = useState("panel1");
+const CheckoutUserDetailsComponent = ({ rentalDates /*CARAVANDETAILS*/ }) => {
+  const [isExpanded, setIsExpanded] = useState("panel5");
   const [panelData, setPanelData] = useState([
     {
       pickupDate: "2024-03-10",
       dropoffDate: "2024-03-15",
       numOfDays: daysCalculator("2024-03-10", "2024-03-15"),
     }, // Initial data for panel 0
-    [null], // Panel 1
-    [null], // Panel 2
-    [null], // Panel 3
-    [null], // Panel 4
+    null, // Panel 1
+    null, // Panel 2
+    null, // Panel 3
+    null, // Panel 4
     [], // Panel 5
-    [null], // Panel 6
+    null, // Panel 6
   ]);
   const [totalPrice, setTotalPrice] = useState(0);
-
-  useEffect(() => {
-    sendDataUp({ panelData, totalPrice });
-  }, [panelData, sendDataUp, totalPrice]);
 
   const handlePanelData = (panelNumber, data) => {
     setPanelData((prevData) => {
@@ -51,9 +47,18 @@ const CheckoutUserDetailsComponent = ({
     });
   };
 
+  const handleNextBtn = () => {
+    let currentPanel = parseInt(isExpanded.slice(-1));
+    setIsExpanded("panel" + (currentPanel + 1));
+  };
+
   const handleChangeBtn = () => {
     let panelToChange = isExpanded.slice(-1);
     setIsExpanded("panel" + (panelToChange - 1));
+  };
+
+  const onExpandClick = (e) => {
+    setIsExpanded(e.target.id);
   };
 
   useEffect(() => {
@@ -67,9 +72,7 @@ const CheckoutUserDetailsComponent = ({
       {/* PANEL1 */}
       <Accordion defaultExpanded expanded={isExpanded === "panel1"} id="p1">
         <AccordionSummary
-          expandIcon={
-            <ExpandMoreIcon id="panel1" /* onClick={onExpandClick} */ />
-          }
+          expandIcon={<ExpandMoreIcon id="panel1" onClick={onExpandClick} />}
           sx={{
             display: "flex",
             justifyContent: "space-between",
@@ -93,13 +96,16 @@ const CheckoutUserDetailsComponent = ({
           <Panel1
             expandedState={isExpanded}
             setExpanded={setIsExpanded}
+            handleNextButton={handleNextBtn}
             onSubmit={(data) => handlePanelData(1, data)}
           />
         </AccordionDetails>
       </Accordion>
       {/* PANEL2 */}
       <Accordion expanded={isExpanded === "panel2"} id="p2">
-        <AccordionSummary expandIcon={<ExpandMoreIcon id="panel2" />}>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon id="panel2" onClick={onExpandClick} />}
+        >
           <Typography variant="h6" sx={{ flexGrow: 1 }}>
             2. פרטי איסוף
           </Typography>
@@ -117,13 +123,16 @@ const CheckoutUserDetailsComponent = ({
           <Panel2
             expandedState={isExpanded}
             setExpanded={setIsExpanded}
+            handleNextButton={handleNextBtn}
             onSubmit={(data) => handlePanelData(2, data)}
           />
         </AccordionDetails>
       </Accordion>
       {/* PANEL 3 */}
       <Accordion expanded={isExpanded === "panel3"} id="p3">
-        <AccordionSummary expandIcon={<ExpandMoreIcon id="panel3" />}>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon id="panel3" onClick={onExpandClick} />}
+        >
           <Typography variant="h6" sx={{ flexGrow: 1 }}>
             3. פרטי החזרה
           </Typography>
@@ -141,13 +150,16 @@ const CheckoutUserDetailsComponent = ({
           <Panel3
             expandedState={isExpanded}
             setExpanded={setIsExpanded}
+            handleNextButton={handleNextBtn}
             onSubmit={(data) => handlePanelData(3, data)}
           />
         </AccordionDetails>
       </Accordion>
       {/* PANEL 4 */}
       <Accordion expanded={isExpanded === "panel4"} id="p4">
-        <AccordionSummary expandIcon={<ExpandMoreIcon id="panel4" />}>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon id="panel4" onClick={onExpandClick} />}
+        >
           <Typography variant="h6" sx={{ flexGrow: 1 }}>
             4. ביטוח
           </Typography>
@@ -165,13 +177,16 @@ const CheckoutUserDetailsComponent = ({
           <Panel4
             expandedState={isExpanded}
             setExpanded={setIsExpanded}
+            handleNextButton={handleNextBtn}
             onSubmit={(data) => handlePanelData(4, data)}
           />
         </AccordionDetails>
       </Accordion>
       {/* PANEL 5 */}
       <Accordion expanded={isExpanded === "panel5"} id="p5">
-        <AccordionSummary expandIcon={<ExpandMoreIcon id="panel5" />}>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon id="panel5" onClick={onExpandClick} />}
+        >
           <Typography variant="h6" sx={{ flexGrow: 1 }}>
             5. בחירת תוספות
           </Typography>
@@ -189,13 +204,16 @@ const CheckoutUserDetailsComponent = ({
           <Panel5
             expandedState={isExpanded}
             setExpanded={setIsExpanded}
+            handleNextButton={handleNextBtn}
             onSubmit={(data) => handlePanelData(5, data)}
           />
         </AccordionDetails>
       </Accordion>
       {/* PANEL 6 */}
       <Accordion expanded={isExpanded === "panel6"} id="p6">
-        <AccordionSummary expandIcon={<ExpandMoreIcon id="panel6" />}>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon id="panel6" onClick={onExpandClick} />}
+        >
           <Typography variant="h6" sx={{ flexGrow: 1 }}>
             6. אפשרויות ביטול
           </Typography>
@@ -213,6 +231,7 @@ const CheckoutUserDetailsComponent = ({
           <Panel6
             expandedState={isExpanded}
             setExpanded={setIsExpanded}
+            handleNextButton={handleNextBtn}
             onSubmit={(data) => handlePanelData(6, data)}
           />
         </AccordionDetails>
@@ -220,9 +239,11 @@ const CheckoutUserDetailsComponent = ({
 
       {/* PANEL 7 */}
       <Accordion expanded={isExpanded === "panel7"} id="p7">
-        <AccordionSummary expandIcon={<ExpandMoreIcon id="panel7" />}>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon id="panel7" onClick={onExpandClick} />}
+        >
           <Typography variant="h6" sx={{ flexGrow: 1 }}>
-            7. סיכום
+            7. תשלום
           </Typography>
         </AccordionSummary>
         <AccordionDetails>
@@ -231,6 +252,7 @@ const CheckoutUserDetailsComponent = ({
             setExpanded={setIsExpanded}
             prevInputData={panelData}
             grandTotal={totalPrice}
+            handleNextButton={handleNextBtn}
             onSubmit={(data) => handlePanelData(7, data)}
           />
         </AccordionDetails>

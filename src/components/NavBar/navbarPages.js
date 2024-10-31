@@ -18,6 +18,10 @@ const pages = [
     label: "test",
     url: "/test",
   },
+  {
+    label: "test2",
+    url: "/test2",
+  },
 ];
 //not logged in users
 const notAuthPages = [

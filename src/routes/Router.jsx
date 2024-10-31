@@ -28,6 +28,7 @@ const Router = () => {
     <Routes>
       {/*   TEST */}
       <Route path="/test" element={<CheckoutUserDetailsComponent />} />
+      <Route path="/test2" element={<NewCheckoutPage />} />
 
       {/*   TEST */}
 

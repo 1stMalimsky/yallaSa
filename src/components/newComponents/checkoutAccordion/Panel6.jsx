@@ -11,17 +11,17 @@ import {
   Box,
 } from "@mui/material";
 
-const Panel6 = ({ setExpanded, handleNextButton, onSubmit }) => {
+const Panel6 = ({ setExpanded, onSubmit }) => {
   const [inputState, setInputState] = useState({
     policyChoice: null,
-    priceToAdd: 0,
+    pricePerNight: 0,
   });
 
   const handlePickCancelation = (e) => {
     setInputState((prevState) => ({
       ...prevState,
       policyChoice: e.target.value,
-      priceToAdd: 0,
+      pricePerNight: 0,
     }));
   };
   const handlePanel6Submit = () => {
@@ -31,10 +31,10 @@ const Panel6 = ({ setExpanded, handleNextButton, onSubmit }) => {
     if (inputState.policyChoice === "flexible") {
       setInputState((prevState) => ({
         ...prevState,
-        priceToAdd: "10",
+        pricePerNight: "10",
       }));
     }
-    handleNextButton();
+
     onSubmit(inputState);
     setExpanded("panel7");
   };
@@ -44,7 +44,7 @@ const Panel6 = ({ setExpanded, handleNextButton, onSubmit }) => {
       <RadioGroup>
         {/* Basic Plan */}
         <Card variant="outlined" sx={{ p: 2, mb: 2 }}>
-          <Grid container spacing={1}>
+          <Grid container>
             <Grid item xs={12} display={"flex"} alignItems={"center"}>
               <FormControlLabel
                 value="basic"
@@ -71,7 +71,7 @@ const Panel6 = ({ setExpanded, handleNextButton, onSubmit }) => {
                 </Typography>
               </Box>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={12}>
               <Typography variant="subtitle">
                 - המבטלים 48 שעות לפני ההזמנה יקבלו %10 מסך הההזמנה שלהם חזרה. -
                 המבטלים ביום ההזמנה לא מקבלים כסף בחזרה
