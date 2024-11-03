@@ -27,8 +27,8 @@
 .datePicker {
   background-color: rgba(255, 255, 255, 0.811);
   .MuiInputLabel-root {
-    text-align: left !important; /* Align label text to the left */
-    direction: rtl !important; /* Ensure LTR direction for the label */
+    text-align: left !important;
+    direction: rtl !important;
   }
 
   /* Align the input text and calendar icon */

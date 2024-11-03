@@ -6,7 +6,7 @@ import Grid from "@mui/material/Grid";
 import CarCardComponent from "../components/CarCard/CarCard";
 import useSort from "../hooks/useSort";
 import { useSelector } from "react-redux";
-import DatePicker from "../components/DatePicker";
+//import DatePicker from "../components/DatePicker";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -121,7 +121,7 @@ const CarInv = () => {
             <SortComponent onSortClick={sortBtnClick} />
           </div>
           <div className="sideGridItem">
-            <DatePicker
+            {/* <DatePicker
               dateText="Pickup Date"
               onChange={(newDate) => handleDateChange("startDate", newDate)}
               value={params.start}
@@ -130,7 +130,7 @@ const CarInv = () => {
               dateText="Return Date"
               onChange={(newDate) => handleDateChange("endDate", newDate)}
               value={params.end}
-            />
+            /> */}
             <Button variant="contained" onClick={handleSearchClick}>
               Search
             </Button>

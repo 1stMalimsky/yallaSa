@@ -7,6 +7,7 @@ import {
   Checkbox,
   FormControlLabel,
   TextField,
+  Alert,
 } from "@mui/material/";
 import axios from "axios";
 import validateRegisterSchema from "../../validation/registerValidation";
@@ -15,15 +16,14 @@ import ROUTES from "../../routes/ROUTES";
 
 const SignInCardComponent = ({ handleBtnClick }) => {
   /* STATES */
-  const [acceptRulesIsChecked, setAcceptRulesIsChecked] = useState(false);
-  const [disableButtonState, setDisableButtonState] = useState(true);
   const [inputState, setInputState] = useState({
     fullName: "",
     phone: "",
     email: "",
     password: "",
   });
-
+  const [acceptRulesIsChecked, setAcceptRulesIsChecked] = useState(false);
+  const [disableButtonState, setDisableButtonState] = useState(true);
   const navigate = useNavigate();
 
   /* CHECK FEILDS ARE NOT EMPTY */
@@ -102,6 +102,7 @@ const SignInCardComponent = ({ handleBtnClick }) => {
             }
             label="אני מאשר את תנאי השימוש והפרטיות שלנו"
           />
+          {}
         </Grid>
         {/* {/* INPUTS */}
         <Grid container spacing={0.5}>

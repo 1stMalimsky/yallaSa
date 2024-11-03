@@ -9,6 +9,14 @@
 
 .loginTextField {
   width: 70%;
+  .MuiInputLabel-root {
+    left: unset;
+    right: 0;
+    margin-right: 2em;
+  }
+  .MuiInputLabel-shrink {
+    margin-right: 1em;
+  }
 }
 .loginCardContainer {
   text-align: center;

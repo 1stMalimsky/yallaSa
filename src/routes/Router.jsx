@@ -22,6 +22,7 @@ import NewCheckoutPage from "../pages/newPages/NewCheckoutPage";
 import CaravanCard from "../components/newComponents/CaravanCard";
 import CheckoutUserDetailsComponent from "../components/newComponents/CheckoutUserDetailsComponent";
 /* test component */
+import CaravanSearchResults from "../pages/newPages/CaravanSearchResult";
 
 const Router = () => {
   return (
@@ -35,7 +36,10 @@ const Router = () => {
       <Route path={ROUTES.HOME} element={<Homepage />} />
       <Route path={ROUTES.REGISTER} element={<RegisterPage />} />
       <Route path={ROUTES.LOGIN} element={<LoginPage />} />
-      <Route path={"/car-inv/:start/:end/"} element={<CarInventoryPage />} />
+      <Route
+        path={"/car-inv/:start/:end/:numOfDays"}
+        element={<CaravanSearchResults />}
+      />
       <Route path={ROUTES.ABOUT} element={<AboutPage />} />
       <Route path={ROUTES.OURCARS} element={<OurCarsPage />} />
       <Route

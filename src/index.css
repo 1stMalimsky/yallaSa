@@ -31,8 +31,8 @@
   /* Align the calendar icon (Input adornment) on the right */
 }
 .datePicker .MuiInputLabel-root {
-  text-align: left !important; /* Align label text to the left */
-  direction: rtl !important; /* Ensure LTR direction for the label */
+  text-align: left !important;
+  direction: rtl !important;
 }
 .datePicker .MuiInputBase-root {
   direction: ltr !important; /* Ensure input field is LTR */
@@ -490,6 +490,14 @@
 .signUpCardInputs {
   width: 70% !important;
 }
+.signUpCardInputs .MuiInputLabel-root {
+  left: unset;
+  right: 0;
+  margin-right: 2em;
+}
+.signUpCardInputs .MuiInputLabel-shrink {
+  margin-right: 1em;
+}
 
 .loginGridContainer {
   background-image: url("../public/imgs/caravanPhotos/caravanGolan07.jpg");
@@ -503,6 +511,14 @@
 .loginTextField {
   width: 70%;
 }
+.loginTextField .MuiInputLabel-root {
+  left: unset;
+  right: 0;
+  margin-right: 2em;
+}
+.loginTextField .MuiInputLabel-shrink {
+  margin-right: 1em;
+}
 
 .loginCardContainer {
   text-align: center;
@@ -512,6 +528,7 @@
 }
 
 .caravanCardGridContainer {
+  max-width: 95%;
   background-color: rgba(0, 0, 0, 0.031372549);
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
   border-radius: 0.3em;
@@ -526,6 +543,18 @@
 
 .caravanCardDescription {
   text-align: center;
+}
+
+.CaravanFacilities {
+  display: flex;
+  align-items: center;
+}
+
+.CaravanDivider {
+  margin: 10px !important;
+  height: 25px !important;
+  border-width: 1.5px !important;
+  border-color: black !important;
 }
 
 .checkoutComponentContainer {

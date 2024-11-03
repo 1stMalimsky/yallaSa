@@ -1,6 +1,8 @@
 import React, { useState } from "react";
-import { Grid, Typography, Button } from "@mui/material";
+import { Divider, Grid, Typography, Button, Box } from "@mui/material";
 import ImageGallery from "react-image-gallery";
+import { useNavigate } from "react-router-dom";
+import icons from "./helpers/icons";
 
 const CaravanCard = () => {
   const [caravanPhotos, setcaravanPhotos] = useState([
@@ -21,13 +23,16 @@ const CaravanCard = () => {
     },
   ]);
 
+  const navigate = useNavigate();
+
+  /* GALLERY APP */
   const renderLeftNav = (onClick, disabled) => (
     <button
       className="image-gallery-custom-left-nav"
       disabled={disabled}
       onClick={onClick}
       style={{
-        width: "50px", // Adjust the size to your preference
+        width: "50px",
         height: "50px",
         position: "absolute",
         top: "50%",
@@ -50,7 +55,7 @@ const CaravanCard = () => {
       disabled={disabled}
       onClick={onClick}
       style={{
-        width: "50px", // Adjust the size to your preference
+        width: "50px",
         height: "50px",
         position: "absolute",
         top: "50%",
@@ -66,6 +71,7 @@ const CaravanCard = () => {
       ▶
     </button>
   );
+  /* END GALLERY APP */
 
   const CaravanGallery = () => {
     return (
@@ -92,13 +98,8 @@ const CaravanCard = () => {
   };
 
   return (
-    <div>
-      <Grid
-        container
-        /* fullWidth={true} */
-        className="caravanCardGridContainer"
-        spacing={1}
-      >
+    <div style={{ display: "flex", justifyContent: "center" }}>
+      <Grid container className="caravanCardGridContainer" spacing={1}>
         {/* GALLERY */}
         <Grid item xs={12} sm={12} md={4}>
           <div style={{ maxwidth: "250px" }}>
@@ -107,13 +108,41 @@ const CaravanCard = () => {
         </Grid>
 
         {/* DESCRIPTION */}
-        <Grid item xs={12} sm={6} md={6} sx={{ padding: 2 }}>
+        <Grid item xs={12} sm={12} md={5} sx={{ padding: 2 }}>
           <Typography variant="h3" className="caravanCardTitle">
             מלך הקרוואנים
           </Typography>
-          <Typography variant="h6" className="caravanCardDescription">
-            4 מיטות | 4 מושבים | אוטומטי | מקלחת\שירותים | מטבח מלא | 9 מטר
-          </Typography>
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Typography variant="h6" className="CaravanFacilities">
+              4 <icons.HotelIcon />
+            </Typography>
+            <Divider className="CaravanDivider" orientation="vertical" />
+            <Typography variant="h6" className="CaravanFacilities">
+              4 <icons.EventSeatIcon />
+            </Typography>
+            <Divider className="CaravanDivider" orientation="vertical" />
+            <Typography variant="h6" className="CaravanFacilities">
+              1 <icons.BathtubIcon />
+            </Typography>
+            <Divider className="CaravanDivider" orientation="vertical" />
+            <Typography variant="h6" className="CaravanFacilities">
+              <icons.KitchenIcon />
+            </Typography>
+            <Divider className="CaravanDivider" orientation="vertical" />
+            <Typography variant="h6" className="CaravanFacilities">
+              <icons.StraightenIcon />
+            </Typography>
+            <Divider className="CaravanDivider" orientation="vertical" />{" "}
+            <Typography variant="h6" className="CaravanFacilities">
+              B2 <icons.DriveEtaIcon />
+            </Typography>
+          </Box>
           <Typography variant="subtitle1" className="caravanCardReviews">
             חוות דעת
           </Typography>
@@ -121,17 +150,16 @@ const CaravanCard = () => {
             מיקום
           </Typography>
           <Typography variant="subtitle1" className="caravanCardIncluded">
-            כלול במחיר
+            כלול בקרוואן
           </Typography>
           <Typography variant="subtitle1">קרוואן כשר</Typography>
         </Grid>
-
         {/* PRICE CARD */}
         <Grid
           item
           xs={12}
-          sm={6}
-          md={2}
+          sm={12}
+          md={3}
           style={{ paddingLeft: "2em", paddingTop: "1em" }}
           sx={{ textAlign: "left" }}
         >
@@ -139,7 +167,9 @@ const CaravanCard = () => {
             מחיר: 700 ש"ח \ <span style={{ fontSize: "0.5em" }}>ללילה</span>
           </Typography>
           <Typography variant="h6">סה"כ: XXX</Typography>
-          <Button variant="contained">הזמן עכשיו</Button>
+          <Button variant="contained" onClick={() => navigate("/test2")}>
+            הזמן עכשיו
+          </Button>
         </Grid>
       </Grid>
     </div>
