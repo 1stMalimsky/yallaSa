@@ -11,7 +11,7 @@ import SortComponent from "../components/SortComponent";
 import SortViewComponent from "../components/SortViewComponent";
 import CarCardComponent from "../components/CarCard/CarCard";
 import CarCardListView from "../components/CarCard/CarCardListView";
-import useSort from "../hooks/useSort";
+//import useSort from "../hooks/useSort";
 import axios from "axios";
 import { toast } from "react-toastify";
 import useQueryParams from "../hooks/useQueryParams";
@@ -79,7 +79,7 @@ const OurCarsPage = () => {
   const sortBtnClick = (value) => {
     setSortPick(value);
   };
-  useSort(sortPick, setCars, cars, sortBtnClick);
+  //useSort(sortPick, setCars, cars, sortBtnClick);
 
   const handleSortView = (value) => {
     setSortView(value);

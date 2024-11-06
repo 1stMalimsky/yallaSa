@@ -20,7 +20,9 @@ const SearchCard = () => {
     end: null,
   });
 
-  const currentDate = new Date();
+  const currentDate = dayjs().startOf("day").unix();
+  //console.log("currentDate", currentDate);
+
   const navigate = useNavigate();
 
   const handleDateChange = (date, field) => {
@@ -29,28 +31,30 @@ const SearchCard = () => {
       [field]: date,
     }));
   };
-
   const handleSearchClick = () => {
-    const adjustedCurrentDate = currentDate.setHours(0, 0, 0, 0);
-    if (
-      isNaN(chosenDates.start) ||
-      isNaN(chosenDates.end) ||
-      chosenDates.start < adjustedCurrentDate ||
-      chosenDates.end < adjustedCurrentDate ||
-      chosenDates.start >= chosenDates.end
-    ) {
-      return toast.error("אנא הכנס תאריכים תקינים");
-    }
-    let numOfDays = daysCalculator(chosenDates.start, chosenDates.end);
     const formatDates = {
       start: chosenDates.start.unix(),
       end: chosenDates.end.unix(),
     };
-    console.log("unix startDate", formatDates.start);
+    const isInvalidDate =
+      isNaN(formatDates.start) ||
+      isNaN(formatDates.end) ||
+      formatDates.start < currentDate ||
+      formatDates.end <= formatDates.start;
+    console.log("isInvalidDate", isInvalidDate);
 
-    toast.success(`number of Day = ${numOfDays}`);
+    if (isInvalidDate) {
+      return toast.error("אנא הכנס תאריכים תקינים");
+    }
+
+    const numOfDays = daysCalculator(chosenDates.start, chosenDates.end);
+
+    console.log("current day", currentDate);
+    console.log("chosen start Date", formatDates.start);
+
     navigate(`/car-inv/${formatDates.start}/${formatDates.end}/${numOfDays}`);
   };
+
   //console.log("chosendates", chosenDates);
 
   return (

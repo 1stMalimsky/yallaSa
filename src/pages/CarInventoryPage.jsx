@@ -4,7 +4,7 @@ import SortComponent from "../components/SortComponent";
 import { Box, Button } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import CarCardComponent from "../components/CarCard/CarCard";
-import useSort from "../hooks/useSort";
+//import useSort from "../hooks/useSort";
 import { useSelector } from "react-redux";
 //import DatePicker from "../components/DatePicker";
 import { useNavigate, useParams } from "react-router-dom";
@@ -94,7 +94,7 @@ const CarInv = () => {
   const sortBtnClick = (value) => {
     setSortPick(value);
   };
-  useSort(sortPick, setFilteredCars, filteredCars, sortBtnClick);
+  //useSort(sortPick, setFilteredCars, filteredCars, sortBtnClick);
 
   const likeClick = async (id) => {
     try {

@@ -121,104 +121,6 @@
   align-items: center;
 }
 
-.cardGridContainer {
-  display: flex;
-  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
-}
-
-.carCardItem {
-  padding: 0.6em;
-}
-
-.aboutCarCardItem {
-  padding: 0.6em;
-}
-
-.carCardImgItem {
-  padding: 0.6em;
-  max-width: 20em !important;
-  max-height: 15em !important;
-}
-
-.cardGridListContainer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
-}
-
-.cardModalList {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  cursor: pointer;
-}
-
-.carCardBtnSection {
-  padding: 0.6em;
-  display: flex;
-  align-items: center;
-}
-.carCardBtnSection .profileAv {
-  display: flex;
-  align-items: center;
-  margin-left: auto;
-}
-
-.myCarCardBtnSection {
-  padding: 0.6em;
-  display: flex;
-  align-items: center;
-}
-.myCarCardBtnSection .profileAv {
-  display: flex;
-  align-items: center;
-  margin-left: auto;
-}
-
-.imgURL {
-  width: 100%;
-  height: 100%;
-  -o-object-fit: fit;
-     object-fit: fit;
-}
-
-.cardBtn {
-  margin-right: 0.8em !important;
-}
-
-.imgXpand {
-  max-width: 100%;
-}
-
-@media (max-width: 900px) {
-  .cardGridContainer {
-    display: flex;
-    flex-direction: column;
-    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
-  }
-  .aboutCarCardItem {
-    margin-top: 4.2em !important;
-  }
-}
-@media (max-width: 600px) {
-  .myCarCardBtnSection {
-    padding: 0.6em;
-    display: flex;
-    flex-direction: column !important;
-  }
-  .cardBtn {
-    width: 80% !important;
-    margin-bottom: 0.8em !important;
-  }
-  .cardModalList {
-    display: flex;
-    flex-direction: column !important;
-    align-items: center;
-    justify-content: space-between;
-    cursor: pointer;
-  }
-}
 .cardGridItem {
   display: flex;
   margin-bottom: 1em !important;
@@ -528,13 +430,18 @@
 }
 
 .caravanCardGridContainer {
-  max-width: 95%;
-  background-color: rgba(0, 0, 0, 0.031372549);
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-  border-radius: 0.3em;
+  width: 95% !important;
+  background-color: rgba(255, 255, 255, 0.95);
+  box-shadow: 5px 8px 8px rgba(0, 0, 0, 0.5);
+  border-radius: 0.12em;
   padding: 1em;
   margin-top: 1em !important;
-  max-height: 300px;
+}
+
+.ratingTextField .MuiInputLabel-root {
+  left: unset;
+  right: 0;
+  margin-right: 5px;
 }
 
 .caravanCardTitle {
@@ -550,11 +457,42 @@
   align-items: center;
 }
 
+.CaravanFacilitiesIcons {
+  margin-right: 5px;
+}
+
 .CaravanDivider {
   margin: 10px !important;
   height: 25px !important;
   border-width: 1.5px !important;
   border-color: black !important;
+}
+
+.image-gallery-custom-left-nav {
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.image-gallery-custom-image-wrapper {
+  width: 100%;
+}
+
+.searchResultsBg {
+  background-color: rgba(255, 255, 255, 0.5);
+  background-blend-mode: overlay;
+  background-image: url("../public/imgs/caravanPhotos/caravanGolan05.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .checkoutComponentContainer {

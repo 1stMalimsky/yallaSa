@@ -7,48 +7,44 @@ import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import { Button } from "@mui/material";
 import { Typography } from "@mui/material";
-import { useSelector } from "react-redux";
 
-const SortComponent = ({ onSortClick }) => {
+const SortComponent = ({ onChange, onSortClick }) => {
   const [value, setValue] = useState("None");
-
-  const isDarkTheme = useSelector(
-    (storePie) => storePie.darkThemeSlice.isDarkTheme
-  );
 
   const handleChange = (event) => {
     setValue(event.target.value);
+    onChange(event.target.value);
   };
 
-  const handleSortClick = () => {
+  const handleSortClick = async () => {
     onSortClick(value);
   };
 
   return (
     <FormControl>
       <FormLabel id="sortGroup">
-        <Typography
-          variant="body1"
-          color={isDarkTheme ? "white" : "black"}
-          sx={{ fontSize: "1.5em" }}
-        >
-          Sort By
+        <Typography variant="body1" sx={{ fontSize: "1.5em" }}>
+          סדר לפי
         </Typography>
       </FormLabel>
-      <RadioGroup value={value} onChange={handleChange}>
-        <FormControlLabel value="Price" control={<Radio />} label="Price" />
+      <RadioGroup
+        value={value}
+        onChange={handleChange}
+        sx={{ display: "flex", flexDirection: "row" }}
+      >
+        <FormControlLabel value="price" control={<Radio />} label="מחיר" />
         <FormControlLabel
-          value="Car Type"
+          value="location"
           control={<Radio />}
-          label="Car Type"
+          label="מיקום (קרוב אלי)"
         />
         <FormControlLabel
-          value="Location"
+          value="numOfBeds"
           control={<Radio />}
-          label="Location"
+          label="מספר מיטות"
         />
       </RadioGroup>
-      <Button variant="contained" onClick={handleSortClick}>
+      <Button variant="contained" onClick={onSortClick}>
         Sort
       </Button>
     </FormControl>

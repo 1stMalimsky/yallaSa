@@ -1,11 +1,10 @@
 import React, { useState, useRef, Fragment } from "react";
-import { Divider, Grid, Typography, Button, Box } from "@mui/material";
-import RatingThing from "./helpers/RatingThing";
+import { Divider, Grid, Typography, Button, Box, Modal } from "@mui/material";
+import ImageGallery from "react-image-gallery";
 import { useNavigate } from "react-router-dom";
 import icons from "./helpers/icons";
 import CaravanCardModal from "./caravanCard/CaravanCardModal";
 import CaravanCardGallery from "./caravanCard/CaravanCardImageGallery";
-import "@fortawesome/fontawesome-free/css/all.min.css";
 
 const CaravanCard = ({ caravanDetails, numOfDays }) => {
   const navigate = useNavigate();
@@ -14,13 +13,8 @@ const CaravanCard = ({ caravanDetails, numOfDays }) => {
   const [currentImage, setCurrentImage] = useState(0);
 
   const handleImageClick = (index) => {
-    const imageUrl = caravanDetails.imgs[index].original;
-    console.log("imgUrl", imageUrl);
-
-    if (index !== undefined && caravanDetails.imgs[index]) {
-      setCurrentImage(caravanDetails.imgs[index].original);
-      setModalOpen(true);
-    }
+    setCurrentImage(caravanDetails.imgs[index].original);
+    setModalOpen(true);
   };
 
   const handleClose = () => {
@@ -28,37 +22,106 @@ const CaravanCard = ({ caravanDetails, numOfDays }) => {
     setCurrentImage(null);
   };
 
+  /* GALLERY APP */
+  const renderLeftNav = (onClick, disabled) => (
+    <button
+      className="image-gallery-custom-left-nav"
+      disabled={disabled}
+      onClick={onClick}
+      style={{
+        width: "50px",
+        height: "50px",
+        position: "absolute",
+        top: "50%",
+        left: "10px",
+        transform: "translateY(-50%)",
+        backgroundColor: "rgba(0, 0, 0, 0.5)",
+        color: "#fff",
+        border: "none",
+        cursor: "pointer",
+        zIndex: 1,
+      }}
+    >
+      ◀
+    </button>
+  );
+
+  const renderRightNav = (onClick, disabled) => (
+    <button
+      className="image-gallery-custom-right-nav"
+      disabled={disabled}
+      onClick={onClick}
+      style={{
+        width: "50px",
+        height: "50px",
+        position: "absolute",
+        top: "50%",
+        right: "10px",
+        transform: "translateY(-50%)",
+        backgroundColor: "rgba(0, 0, 0, 0.5)",
+        color: "#fff",
+        border: "none",
+        cursor: "pointer",
+        zIndex: 1,
+      }}
+    >
+      ▶
+    </button>
+  );
+  /* END GALLERY APP */
+
+  const CaravanGallery = () => {
+    const isFullScreen = useRef(false);
+
+    const handleScreenChange = (fullscreen) => {
+      isFullScreen.current = fullscreen;
+    };
+
+    return (
+      <ImageGallery
+        showPlayButton={false}
+        showThumbnails={false}
+        isRTL={true}
+        items={caravanDetails.imgs}
+        onScreenChange={handleScreenChange}
+        showFullscreenButton={false}
+        onClick={(e, index) => handleImageClick(index)}
+        renderItem={(item, index) => (
+          <div className="image-gallery-custom-image-wrapper">
+            <img
+              src={item.thumbnail}
+              alt={item.description}
+              onClick={() => handleImageClick(index)}
+              style={{
+                width: "100%",
+                height: isFullScreen.current ? "100%" : "250px",
+                objectFit: "cover",
+                cursor: "pointer",
+              }}
+            />
+          </div>
+        )}
+        renderLeftNav={renderLeftNav}
+        renderRightNav={renderRightNav}
+      />
+    );
+  };
+
   return (
-    <div style={{ display: "flex", justifyContent: "center" }}>
+    <div>
       <Grid container className="caravanCardGridContainer" spacing={1}>
         {/* GALLERY */}
-        <Grid
-          item
-          xs={12}
-          sm={6}
-          md={4}
-          lg={4}
-          sx={{ order: { xs: 2, md: 1 } }}
-        >
-          <CaravanCardGallery
-            caravanImgs={caravanDetails.imgs}
-            handleImageClick={handleImageClick}
-          />
-          <CaravanCardModal
-            isModalOpen={modalOpen}
-            handleClose={handleClose}
-            currentImage={currentImage}
-          />
+        <Grid item xs={12} sm={4} md={4} sx={{ order: { sm: 2, md: 1 } }}>
+          <CaravanGallery />
         </Grid>
 
         {/* DESCRIPTION */}
         <Grid
           item
           xs={12}
-          sm={12}
+          sm={5}
           md={5}
-          lg={5}
-          sx={{ order: { xs: 1, md: 2 }, padding: 2 }}
+          sx={{ order: { sm: 1, md: 2 }, padding: 2 }}
         >
           <Typography variant="h3" className="caravanCardTitle">
             {caravanDetails.title}
@@ -117,21 +180,18 @@ const CaravanCard = ({ caravanDetails, numOfDays }) => {
             כלול בקרוואן
           </Typography>
           <Typography variant="subtitle1">קרוואן כשר</Typography>
-          <div>
-            <RatingThing readOnly={true} />
-          </div>
         </Grid>
         {/* PRICE CARD */}
         <Grid
           item
           xs={12}
-          sm={6}
+          sm={3}
           md={3}
-          lg={3}
           sx={{
-            order: { xs: 3, md: 3 },
-            textAlign: "right",
-            padding: 2,
+            order: { sm: 3, md: 3 },
+            textAlign: "left",
+            pl: "2em !important",
+            pt: "1em !important",
           }}
         >
           <Typography variant="h4">
