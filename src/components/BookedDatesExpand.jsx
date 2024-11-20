@@ -48,7 +48,7 @@ const BookedDatesExpand = ({ arr, isDarkMode }) => {
             <Grid item xs={12}>
               <Typography variant="h5">Booked Dates</Typography>
               {arr.map((date) => (
-                <Grid itex={2} key={date.start}>
+                <Grid item={2} key={date.start}>
                   <Typography variant="body1">
                     Pickup Date: {formatDate(date.start)}
                     <br />

@@ -17,13 +17,13 @@ const NavLinkComponent = ({ url, label, onClick }) => {
             color={
               isActive
                 ? isDarkTheme
-                  ? "warning.dark"
+                  ? "#7c009c"
                   : "secondary.dark"
                 : isDarkTheme
-                ? "warning.light"
+                ? "black"
                 : "white"
             }
-            sx={{ fontSize: 17 }}
+            sx={{ fontSize: 17 /* fontWeight: "bold" */ }}
           >
             {label}
           </Typography>

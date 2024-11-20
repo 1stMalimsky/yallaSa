@@ -62,8 +62,6 @@
 .homepageSignUpLink {
   display: inline-block;
   padding: 0 0.4em 0 0.4em;
-  background-color: rgba(255, 255, 255, 0.2);
-  box-shadow: -2px -2px 5px 6px rgba(255, 255, 255, 0.2);
 }
 
 .alignItems {
@@ -71,11 +69,18 @@
   align-items: center !important;
 }
 
+.registerLink {
+  color: var(--secondary-main);
+  text-decoration: underline;
+}
+.registerLink:hover {
+  color: var(--text-secondary);
+}
+
 .navLink {
   margin: 0 0.2em 0 0.2em;
-  font-family: belanosima !important;
-  font-size: 1.1em !important;
-  text-decoration: none;
+  font-size: 1.1em;
+  font-weight: bold !important;
 }
 
 .logoImgDark {
@@ -317,16 +322,6 @@
   margin-right: 0.5em;
 }
 
-.textFieldContainer {
-  margin: 0.5em 0.5em 0 0.5em !important;
-}
-
-.finalizeBtn {
-  display: flex;
-  margin-right: 1.5em !important;
-  justify-content: flex-end;
-}
-
 .footerContact {
   display: flex;
   align-content: center;
@@ -373,11 +368,11 @@
   padding: 1em;
 }
 .searchCardGrid .MuiInputLabel-root {
-  font-weight: bold; /* Make the label bold */
-  font-size: 1rem; /* Adjust font size */
+  font-weight: bold;
+  font-size: 1rem;
 }
 .searchCardGrid .MuiInputLabel-shrink {
-  font-size: 0.875rem; /* Adjust size when shrunk */
+  font-size: 0.875rem;
 }
 
 .searchCardGridItem {
@@ -431,7 +426,7 @@
 
 .caravanCardGridContainer {
   width: 95% !important;
-  background-color: rgba(255, 255, 255, 0.95);
+  background-color: var(--background-default);
   box-shadow: 5px 8px 8px rgba(0, 0, 0, 0.5);
   border-radius: 0.12em;
   padding: 1em;
@@ -495,6 +490,17 @@
   background-repeat: no-repeat;
 }
 
+.sortCompHeader {
+  margin-top: 0.5em;
+  background-color: var(--background-default) !important;
+  padding-left: 1em;
+}
+
+.sortCompBox {
+  display: flex;
+  padding: 0 1em 1em 2em;
+}
+
 .checkoutComponentContainer {
   background-color: rgba(0, 0, 0, 0.031372549);
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
@@ -514,6 +520,16 @@
 
 /* PANEL1 */
 .datePickerInput .MuiInputLabel-root {
+  left: unset;
+  right: 0;
+  margin-right: 1.7em;
+}
+.datePickerInput .MuiInputLabel-root.MuiInputLabel-shrink {
+  left: unset;
+  right: 0;
+  margin-right: 10px;
+}
+.datePickerInput .MuiInputLabel-root.Mui-focused {
   left: unset;
   right: 0;
   margin-right: 10px;

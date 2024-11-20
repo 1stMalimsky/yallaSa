@@ -18,15 +18,17 @@ const CheckoutSummaryComponent = ({ checkoutCompData, totalPrice }) => {
   const [dateData, setDateData] = useState([]);
   const [extrasDetails, setExtrasDetails] = useState([]);
 
+  console.log("dateData", dateData);
+
   useEffect(() => {
-    if (checkoutCompData[5] === undefined) return;
+    if (checkoutCompData && checkoutCompData[5] === undefined) return;
     setExtrasDetails(extractDataToArr(checkoutCompData[5]));
     setDateData([
       checkoutCompData[0],
       checkoutCompData[2],
       checkoutCompData[3],
     ]);
-  }, [checkoutCompData]);
+  }, []);
   //console.log("checkoutCompData", checkoutCompData);
 
   return (
@@ -135,22 +137,24 @@ const CheckoutSummaryComponent = ({ checkoutCompData, totalPrice }) => {
               </AccordionSummary>
               <AccordionDetails>
                 <Box>
-                  {checkoutCompData[4] && totalPrice.totalInsurance > 0 && (
-                    <Box
-                      sx={{
-                        width: "93%",
-                        display: "flex",
-                        justifyContent: "space-between",
-                      }}
-                    >
-                      <Typography variant="body1">
-                        {checkoutCompData[4].insuranceType}
-                      </Typography>
-                      <Typography variant="body1">
-                        {totalPrice.totalInsurance}
-                      </Typography>
-                    </Box>
-                  )}
+                  {checkoutCompData &&
+                    checkoutCompData[4] &&
+                    totalPrice.totalInsurance > 0 && (
+                      <Box
+                        sx={{
+                          width: "93%",
+                          display: "flex",
+                          justifyContent: "space-between",
+                        }}
+                      >
+                        <Typography variant="body1">
+                          {checkoutCompData[4].insuranceType}
+                        </Typography>
+                        <Typography variant="body1">
+                          {totalPrice.totalInsurance}
+                        </Typography>
+                      </Box>
+                    )}
                   {checkoutCompData &&
                     checkoutCompData[6] &&
                     totalPrice.totalCancellation > 0 && (
@@ -174,7 +178,7 @@ const CheckoutSummaryComponent = ({ checkoutCompData, totalPrice }) => {
             </Accordion>
             <div className="checkoutAccordionSummary">
               <Typography variant="h6">סה"כ</Typography>
-              <Typography variant="h6">{totalPrice.grandTotal}</Typography>
+              <Typography variant="h6">{+totalPrice.grandTotal}</Typography>
             </div>
           </Grid>
         </Grid>

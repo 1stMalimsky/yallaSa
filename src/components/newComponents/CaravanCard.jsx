@@ -6,12 +6,19 @@ import icons from "./helpers/icons";
 import CaravanCardModal from "./caravanCard/CaravanCardModal";
 import CaravanCardGallery from "./caravanCard/CaravanCardImageGallery";
 import "@fortawesome/fontawesome-free/css/all.min.css";
+import dayjs from "dayjs";
 
-const CaravanCard = ({ caravanDetails, numOfDays }) => {
+const CaravanCard = ({ caravanDetails, chosenDates }) => {
   const navigate = useNavigate();
 
+  const [unixDates, setUnixDates] = useState({
+    start: dayjs(chosenDates.start).unix(),
+    end: dayjs(chosenDates.end).unix(),
+  });
   const [modalOpen, setModalOpen] = useState(false);
   const [currentImage, setCurrentImage] = useState(0);
+
+  console.log("unixDates", unixDates);
 
   const handleImageClick = (index) => {
     const imageUrl = caravanDetails.imgs[index].original;
@@ -27,6 +34,8 @@ const CaravanCard = ({ caravanDetails, numOfDays }) => {
     setModalOpen(false);
     setCurrentImage(null);
   };
+
+  console.log("chosenDates caravan card", chosenDates);
 
   return (
     <div style={{ display: "flex", justifyContent: "center" }}>
@@ -139,9 +148,16 @@ const CaravanCard = ({ caravanDetails, numOfDays }) => {
             <span style={{ fontSize: "0.5em" }}>ללילה</span>
           </Typography>
           <Typography variant="h6">
-            סה"כ: {+caravanDetails.pricePerNight * +numOfDays}
+            סה"כ: {+caravanDetails.pricePerNight * +chosenDates.numOfDay}
           </Typography>
-          <Button variant="contained" onClick={() => navigate("/test2")}>
+          <Button
+            variant="contained"
+            onClick={() =>
+              navigate(
+                `/checkout/${caravanDetails._id}/${unixDates.start}/${unixDates.end}/${chosenDates.numOfDay}`
+              )
+            }
+          >
             הזמן עכשיו
           </Button>
         </Grid>

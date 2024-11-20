@@ -42,6 +42,7 @@ const MuiNavbar = () => {
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar>
+          {/* LOGO */}
           <NavLink to={ROUTES.HOME}>
             {isDarkTheme ? (
               <Box

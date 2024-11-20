@@ -9,13 +9,7 @@ const Homepage = () => {
   return (
     <div>
       <Grid container className={"gridContainerHomePage"}>
-        <Grid
-          item
-          xs={12}
-          md={4}
-          className="homepageHeaderBox"
-          /* sx={{ backgroundColor: "background.default" }} */
-        >
+        <Grid item xs={12} md={4} className="homepageHeaderBox">
           <SearchCard />
         </Grid>
         <Grid item xs={12}></Grid>

@@ -30,7 +30,7 @@ const sortByProximity = async (currentLocation, locations) => {
         location.locationDetails.gpsData[1]
       ),
     }))
-    .sort((a, b) => b.distance - a.distance);
+    .sort((a, b) => a.distance - b.distance);
 };
 
 export { haversineDistance, sortByProximity };

@@ -64,7 +64,7 @@ const Router = () => {
       />
       <Route
         path={"/checkout/:id/:start/:end/:numOfDays"}
-        element={<CheckoutPage />}
+        element={<NewCheckoutPage />}
       />
       <Route
         path={"/finalize/:id/:extrasCount/:start/:end/:numOfDays"}

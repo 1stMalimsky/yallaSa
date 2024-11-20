@@ -1,11 +1,10 @@
 .caravanCardGridContainer {
   width: 95% !important;
-  background-color: rgba(255, 255, 255, 0.95);
+  background-color: var(--background-default);
   box-shadow: 5px 8px 8px rgba(0, 0, 0, 0.5);
   border-radius: 0.12em;
   padding: 1em;
   margin-top: 1em !important;
-  //max-height: 300px;
 }
 
 .ratingTextField {
@@ -63,4 +62,16 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+}
+
+.sortCompHeader {
+  margin-top: 0.5em;
+  background-color: var(--background-default) !important;
+  padding-left: 1em;
+}
+
+.sortCompBox {
+  //background-color: #fff;
+  display: flex;
+  padding: 0 1em 1em 2em;
 }

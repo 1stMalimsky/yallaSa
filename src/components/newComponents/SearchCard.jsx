@@ -1,17 +1,18 @@
 import { useState } from "react";
-import { Typography, Button, Grid } from "@mui/material";
+import { Typography, Button, Grid, TextField } from "@mui/material";
 import { toast } from "react-toastify";
 import { dateActions } from "../../store/dateHandler";
 import { useDispatch } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
 import SearchIcon from "@mui/icons-material/Search";
 import daysCalculator from "../../utils/daysCalculator";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import "dayjs/locale/he";
 import { DatePicker } from "@mui/x-date-pickers";
 import { heIL } from "@mui/x-date-pickers/locales";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { current } from "@reduxjs/toolkit";
 dayjs.locale("he");
 
 const SearchCard = () => {
@@ -20,8 +21,9 @@ const SearchCard = () => {
     end: null,
   });
 
-  const currentDate = dayjs().startOf("day").unix();
-  //console.log("currentDate", currentDate);
+  const currentDate = dayjs();
+  const currentUnixDate = dayjs().startOf("day").unix();
+  console.log("currentUnixDate", currentDate);
 
   const navigate = useNavigate();
 
@@ -39,23 +41,20 @@ const SearchCard = () => {
     const isInvalidDate =
       isNaN(formatDates.start) ||
       isNaN(formatDates.end) ||
-      formatDates.start < currentDate ||
+      formatDates.start < currentUnixDate ||
       formatDates.end <= formatDates.start;
-    console.log("isInvalidDate", isInvalidDate);
+    //console.log("isInvalidDate", isInvalidDate);
 
     if (isInvalidDate) {
       return toast.error("אנא הכנס תאריכים תקינים");
     }
 
     const numOfDays = daysCalculator(chosenDates.start, chosenDates.end);
-
-    console.log("current day", currentDate);
-    console.log("chosen start Date", formatDates.start);
-
     navigate(`/car-inv/${formatDates.start}/${formatDates.end}/${numOfDays}`);
   };
 
-  //console.log("chosendates", chosenDates);
+  //console.log("current", currentDate);
+  //console.log("chosendates", chosenDates.start);
 
   return (
     <LocalizationProvider
@@ -69,15 +68,12 @@ const SearchCard = () => {
         container
         spacing={1}
         className="searchCardGrid"
-        sx={(theme) => ({
-          backgroundColor:
-            theme.palette.mode === "dark"
-              ? "rgba(51, 51, 51, 0.8)"
-              : "rgba(255, 255, 255, 0.8)",
+        sx={{
+          backgroundColor: "background.default",
           justifyContent: "center",
           alignItems: "center",
           textAlign: "center",
-        })}
+        }}
       >
         <Grid item xs={12} className="searchCardGridItem">
           <Typography variant="h4" component="h6" sx={{ fontWeight: "bold" }}>
@@ -93,8 +89,10 @@ const SearchCard = () => {
             className="datePickerInput"
             label="מתי אוספים?"
             variant="outlined"
-            value={dayjs(chosenDates.start)}
+            value={chosenDates.start}
             onChange={(date) => handleDateChange(date, "start")}
+            minDate={currentDate}
+            openTo="day"
           />
         </Grid>
         <Grid item xs={12} className="searchCardGridItem">
@@ -103,16 +101,17 @@ const SearchCard = () => {
             className="datePickerInput"
             label="מתי מחזירים?"
             variant="outlined"
-            value={dayjs(chosenDates.end)}
+            value={chosenDates.end}
             onChange={(date) => handleDateChange(date, "end")}
-            minDate={chosenDates.start} // Ensures earliest selectable date is pickupDate
-            openTo="day" // Ensures the DatePicker opens to the calendar view
+            minDate={chosenDates.start}
+            openTo="day"
           />
         </Grid>
         <Grid item xs={12} className="searchCardGridItem">
           <Button
             variant="contained"
             onClick={handleSearchClick}
+            disabled={!chosenDates.start || !chosenDates.end}
             style={{
               width: "10em",
               height: "4em",
@@ -131,7 +130,9 @@ const SearchCard = () => {
             className="homepageSignUpLink"
             sx={{ marginBottom: "1em" }}
           >
-            <Link to="/register">להצטרפות הרשמו עכשיו!</Link>
+            <Link to="/register" className="registerLink">
+              להצטרפות הרשמו עכשיו!
+            </Link>
           </Typography>
         </Grid>
       </Grid>

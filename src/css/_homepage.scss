@@ -65,11 +65,18 @@
 .homepageSignUpLink {
   display: inline-block;
   padding: 0 0.4em 0 0.4em;
-  background-color: rgba(255, 255, 255, 0.2);
-  box-shadow: -2px -2px 5px 6px rgba(255, 255, 255, 0.2);
 }
 
 .alignItems {
   display: flex;
   align-items: center !important;
+}
+
+.registerLink {
+  color: var(--secondary-main);
+  text-decoration: underline;
+
+  &:hover {
+    color: var(--text-secondary);
+  }
 }

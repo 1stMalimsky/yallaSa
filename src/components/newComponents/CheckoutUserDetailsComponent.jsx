@@ -19,17 +19,10 @@ import { calculateTotalPrice } from "./checkoutAccordion/helpers/extrasCalculato
 
 import daysCalculator from "../../utils/daysCalculator";
 
-const CheckoutUserDetailsComponent = ({
-  sendDataUp,
-  rentalDates /*CARAVANDETAILS*/,
-}) => {
+const CheckoutUserDetailsComponent = ({ sendDataUp, rentalDates }) => {
   const [isExpanded, setIsExpanded] = useState("panel1");
   const [panelData, setPanelData] = useState([
-    {
-      pickupDate: "2024-03-10",
-      dropoffDate: "2024-03-15",
-      numOfDays: daysCalculator("2024-03-10", "2024-03-15"),
-    }, // Initial data for panel 0
+    rentalDates, // Initial data for panel 0
     [null], // Panel 1
     [null], // Panel 2
     [null], // Panel 3
@@ -41,7 +34,7 @@ const CheckoutUserDetailsComponent = ({
 
   useEffect(() => {
     sendDataUp({ panelData, totalPrice });
-  }, [panelData, sendDataUp, totalPrice]);
+  }, [panelData, totalPrice]);
 
   const handlePanelData = (panelNumber, data) => {
     setPanelData((prevData) => {

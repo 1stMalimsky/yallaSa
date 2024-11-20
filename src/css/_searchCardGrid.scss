@@ -1,18 +1,12 @@
 .searchCardGrid {
   padding: 1em;
   .MuiInputLabel-root {
-    //color: rgb(44, 44, 44); /* Default label color */
-    font-weight: bold; /* Make the label bold */
-    font-size: 1rem; /* Adjust font size */
-  }
-
-  .Mui-focused {
-    //  color: rgb(44, 44, 44); /* Change label color when focused */
+    font-weight: bold;
+    font-size: 1rem;
   }
 
   .MuiInputLabel-shrink {
-    //  color: rgb(0, 0, 0); /* Change color when label shrinks */
-    font-size: 0.875rem; /* Adjust size when shrunk */
+    font-size: 0.875rem;
   }
 }
 

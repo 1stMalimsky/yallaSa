@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { createTheme, ThemeProvider, CssBaseline } from "@mui/material";
 import Router from "./routes/Router";
 import Navbar from "./components/NavBar/MuiNav";
@@ -9,22 +9,9 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import CircularProgress from "@mui/material/CircularProgress";
 import FooterComponent from "./components/FooterComponent";
-import { Box } from "@mui/system"; // <-- NEW (Replace for layout and styling)
-
-// Configure RTL theme
-const light = createTheme({
-  direction: "rtl",
-  palette: {
-    mode: "light",
-  },
-});
-
-const dark = createTheme({
-  direction: "rtl",
-  palette: {
-    mode: "dark",
-  },
-});
+import { Box } from "@mui/system";
+import { toastOptions } from "./utils/helpers/toastSettings";
+import { light, dark } from "./utils/helpers/colorTheme";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -41,24 +28,16 @@ function App() {
     (storePie) => storePie.darkThemeSlice.isDarkTheme
   );
 
+  const selectedTheme = useMemo(
+    () => (isDarkTheme ? dark : light),
+    [isDarkTheme]
+  );
+
   return (
-    <ThemeProvider theme={isDarkTheme ? dark : light}>
+    <ThemeProvider theme={selectedTheme}>
       <CssBaseline />
-      <ToastContainer
-        position="top-center"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={true} // <-- NEW (Enable RTL for toast notifications)
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="colored"
-      />
+      <ToastContainer {...toastOptions} />
       <Box sx={{ direction: "rtl" }}>
-        {" "}
-        {/* <-- NEW (RTL for layout wrapper) */}
         <header>
           <Navbar />
         </header>

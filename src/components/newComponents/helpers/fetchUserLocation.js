@@ -9,7 +9,7 @@ const getUserLocation = async () => {
     );
 
     const { latitude, longitude } = position.coords;
-    console.log("User's Location:", latitude, longitude);
+    //console.log("User's Location:", latitude, longitude);
     return { latitude, longitude };
   } catch (error) {
     console.error("Error retrieving location:", error);

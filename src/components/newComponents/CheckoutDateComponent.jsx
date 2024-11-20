@@ -32,7 +32,7 @@ const ChcekoutDateComponent = ({ dates }) => {
           />
         </Grid>
         <Grid
-          itex
+          item
           xs={8}
           sx={{ display: "flex", justifyContent: "space-between" }}
         >

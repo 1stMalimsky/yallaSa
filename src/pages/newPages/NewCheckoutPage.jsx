@@ -1,18 +1,33 @@
 import { useState } from "react";
+import { useParams } from "react-router-dom";
 import { Grid, Typography } from "@mui/material";
 import CheckoutSummaryComponent from "../../components/newComponents/CheckoutSummaryComponent";
 import CheckoutUserDetailsComponent from "../../components/newComponents/CheckoutUserDetailsComponent";
 
 const NewCheckoutPage = () => {
-  const [panelData, setPanelData] = useState([]);
+  const params = useParams();
+
+  const [panelData, setPanelData] = useState([
+    {
+      id: params.id,
+      start: params.start,
+      end: params.end,
+      numOfDays: params.numOfDays,
+    },
+  ]);
   const [totalPrice, setTotalPrice] = useState(0);
 
   const handlePanelDataChange = (newPanelData) => {
-    setPanelData(newPanelData.panelData);
+    console.log("handlePanelDataChange INIT");
+
+    setPanelData((prevData) => ({
+      ...prevData,
+      newPanelData,
+    }));
     setTotalPrice(newPanelData.totalPrice);
   };
 
-  //console.log("panelData NewChcekoutPage", panelData);
+  console.log("panelData NewChcekoutPage", panelData);
 
   return (
     <div className="checkoutdivContainer">
@@ -36,8 +51,10 @@ const NewCheckoutPage = () => {
               <Typography variant="h5" sx={{ textDecoration: "underline" }}>
                 פרטים אישיים
               </Typography>
+
               <CheckoutUserDetailsComponent
                 sendDataUp={handlePanelDataChange}
+                rentalDates={panelData}
               />
             </Grid>
           </Grid>

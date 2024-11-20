@@ -17,10 +17,22 @@
 
 /* PANEL1 */
 
-.datePickerInput .MuiInputLabel-root {
-  left: unset;
-  right: 0;
-  margin-right: 10px;
+.datePickerInput {
+  .MuiInputLabel-root {
+    left: unset;
+    right: 0;
+    margin-right: 1.7em;
+    &.MuiInputLabel-shrink {
+      left: unset;
+      right: 0;
+      margin-right: 10px;
+    }
+    &.Mui-focused {
+      left: unset;
+      right: 0;
+      margin-right: 10px;
+    }
+  }
 }
 
 .textFieldInputsFullName {
