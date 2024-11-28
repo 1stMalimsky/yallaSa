@@ -47,7 +47,7 @@ const Panel5 = ({ setExpanded, onSubmit }) => {
               alignItems: "center",
               border: "1px solid white",
               borderRadius: "10px",
-              height: "15em",
+              height: "100%",
               mb: 1,
             }}
           >

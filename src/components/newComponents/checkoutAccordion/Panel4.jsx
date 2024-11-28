@@ -113,7 +113,7 @@ const Panel4 = ({ setExpanded, onSubmit }) => {
                 }}
               />
               <Typography variant="h6">&nbsp;פרמיום&nbsp;</Typography>
-              <Typography variant="subtitle">X\ללילה</Typography>
+              <Typography variant="subtitle">50\ללילה</Typography>
             </Grid>
             <Grid item xs={6}>
               <Typography>השתתפות עצמית</Typography>

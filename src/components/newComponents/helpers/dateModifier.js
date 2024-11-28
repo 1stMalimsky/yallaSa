@@ -8,7 +8,8 @@ dayjs.extend(localeData);
 
 dayjs.locale("he");
 const dateModifier = (dateToModify) => {
-  const date = dayjs(dateToModify);
+  const date = dayjs.unix(dateToModify);
+
   const dayOfWeek = date.format("dddd");
   const dayNumber = date.format("D");
   const month = date.format("MMMM");

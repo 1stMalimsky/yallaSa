@@ -14,13 +14,13 @@ import Panel4 from "./checkoutAccordion/Panel4";
 import Panel5 from "./checkoutAccordion/Panel5";
 import Panel6 from "./checkoutAccordion/Panel6";
 import Panel7 from "./checkoutAccordion/Panel7";
+import Panel8 from "./checkoutAccordion/Panel8";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { calculateTotalPrice } from "./checkoutAccordion/helpers/extrasCalculator";
-
-import daysCalculator from "../../utils/daysCalculator";
+import { calculateTotalPrice } from "./checkoutAccordion/helpers/priceCalculator";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const CheckoutUserDetailsComponent = ({ sendDataUp, rentalDates }) => {
-  const [isExpanded, setIsExpanded] = useState("panel1");
+  const [isExpanded, setIsExpanded] = useState("panel8");
   const [panelData, setPanelData] = useState([
     rentalDates, // Initial data for panel 0
     [null], // Panel 1
@@ -30,10 +30,10 @@ const CheckoutUserDetailsComponent = ({ sendDataUp, rentalDates }) => {
     [], // Panel 5
     [null], // Panel 6
   ]);
-  const [totalPrice, setTotalPrice] = useState(0);
+  const [totalPrice, setTotalPrice] = useState(null);
 
   useEffect(() => {
-    sendDataUp({ panelData, totalPrice });
+    sendDataUp(panelData, totalPrice);
   }, [panelData, totalPrice]);
 
   const handlePanelData = (panelNumber, data) => {
@@ -50,19 +50,28 @@ const CheckoutUserDetailsComponent = ({ sendDataUp, rentalDates }) => {
   };
 
   useEffect(() => {
-    const totalPrice = calculateTotalPrice(100, panelData);
-    setTotalPrice(totalPrice);
+    const getTotalPrice = async () => {
+      try {
+        const rentalPrice = await calculateTotalPrice(panelData);
+        setTotalPrice(rentalPrice);
+      } catch (err) {
+        console.log("useEffect err", err);
+      }
+    };
+    getTotalPrice();
   }, [panelData]);
-  //console.log("panel data:", panelData);
+  //console.log("userDetails panel data", panelData);
+
+  if (!totalPrice) {
+    return <CircularProgress />;
+  }
 
   return (
     <Box>
       {/* PANEL1 */}
       <Accordion defaultExpanded expanded={isExpanded === "panel1"} id="p1">
         <AccordionSummary
-          expandIcon={
-            <ExpandMoreIcon id="panel1" /* onClick={onExpandClick} */ />
-          }
+          expandIcon={<ExpandMoreIcon id="panel1" />}
           sx={{
             display: "flex",
             justifyContent: "space-between",
@@ -217,6 +226,15 @@ const CheckoutUserDetailsComponent = ({ sendDataUp, rentalDates }) => {
           <Typography variant="h6" sx={{ flexGrow: 1 }}>
             7. סיכום
           </Typography>
+          {isExpanded === "panel8" ? (
+            <ButtonBase onClick={handleChangeBtn}>
+              <Typography variant="h6" id="changePanel5">
+                שינוי
+              </Typography>
+            </ButtonBase>
+          ) : (
+            ""
+          )}
         </AccordionSummary>
         <AccordionDetails>
           <Panel7
@@ -225,6 +243,21 @@ const CheckoutUserDetailsComponent = ({ sendDataUp, rentalDates }) => {
             prevInputData={panelData}
             grandTotal={totalPrice}
             onSubmit={(data) => handlePanelData(7, data)}
+          />
+        </AccordionDetails>
+      </Accordion>
+      {/* PANEL 8 */}
+      <Accordion expanded={isExpanded === "panel8"} id="p8">
+        <AccordionSummary expandIcon={<ExpandMoreIcon id="panel8" />}>
+          <Typography variant="h6" sx={{ flexGrow: 1 }}>
+            8. תשלום
+          </Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Panel8
+            expandedState={isExpanded}
+            setExpanded={setIsExpanded}
+            grandTotal={totalPrice}
           />
         </AccordionDetails>
       </Accordion>

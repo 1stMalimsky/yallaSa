@@ -41,7 +41,7 @@ const caravanCatalog = [
     shabbatSystem: false,
 
     /* start: 15/11/2024, end: 25/11/2024  */
-    bookedDates: [{ start: 1731621660, end: 1732485660 }],
+    bookedDates: [{ start: 1732928400, end: 1733187600 }],
     insurancePerNight: 100,
     cancelationPolicy: "3 days before",
     ownerDetails: {
@@ -52,7 +52,6 @@ const caravanCatalog = [
     locationDetails: {
       city: "Petach Tikvah",
       street: "HaMeyasdim 8",
-
       locationArea: "north",
       mapsLocation: "https://maps.app.goo.gl/j3vkhA4K498gi21X9",
       gpsData: [32.04784649131059, 34.92227224047749],
@@ -99,7 +98,7 @@ const caravanCatalog = [
     hasTowCar: false,
     shabbatSystem: true,
     /* start: 17/11/2024, end: 26/11/2024  */
-    bookedDates: [{ start: 1731794460, end: 1732572060 }],
+    bookedDates: [{ start: 1733101200, end: 1733446800 }],
     insurancePerNight: 200,
     cancelationPolicy: "7 days before",
     ownerDetails: {
@@ -159,7 +158,7 @@ const caravanCatalog = [
     hasTowCar: false,
     shabbatSystem: true,
     /* start: 29/11/2024, end: 05/12/2024  */
-    bookedDates: [{ start: 1732831260, end: 1733349660 }],
+    bookedDates: [{ start: 1733446800, end: 1733619600 }],
     insurancePerNight: 200,
     cancelationPolicy: "7 days before",
     ownerDetails: {

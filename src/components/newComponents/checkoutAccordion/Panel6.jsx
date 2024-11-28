@@ -21,7 +21,7 @@ const Panel6 = ({ setExpanded, onSubmit }) => {
     setInputState((prevState) => ({
       ...prevState,
       policyChoice: e.target.value,
-      pricePerNight: 0,
+      pricePerNight: 10,
     }));
   };
   const handlePanel6Submit = () => {

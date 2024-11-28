@@ -23,7 +23,7 @@ const SearchCard = () => {
 
   const currentDate = dayjs();
   const currentUnixDate = dayjs().startOf("day").unix();
-  console.log("currentUnixDate", currentDate);
+  //console.log("currentUnixDate", currentDate);
 
   const navigate = useNavigate();
 

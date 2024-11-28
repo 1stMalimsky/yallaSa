@@ -576,6 +576,20 @@
   padding: 0 0.2em 0 0.3em;
 }
 
+/* PANEL8 */
+.ccDetails {
+  width: 100%;
+}
+.ccDetails .MuiInputLabel-root {
+  left: unset;
+  right: 0;
+  margin-right: 1.5em;
+}
+.ccDetails .MuiInputLabel-shrink {
+  margin-right: -0.2em;
+  padding: 0 0.5em 0 0.3em;
+}
+
 .image-gallery-icon {
   color: #fff;
   transition: all 0.3s ease-out;

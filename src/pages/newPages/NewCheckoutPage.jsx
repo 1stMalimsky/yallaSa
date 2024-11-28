@@ -1,12 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Grid, Typography } from "@mui/material";
 import CheckoutSummaryComponent from "../../components/newComponents/CheckoutSummaryComponent";
 import CheckoutUserDetailsComponent from "../../components/newComponents/CheckoutUserDetailsComponent";
+import caravanCatalog from "../../components/newComponents/helpers/caravanCatalog";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const NewCheckoutPage = () => {
   const params = useParams();
-
   const [panelData, setPanelData] = useState([
     {
       id: params.id,
@@ -16,19 +17,37 @@ const NewCheckoutPage = () => {
     },
   ]);
   const [totalPrice, setTotalPrice] = useState(0);
+  const [currentCaravan, setCurrentCaravan] = useState(null);
 
-  const handlePanelDataChange = (newPanelData) => {
-    console.log("handlePanelDataChange INIT");
-
-    setPanelData((prevData) => ({
-      ...prevData,
-      newPanelData,
-    }));
-    setTotalPrice(newPanelData.totalPrice);
+  const getCaravanData = async (caravanId) => {
+    try {
+      const caravanSearchResult = await caravanCatalog.find(
+        (item) => item._id === caravanId
+      );
+      setCurrentCaravan(caravanSearchResult);
+    } catch (err) {
+      console.log("getCaravanErr", err);
+    }
   };
 
-  console.log("panelData NewChcekoutPage", panelData);
+  useEffect(() => {
+    getCaravanData(+panelData[0].id);
+  }, []);
 
+  const handlePanelDataChange = (dataArr, priceObj) => {
+    if (!dataArr || !priceObj) {
+      return;
+    }
+    setPanelData(dataArr);
+    setTotalPrice(priceObj);
+  };
+  //console.log("panelData NewChcekoutPage", panelData);
+  //console.log("chekcoutPage totalPrice", totalPrice);
+  //console.log("found caravan", currentCaravan);
+
+  if (!currentCaravan || !panelData) {
+    return <CircularProgress />;
+  }
   return (
     <div className="checkoutdivContainer">
       <h1 style={{ textAlign: "center" }}>יאללה! בואו ניסע</h1>
@@ -54,7 +73,7 @@ const NewCheckoutPage = () => {
 
               <CheckoutUserDetailsComponent
                 sendDataUp={handlePanelDataChange}
-                rentalDates={panelData}
+                rentalDates={panelData[0]}
               />
             </Grid>
           </Grid>
@@ -64,6 +83,7 @@ const NewCheckoutPage = () => {
           <CheckoutSummaryComponent
             checkoutCompData={panelData}
             totalPrice={totalPrice}
+            caravanDetails={currentCaravan}
           />
         </Grid>
       </Grid>

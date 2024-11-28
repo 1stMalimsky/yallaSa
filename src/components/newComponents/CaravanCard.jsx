@@ -18,11 +18,11 @@ const CaravanCard = ({ caravanDetails, chosenDates }) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [currentImage, setCurrentImage] = useState(0);
 
-  console.log("unixDates", unixDates);
+  //console.log("unixDates", unixDates);
 
   const handleImageClick = (index) => {
-    const imageUrl = caravanDetails.imgs[index].original;
-    console.log("imgUrl", imageUrl);
+    //const imageUrl = caravanDetails.imgs[index].original;
+    //console.log("imgUrl", imageUrl);
 
     if (index !== undefined && caravanDetails.imgs[index]) {
       setCurrentImage(caravanDetails.imgs[index].original);
@@ -35,7 +35,7 @@ const CaravanCard = ({ caravanDetails, chosenDates }) => {
     setCurrentImage(null);
   };
 
-  console.log("chosenDates caravan card", chosenDates);
+  //console.log("chosenDates caravan card", chosenDates);
 
   return (
     <div style={{ display: "flex", justifyContent: "center" }}>

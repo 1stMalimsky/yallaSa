@@ -1,22 +1,29 @@
 import { useState, useEffect } from "react";
-import { Typography, Box, Grid, Divider } from "@mui/material";
+import { Typography, Box, Grid, Divider, Link } from "@mui/material";
 import dateModifier from "./helpers/dateModifier";
 
-const ChcekoutDateComponent = ({ dates }) => {
+const ChcekoutDateComponent = ({ panelData, details }) => {
   const [modifiedDates, setModifiedDates] = useState({
-    pickupDate: "",
-    dropoffDate: "",
-    location: "",
+    pickupDate: [],
+    dropoffDate: [],
+    pickupTime: "",
+    dropoffTime: "",
   });
 
   useEffect(() => {
-    if (!dates || !dates[0]) return;
+    if (!panelData) return;
     setModifiedDates({
-      pickupDate: dateModifier(dates[0].pickupDate),
-      dropoffDate: dateModifier(dates[0].dropoffDate),
+      pickupDate: dateModifier(panelData[0].start),
+      dropoffDate: dateModifier(panelData[0].end),
+      pickupTime: panelData[2].pickupTime,
+      dropoffTime: panelData[3].dropoffTime,
     });
-  }, [dates]);
+  }, [panelData]);
+  // console.log("dates", Pan);
 
+  if (!details || !panelData) {
+    return;
+  }
   //console.log("modifiedDates", modifiedDates);
   return (
     <div>
@@ -45,7 +52,7 @@ const ChcekoutDateComponent = ({ dates }) => {
             {modifiedDates.pickupDate[1]} &nbsp;ב
             {modifiedDates.pickupDate[2]}
           </Typography>
-          <Typography variant="subtitle1">שם העסק ומקום איסוף</Typography>
+          <Typography variant="h6">בשעה: {modifiedDates.pickupTime}</Typography>
         </Grid>
         <Grid item xs={6}>
           <Typography variant="h5">
@@ -53,7 +60,18 @@ const ChcekoutDateComponent = ({ dates }) => {
             {modifiedDates.dropoffDate[1]} &nbsp;ב
             {modifiedDates.dropoffDate[2]}
           </Typography>
-          <Typography variant="subtitle1">שם העסק ומקום איסוף</Typography>
+          <Typography variant="h6">
+            בשעה: {modifiedDates.dropoffTime}
+          </Typography>
+        </Grid>
+        <Grid item xs={12}>
+          <Link
+            href={details.locationDetails.mapsLocation}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            מקום איסוף
+          </Link>
         </Grid>
       </Grid>
     </div>

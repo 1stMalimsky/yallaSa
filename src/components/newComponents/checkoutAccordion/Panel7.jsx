@@ -6,11 +6,12 @@ import {
   AccordionDetails,
   Box,
   Grid,
+  Button,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import extractDataToArr from "./helpers/extractDataToArr";
 
-const Panel7 = ({ prevInputData, grandTotal, onSubmit }) => {
+const Panel7 = ({ prevInputData, grandTotal, setExpanded }) => {
   //console.log("panelData", prevInputData, "Gradn Total", grandTotal);
 
   const [extrasDetails, setExtrasDetails] = useState(null);
@@ -19,6 +20,10 @@ const Panel7 = ({ prevInputData, grandTotal, onSubmit }) => {
     if (prevInputData[5] === undefined) return;
     else setExtrasDetails(extractDataToArr(prevInputData[5]));
   }, [prevInputData]);
+
+  const handlePanel7Submit = () => {
+    setExpanded("panel8");
+  };
 
   return (
     <div>
@@ -174,7 +179,19 @@ const Panel7 = ({ prevInputData, grandTotal, onSubmit }) => {
         }}
       >
         <Typography variant="h5">סה"כ להזמנה</Typography>
-        <Typography variant="h5">&#8362;{grandTotal.grandTotal}</Typography>
+        <Typography variant="h5" sx={{ marginLeft: 1 }}>
+          &#8362;{grandTotal.grandTotal}
+        </Typography>
+      </Box>
+      <Box sx={{ textAlign: "center", marginTop: 2 }}>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handlePanel7Submit}
+          sx={{ align: "center" }}
+        >
+          הבא
+        </Button>
       </Box>
     </div>
   );

@@ -12,25 +12,30 @@ import {
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import CheckoutDateComponent from "./CheckoutDateComponent";
 import extractDataToArr from "./checkoutAccordion/helpers/extractDataToArr";
-import { checkPreferences } from "joi";
+import CircularProgress from "@mui/material/CircularProgress";
+import ChcekoutDateComponent from "./CheckoutDateComponent";
 
-const CheckoutSummaryComponent = ({ checkoutCompData, totalPrice }) => {
-  const [dateData, setDateData] = useState([]);
+const CheckoutSummaryComponent = ({
+  checkoutCompData,
+  totalPrice,
+  caravanDetails,
+}) => {
   const [extrasDetails, setExtrasDetails] = useState([]);
 
-  console.log("dateData", dateData);
+  //console.log("dateData", dateData);
+  //console.log("checkoutdata", checkoutCompData);
 
   useEffect(() => {
     if (checkoutCompData && checkoutCompData[5] === undefined) return;
     setExtrasDetails(extractDataToArr(checkoutCompData[5]));
-    setDateData([
-      checkoutCompData[0],
-      checkoutCompData[2],
-      checkoutCompData[3],
-    ]);
-  }, []);
-  //console.log("checkoutCompData", checkoutCompData);
+  }, [checkoutCompData[5]]);
 
+  //console.log("checkoutCompData", checkoutCompData);
+  //console.log("Total price arr", totalPrice);
+
+  if (!totalPrice) {
+    return <CircularProgress />;
+  }
   return (
     <div>
       <Card sx={{ display: { xs: "none", md: "block" }, padding: 1 }}>
@@ -39,20 +44,25 @@ const CheckoutSummaryComponent = ({ checkoutCompData, totalPrice }) => {
           <Grid item xs={12} md={6}>
             <img
               className="checkoutComponentImg"
-              src="../imgs/caravanPhotos/caravanJapan01.jpg"
+              src={caravanDetails.imgs[0].thumbnail}
               alt="checkout"
             />
           </Grid>
           {/* CARAVAN DETAILS */}
           <Grid item xs={12} md={6} sx={{ pr: 1 }}>
-            <Typography variant="h6">מלך הקרוואנים</Typography>
-            <Typography variant="h6">דגם</Typography>
+            <Typography variant="h6">
+              שם: {caravanDetails.ownerDetails.name}
+            </Typography>
+            <Typography variant="h6">דגם: {caravanDetails.title}</Typography>
             <Typography variant="h6">חוות דעת</Typography>
           </Grid>
           {/* PICKED DATES */}
           <Grid item xs={12}>
             <Box>
-              <CheckoutDateComponent dates={dateData} />
+              <CheckoutDateComponent
+                panelData={checkoutCompData}
+                details={caravanDetails}
+              />
             </Box>
             <Divider
               sx={{
@@ -148,7 +158,7 @@ const CheckoutSummaryComponent = ({ checkoutCompData, totalPrice }) => {
                         }}
                       >
                         <Typography variant="body1">
-                          {checkoutCompData[4].insuranceType}
+                          ביטוח: {checkoutCompData[4].insuranceType}
                         </Typography>
                         <Typography variant="body1">
                           {totalPrice.totalInsurance}
@@ -166,7 +176,7 @@ const CheckoutSummaryComponent = ({ checkoutCompData, totalPrice }) => {
                         }}
                       >
                         <Typography variant="body1">
-                          {checkoutCompData[6].policyChoice}
+                          ביטוח ביטולים: {checkoutCompData[6].policyChoice}
                         </Typography>
                         <Typography variant="body1">
                           {totalPrice.totalCancellation}
