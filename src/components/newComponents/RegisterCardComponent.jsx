@@ -10,11 +10,12 @@ import {
   Alert,
 } from "@mui/material/";
 import axios from "axios";
-import validateRegisterSchema from "../../validation/registerValidation";
+import { registerSchema } from "../../validation/registerValidation";
 import { toast } from "react-toastify";
 import ROUTES from "../../routes/ROUTES";
+import validateInputs from "../../utils/helpers/validateInputs";
 
-const SignInCardComponent = ({ handleBtnClick }) => {
+const RegisterCardComponent = ({ handleBtnClick }) => {
   /* STATES */
   const [inputState, setInputState] = useState({
     fullName: "",
@@ -51,21 +52,17 @@ const SignInCardComponent = ({ handleBtnClick }) => {
   };
 
   /* REGISTER VALIDATION AND COMPLETION */
-  const handleRegisterClick = async (ev) => {
+  const handleRegisterClick = async () => {
     try {
-      const joiResponse = validateRegisterSchema(inputState);
-      if (joiResponse) {
-        let firstError = Object.keys(joiResponse)[0];
-        let firstErrorValue = String(joiResponse[firstError]);
-        console.log("joiResponse", firstErrorValue);
-        toast.error(firstErrorValue);
-        return;
+      if (validateInputs(registerSchema, inputState)) {
+        await axios.post("/users/register", inputState);
+        toast.success("נרשמת בהצלחה");
+        navigate(ROUTES.LOGIN);
+      } else {
+        console.log("registration error");
       }
-      await axios.post("/user/register", inputState);
-      toast.success("Registeration success!");
-      navigate(ROUTES.LOGIN);
     } catch (err) {
-      //console.log("error from axios", err.response.data);
+      console.log("error from axios", err.response.data);
       toast.error("Registrationg error occured. Please try again");
     }
   };
@@ -77,12 +74,7 @@ const SignInCardComponent = ({ handleBtnClick }) => {
         container
         className="signupCardContainer"
         maxWidth="sm"
-        sx={(theme) => ({
-          backgroundColor:
-            theme.palette.mode === "dark"
-              ? "rgba(51, 51, 51, 0.8)"
-              : "rgba(255, 255, 255, 0.8)",
-        })}
+        sx={{ backgroundColor: (theme) => theme.palette.background.default }}
       >
         {/* HEADER AND CHECKBOX */}
         <Grid item xs={12} sx={{ padding: 2 }}>
@@ -166,4 +158,4 @@ const SignInCardComponent = ({ handleBtnClick }) => {
     </div>
   );
 };
-export default SignInCardComponent;
+export default RegisterCardComponent;

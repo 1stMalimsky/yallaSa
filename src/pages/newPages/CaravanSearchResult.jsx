@@ -5,17 +5,15 @@ import SortComponent from "../../components/SortComponent.jsx";
 import sortArray from "../../components/newComponents/helpers/sortArray";
 import { DatePicker } from "@mui/x-date-pickers";
 import dayjs from "dayjs";
-import { Grid, Box, Button, Card, CardHeader } from "@mui/material";
-import axios from "axios";
+import { Grid, Box, Button, Card, CardHeader, Pagination } from "@mui/material";
 import { toast } from "react-toastify";
-import ROUTES from "../../routes/ROUTES";
 import CaravanCard from "../../components/newComponents/CaravanCard";
-import caravanCatalog from "../../components/newComponents/helpers/caravanCatalog.js";
 import fetchUserLocation from "../../components/newComponents/helpers/fetchUserLocation";
 import { heIL } from "@mui/x-date-pickers/locales";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import daysCalculator from "../../utils/daysCalculator.js";
+import availableCaravanSearch from "../../utils/helpers/availableCarvanSearch";
 
 const CaravanSearchResults = () => {
   const params = useParams();
@@ -30,31 +28,16 @@ const CaravanSearchResults = () => {
     updateStart: dayjs.unix(params.start),
     updateEnd: dayjs.unix(params.end),
   });
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(10);
 
   const currentDate = dayjs();
-  const currentUnixDate = dayjs().startOf("day").unix();
 
   const handleDateChange = (date, field) => {
     setChosenDates((prevDates) => ({
       ...prevDates,
       [field]: date,
     }));
-  };
-  const isOverlappingDates = (start1, end1, start2, end2) => {
-    return start1 <= end2 && end1 >= start2;
-  };
-
-  const searchAvailability = (startDate, endDate) => {
-    if (startDate < currentUnixDate || endDate < currentUnixDate) {
-      return toast.error("אנא הכנס תאריכים תקינים");
-    }
-    const availableCaravans = caravanCatalog.filter((caravan) => {
-      const isBooked = caravan.bookedDates.some(({ start, end }) => {
-        return isOverlappingDates(startDate, endDate, start, end);
-      });
-      return !isBooked;
-    });
-    setSearchResults(availableCaravans);
   };
 
   const getUserLocation = async () => {
@@ -63,13 +46,37 @@ const CaravanSearchResults = () => {
     setUserLocation(location);
   };
 
+  const handlePageChange = (event, value) => {
+    console.log("Page changed to:", value);
+    setPage(value);
+  };
+
   useEffect(() => {
     getUserLocation();
   }, []);
 
   useEffect(() => {
-    searchAvailability(params.start, params.end);
+    const fetchData = async () => {
+      try {
+        const searchResult = await availableCaravanSearch(
+          params.start,
+          params.end
+        );
+        if (!searchResult) {
+          toast.error("אין קרוואנים זמינים בתאריכים אלו");
+          setTimeout(() => {
+            //return navigate("/");
+          }, 5000);
+        }
+        setSearchResults(searchResult.data.caravans.caravans);
+      } catch (err) {
+        console.log("fetchData error", err);
+      }
+    };
+    fetchData();
   }, []);
+
+  console.log("searchResults", searchResults);
 
   const onSortPick = (value) => {
     setSortState(value);
@@ -174,14 +181,18 @@ const CaravanSearchResults = () => {
             sx={{
               display: "flex",
               flexDirection: "column",
-              pb: "2em",
+              /* pb: "2em", */
+              justifyContent: "center",
             }}
           >
             {searchResults.map((card) => (
-              <Grid key={card.title} item xs={12}>
+              <Grid key={card.model} item xs={12} sx={{ marginBottom: "1em" }}>
                 <CaravanCard caravanDetails={card} chosenDates={chosenDates} />
               </Grid>
             ))}
+          </Grid>
+          <Grid item xs={12} sx={{ display: "flex", justifyContent: "center" }}>
+            <Pagination count={10} page={page} onChange={handlePageChange} />
           </Grid>
         </Card>
       </div>

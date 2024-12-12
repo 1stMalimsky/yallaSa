@@ -10,18 +10,10 @@ const pages = [
     label: "אודות",
     url: ROUTES.ABOUT,
   },
-  {
-    label: "הקרוואנים שלנו",
-    url: ROUTES.OURCARS,
-  },
   /*   {
     label: "test",
     url: "/test",
-  },
-  {
-    label: "test2",
-    url: "/test2",
-  }, */
+  },*/
 ];
 //not logged in users
 const notAuthPages = [
@@ -37,15 +29,11 @@ const notAuthPages = [
 //logged in users
 const loggedInPages = [
   {
-    label: "LIKED CARS",
-    url: ROUTES.LIKEDCARS,
-  },
-  {
-    label: "MY CARS",
+    label: "הקרוואנים שלי",
     url: ROUTES.MYCARS,
   },
   {
-    label: "LOGOUT",
+    label: "התנתקות",
     url: ROUTES.LOGOUT,
   },
 ];
@@ -53,7 +41,7 @@ const loggedInPages = [
 //admin pages
 const adminPages = [
   {
-    label: "MY CONTROLS",
+    label: "ADMIN CONTROLS",
     url: ROUTES.ADMIN,
   },
 ];

@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { darkThemeActions } from "../../store/darkTheme";
 import { authActions } from "../../store/auth";
@@ -19,7 +19,7 @@ import logo from "../../assets/imgs/logo.png";
 
 const MuiNavbar = () => {
   const user = useSelector((storePie) => storePie.authSlice);
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
+  const [anchorElNav, setAnchorElNav] = useState(null);
   const isDarkTheme = useSelector(
     (storePie) => storePie.darkThemeSlice.isDarkTheme
   );
@@ -96,7 +96,6 @@ const MuiNavbar = () => {
               ""
             )}
           </Box>
-          {/*  <SearchPartial /> */}
           <Box>
             <IconButton onClick={changeTheme}>
               {isDarkTheme ? (
@@ -115,9 +114,7 @@ const MuiNavbar = () => {
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
             {user.isLoggedIn
               ? loggedInPages.map((page) =>
-                  page.label === "LIKED CARS" ? (
-                    ""
-                  ) : page.label === "LOGOUT" ? (
+                  page.label === "LOGOUT" ? (
                     <NavLinkComponent
                       key={page.url}
                       {...page}

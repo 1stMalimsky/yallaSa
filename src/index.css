@@ -1016,6 +1016,26 @@
   justify-content: center;
 }
 
+.inputRTL .MuiInputLabel-root {
+  left: unset;
+  right: 0;
+  margin-right: 1.7em;
+}
+.inputRTL .MuiInputLabel-root.MuiInputLabel-shrink {
+  left: unset;
+  right: 0;
+  margin-right: 0.4em;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+}
+.inputRTL .MuiInputLabel-root.Mui-focused {
+  left: unset;
+  right: 0;
+  margin-right: 0.5em;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+}
+
 .boxHeader {
   padding: 10px;
   background-color: red;

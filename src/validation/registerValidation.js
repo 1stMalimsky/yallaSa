@@ -1,12 +1,18 @@
 import Joi from "joi";
-import validation from "./validation";
+import { validation } from "./validation";
 
 const registerSchema = Joi.object({
-  fullName: Joi.string().min(2).max(100).required().messages({
-    "any.required": "אנא הזן שם מלא",
-    "string.min": "שם מלא חייב להכיל לפחות 2 תווים",
-    "string.max": "שם מלא חייב להכיל לכל היותר 100 תווים",
-  }),
+  fullName: Joi.string()
+    .min(2)
+    .max(100)
+    .required()
+    .pattern(/^[a-zA-Zא-ת]+\s+[a-zA-Zא-ת]+$/)
+    .messages({
+      "any.required": "אנא הזן שם מלא",
+      "string.min": "שם מלא חייב להכיל לפחות 2 תווים",
+      "string.max": "שם מלא חייב להכיל לכל היותר 100 תווים",
+      "string.pattern.base": "שם מלא חייב לכלול לפחות שני שמות מופרדים ברווח",
+    }),
   phone: Joi.string()
     .regex(new RegExp(/0[0-9]{1,2}\-?\s?[0-9]{3}\s?[0-9]{4}/))
     .required()
@@ -38,4 +44,4 @@ const registerSchema = Joi.object({
 const validateRegisterSchema = (userInput) =>
   validation(registerSchema, userInput);
 
-export default validateRegisterSchema;
+export { validateRegisterSchema, registerSchema };

@@ -1,12 +1,10 @@
 import { Route, Routes } from "react-router-dom";
 import ROUTES from "./ROUTES";
 import Homepage from "../pages/Homepage";
-import RegisterPage from "../pages/RegisterPage";
-import LoginPage from "../pages/LoginPage";
-import CarInventoryPage from "../pages/CarInventoryPage";
+import RegisterPage from "../pages/newPages/RegisterPage";
+import LoginPage from "../pages/newPages/LoginPage";
 import AboutPage from "../pages/AboutPage";
 import OurCarsPage from "../pages/OurCarsPage";
-import CheckoutPage from "../pages/CheckoutPage";
 import AdminControls from "../pages/AdminControls";
 import MyCars from "../pages/MyCars";
 import LogoutRoute from "../components/LogoutRoute";

@@ -138,7 +138,7 @@ const caravanCatalog = [
       {
         original: "/imgs/caravanPhotos/jumbo_620/Jambo04.jpg",
         thumbnail: "/imgs/caravanPhotos/jumbo_620/Jambo04mini.jpg",
-        alt: "kitcehn",
+        alt: "kitchen",
       },
     ],
     description:

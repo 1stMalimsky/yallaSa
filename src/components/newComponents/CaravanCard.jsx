@@ -7,6 +7,7 @@ import CaravanCardModal from "./caravanCard/CaravanCardModal";
 import CaravanCardGallery from "./caravanCard/CaravanCardImageGallery";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import dayjs from "dayjs";
+import { maxHeight } from "@mui/system";
 
 const CaravanCard = ({ caravanDetails, chosenDates }) => {
   const navigate = useNavigate();
@@ -18,14 +19,9 @@ const CaravanCard = ({ caravanDetails, chosenDates }) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [currentImage, setCurrentImage] = useState(0);
 
-  //console.log("unixDates", unixDates);
-
   const handleImageClick = (index) => {
-    //const imageUrl = caravanDetails.imgs[index].original;
-    //console.log("imgUrl", imageUrl);
-
-    if (index !== undefined && caravanDetails.imgs[index]) {
-      setCurrentImage(caravanDetails.imgs[index].original);
+    if (index !== undefined && caravanDetails.images[index]) {
+      setCurrentImage(caravanDetails.images[index].original);
       setModalOpen(true);
     }
   };
@@ -34,8 +30,6 @@ const CaravanCard = ({ caravanDetails, chosenDates }) => {
     setModalOpen(false);
     setCurrentImage(null);
   };
-
-  //console.log("chosenDates caravan card", chosenDates);
 
   return (
     <div style={{ display: "flex", justifyContent: "center" }}>
@@ -50,7 +44,7 @@ const CaravanCard = ({ caravanDetails, chosenDates }) => {
           sx={{ order: { xs: 2, md: 1 } }}
         >
           <CaravanCardGallery
-            caravanImgs={caravanDetails.imgs}
+            caravanImgs={caravanDetails.images}
             handleImageClick={handleImageClick}
           />
           <CaravanCardModal

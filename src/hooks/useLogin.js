@@ -14,17 +14,17 @@ const useLogin = () => {
       if (!token) {
         return;
       }
-      const payload = await jwt_decode(token);
+      const payload = jwt_decode(token);
       const userId = payload.userId;
-      const { data } = await axios.get("/user/" + userId);
-      if (!data) {
+      const foundUser = await axios.get("/users/" + userId);
+      if (!foundUser) {
         localStorage.clear();
         toast.err("Invalid token");
-        navigate("/");
+        return navigate("/");
       }
       dispatch(authActions.login(payload));
     } catch (err) {
-      console.log(err.response.data);
+      console.log("useLogin error", err.response.data);
     }
   };
 };

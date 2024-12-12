@@ -7,7 +7,6 @@ const getUserLocation = async () => {
     const position = await new Promise((resolve, reject) =>
       navigator.geolocation.getCurrentPosition(resolve, reject)
     );
-
     const { latitude, longitude } = position.coords;
     //console.log("User's Location:", latitude, longitude);
     return { latitude, longitude };

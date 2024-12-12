@@ -59,11 +59,7 @@ const CaravanCardGallery = ({ caravanImgs, handleImageClick }) => {
       onSlide={(index) => setCurrentIndex(index)} // Track the current index
       onClick={() => handleImageClick(currentIndex)} // Pass the current index when clicked
       renderItem={(item) => (
-        <div
-          className="image-gallery-custo
-        
-        m-image-wrapper"
-        >
+        <div className="image-gallery-custom-image-wrapper">
           <img
             src={item.thumbnail}
             alt={item.description}

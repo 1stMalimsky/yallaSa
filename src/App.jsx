@@ -12,6 +12,7 @@ import FooterComponent from "./components/FooterComponent";
 import { Box } from "@mui/system";
 import { toastOptions } from "./utils/helpers/toastSettings";
 import { light, dark } from "./utils/helpers/colorTheme";
+import AccessibilityWidget from "./components/newComponents/AccessibilityComponent";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -50,4 +51,7 @@ function App() {
   );
 }
 
+{
+  /* <AccessibilityWidget /> */
+}
 export default App;
