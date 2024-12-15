@@ -77,15 +77,6 @@ const MuiNavbar = () => {
                 className="navLink"
               />
             ))}
-            {user.isLoggedIn ? (
-              <NavLinkComponent
-                key={loggedInPages[0].url}
-                {...loggedInPages[0]}
-                className="navLink"
-              />
-            ) : (
-              ""
-            )}
             {user.payload && user.payload.isAdmin ? (
               <NavLinkComponent
                 key={adminPages.url}

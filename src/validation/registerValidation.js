@@ -24,8 +24,9 @@ const registerSchema = Joi.object({
     .email({ tlds: { allow: false } })
     .required()
     .messages({
-      "string.email": "אנא הזן כתובת מייל תקינה",
-      "any.required": "אנא הזן כתובת מייל",
+      "string.email": "אנא הכנס כתובת מייל תקינה",
+      "string.empty": "אנא הכנס כתובת מייל",
+      "any.required": "אנא הכנס כתובת מייל",
     }),
   password: Joi.string()
     .pattern(

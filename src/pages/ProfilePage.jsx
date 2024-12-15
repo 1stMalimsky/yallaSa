@@ -1,14 +1,13 @@
 import { useState, useEffect } from "react";
 import {
   Avatar,
-  Button,
   Grid,
   Box,
   Container,
   Typography,
   TextField,
 } from "@mui/material";
-import EditIcon from "@mui/icons-material/Edit";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import ROUTES from "../routes/ROUTES";
@@ -32,7 +31,6 @@ const EditProfilePage = () => {
         let newInputState = {
           ...data,
         };
-        delete newInputState._id;
         delete newInputState.createdAt;
         delete newInputState.__v;
         delete newInputState.password;
@@ -67,7 +65,7 @@ const EditProfilePage = () => {
         }}
       >
         <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-          <EditIcon />
+          <AccountCircleIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
           הפרופיל שלי

@@ -6,7 +6,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import useLogin from "../../hooks/useLogin";
 import { loginSchema } from "../../validation/loginValidation";
-import validateInputs from "../../utils/helpers/validateInputs";
+import { validateInputs } from "../../validation/validation";
 
 const LoginCardComponent = () => {
   /* STATES */
@@ -20,7 +20,7 @@ const LoginCardComponent = () => {
 
   const handleLoginClick = async () => {
     try {
-      if (validateInputs(loginSchema, inputState)) {
+      if (!validateInputs(loginSchema, inputState)) {
         const serverResponse = await axios.post("/users/login", inputState);
         //console.log("server response", serverResponse.data);
         localStorage.setItem("token", serverResponse.data.token);

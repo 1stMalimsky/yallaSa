@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   Grid,
   Typography,
@@ -7,13 +7,12 @@ import {
   Checkbox,
   FormControlLabel,
   TextField,
-  Alert,
 } from "@mui/material/";
 import axios from "axios";
 import { registerSchema } from "../../validation/registerValidation";
 import { toast } from "react-toastify";
 import ROUTES from "../../routes/ROUTES";
-import validateInputs from "../../utils/helpers/validateInputs";
+import { validateInputs } from "../../validation/validation";
 
 const RegisterCardComponent = ({ handleBtnClick }) => {
   /* STATES */
@@ -53,17 +52,19 @@ const RegisterCardComponent = ({ handleBtnClick }) => {
 
   /* REGISTER VALIDATION AND COMPLETION */
   const handleRegisterClick = async () => {
+    const joiResponse = validateInputs(registerSchema, inputState);
+    console.log("joiresponse", joiResponse);
+    if (joiResponse) {
+      toast.error(joiResponse);
+      return;
+    }
     try {
-      if (validateInputs(registerSchema, inputState)) {
-        await axios.post("/users/register", inputState);
-        toast.success("נרשמת בהצלחה");
-        navigate(ROUTES.LOGIN);
-      } else {
-        console.log("registration error");
-      }
+      await axios.post("/users/register", inputState);
+      toast.success("נרשמת בהצלחה");
+      navigate(ROUTES.LOGIN);
     } catch (err) {
-      console.log("error from axios", err.response.data);
-      toast.error("Registrationg error occured. Please try again");
+      console.log("error from axios", err);
+      toast.error(err.response.data.message || err);
     }
   };
 
@@ -137,6 +138,7 @@ const RegisterCardComponent = ({ handleBtnClick }) => {
               label={"סיסמא"}
               value={inputState.password}
               onChange={handleInputChange}
+              sx={{ input: { direction: "ltr" } }}
             />
           </Grid>
         </Grid>

@@ -29,10 +29,6 @@ const notAuthPages = [
 //logged in users
 const loggedInPages = [
   {
-    label: "הקרוואנים שלי",
-    url: ROUTES.MYCARS,
-  },
-  {
     label: "התנתקות",
     url: ROUTES.LOGOUT,
   },

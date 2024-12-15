@@ -19,6 +19,7 @@ const CaravanSearchResults = () => {
   const params = useParams();
   const navigate = useNavigate();
   const [searchResults, setSearchResults] = useState([]);
+  const [queryData, setQueryData] = useState(null);
   const [sortState, setSortState] = useState("None");
   const [userLocation, setUserLocation] = useState(null);
   const [chosenDates, setChosenDates] = useState({
@@ -29,9 +30,29 @@ const CaravanSearchResults = () => {
     updateEnd: dayjs.unix(params.end),
   });
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(10);
-
+  const [limit, setLimit] = useState(1);
   const currentDate = dayjs();
+
+  const fetchData = async () => {
+    try {
+      const searchResult = await availableCaravanSearch(
+        params.start,
+        params.end,
+        page,
+        limit
+      );
+      if (!searchResult) {
+        toast.error("אין קרוואנים זמינים בתאריכים אלו");
+        setTimeout(() => {
+          //return navigate("/");
+        }, 5000);
+      }
+      setQueryData(searchResult.data.caravans);
+      setSearchResults(searchResult.data.caravans.caravans);
+    } catch (err) {
+      console.log("fetchData error", err);
+    }
+  };
 
   const handleDateChange = (date, field) => {
     setChosenDates((prevDates) => ({
@@ -46,7 +67,7 @@ const CaravanSearchResults = () => {
     setUserLocation(location);
   };
 
-  const handlePageChange = (event, value) => {
+  const handlePageChange = (ev, value) => {
     console.log("Page changed to:", value);
     setPage(value);
   };
@@ -56,27 +77,10 @@ const CaravanSearchResults = () => {
   }, []);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const searchResult = await availableCaravanSearch(
-          params.start,
-          params.end
-        );
-        if (!searchResult) {
-          toast.error("אין קרוואנים זמינים בתאריכים אלו");
-          setTimeout(() => {
-            //return navigate("/");
-          }, 5000);
-        }
-        setSearchResults(searchResult.data.caravans.caravans);
-      } catch (err) {
-        console.log("fetchData error", err);
-      }
-    };
     fetchData();
-  }, []);
+  }, [page, limit]);
 
-  console.log("searchResults", searchResults);
+  console.log("queryData", queryData);
 
   const onSortPick = (value) => {
     setSortState(value);
@@ -108,15 +112,9 @@ const CaravanSearchResults = () => {
       chosenDates.updateStart,
       chosenDates.updateEnd
     );
-
     const newUrl = `/car-inv/${unixDates.start}/${unixDates.end}/${numOfDays}`;
-    /* navigate(
-      `/car-inv/${unixDates.start}/${unixDates.end}/${numOfDays}`
-    ); */
-
     window.location.href = newUrl;
   };
-
   if (!searchResults || !searchResults.length) {
     return <CircularProgress />;
   }
@@ -185,14 +183,31 @@ const CaravanSearchResults = () => {
               justifyContent: "center",
             }}
           >
-            {searchResults.map((card) => (
-              <Grid key={card.model} item xs={12} sx={{ marginBottom: "1em" }}>
-                <CaravanCard caravanDetails={card} chosenDates={chosenDates} />
+            {searchResults.map((caravan) => (
+              <Grid
+                key={caravan.model}
+                item
+                xs={12}
+                sx={{ marginBottom: "1em" }}
+              >
+                <CaravanCard
+                  caravanDetails={caravan}
+                  chosenDates={chosenDates}
+                />
               </Grid>
             ))}
-          </Grid>
-          <Grid item xs={12} sx={{ display: "flex", justifyContent: "center" }}>
-            <Pagination count={10} page={page} onChange={handlePageChange} />
+            <Grid
+              item
+              xs={12}
+              sx={{ display: "flex", justifyContent: "center" }}
+            >
+              <Pagination
+                count={queryData.totalPages}
+                page={page}
+                onChange={handlePageChange}
+                sx={{ mt: "1em" }}
+              />
+            </Grid>
           </Grid>
         </Card>
       </div>

@@ -15,18 +15,16 @@ import AddNewCarPage from "../pages/AddNewCarPage";
 import LikedCarsPage from "../pages/LikedCarsPage";
 import FinalizePage from "../pages/FinalizePage";
 import ProtectedRoute from "../components/ProtectedRoute";
-/* test components */
 import NewCheckoutPage from "../pages/newPages/NewCheckoutPage";
-import CaravanCard from "../components/newComponents/CaravanCard";
 import CheckoutUserDetailsComponent from "../components/newComponents/CheckoutUserDetailsComponent";
-/* test component */
 import CaravanSearchResults from "../pages/newPages/CaravanSearchResult";
+import Test from "../pages/newPages/Test";
 
 const Router = () => {
   return (
     <Routes>
       {/*   TEST */}
-      <Route path="/test" element={<CheckoutUserDetailsComponent />} />
+      <Route path="/test" element={<Test />} />
       <Route path="/test2" element={<NewCheckoutPage />} />
 
       {/*   TEST */}

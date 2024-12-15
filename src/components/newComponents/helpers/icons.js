@@ -7,6 +7,7 @@ import DriveEtaIcon from "@mui/icons-material/DriveEta";
 import AcUnitIcon from "@mui/icons-material/AcUnit";
 import TvIcon from "@mui/icons-material/Tv";
 import OutletIcon from "@mui/icons-material/Outlet";
+import ScaleIcon from "@mui/icons-material/Scale";
 
 const icons = {
   TvIcon,
@@ -18,6 +19,7 @@ const icons = {
   StraightenIcon,
   DriveEtaIcon,
   OutletIcon,
+  ScaleIcon,
 };
 
 export default icons;

@@ -2,8 +2,6 @@ import axios from "axios";
 
 const availableCaravanSearch = async (startDate, endDate, page, limit) => {
   try {
-    console.log("startDate", startDate);
-    console.log("endDate", endDate);
     const availableCaravanList = await axios.get(
       `/caravans/searchbydate/${startDate}/${endDate}`,
       {

@@ -13,6 +13,7 @@ const RatingThing = ({ readOnly }) => {
   };
 
   const onClick = (event, newRating) => {
+    if (readOnly) return;
     handlePopClick(event);
     setRating(newRating);
   };
@@ -35,7 +36,7 @@ const RatingThing = ({ readOnly }) => {
     <div style={{ display: "flex" }}>
       <div onClick={onClick}>
         <Rating
-          readOnly
+          readOnly={readOnly}
           initialRating={rating}
           emptySymbol={
             <i

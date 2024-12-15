@@ -64,7 +64,7 @@ const CaravanCard = ({ caravanDetails, chosenDates }) => {
           sx={{ order: { xs: 1, md: 2 }, padding: 2 }}
         >
           <Typography variant="h3" className="caravanCardTitle">
-            {caravanDetails.title}
+            {caravanDetails.model}
           </Typography>
           <Box
             sx={{
@@ -76,33 +76,38 @@ const CaravanCard = ({ caravanDetails, chosenDates }) => {
             }}
           >
             <Typography variant="h6" className="CaravanFacilities">
-              {caravanDetails.beds}
+              {caravanDetails.numOfBeds}
               <icons.HotelIcon className="CaravanFacilitiesIcons" />
             </Typography>
             <Divider className="CaravanDivider" orientation="vertical" />
             <Typography variant="h6" className="CaravanFacilities">
-              {caravanDetails.seats}
+              {caravanDetails.numOfSeats}
               <icons.EventSeatIcon className="CaravanFacilitiesIcons" />
             </Typography>
-            {caravanDetails.baths ? (
-              <Fragment>
-                <Divider className="CaravanDivider" orientation="vertical" />
-                <Typography variant="h6" className="CaravanFacilities">
-                  <icons.BathtubIcon className="CaravanFacilitiesIcons" />
-                </Typography>
-              </Fragment>
-            ) : (
-              ""
-            )}
+            <Fragment>
+              <Divider className="CaravanDivider" orientation="vertical" />
+              <Typography variant="h6" className="CaravanFacilities">
+                <icons.BathtubIcon className="CaravanFacilitiesIcons" />
+              </Typography>
+            </Fragment>
             <Divider className="CaravanDivider" orientation="vertical" />
             <Typography variant="h6" className="CaravanFacilities">
-              {caravanDetails.kitchen}
-              <icons.KitchenIcon className="CaravanFacilitiesIcons" />
+              {caravanDetails.features.kitchen ? (
+                <icons.KitchenIcon className="CaravanFacilitiesIcons" />
+              ) : (
+                ""
+              )}
             </Typography>
             <Divider className="CaravanDivider" orientation="vertical" />
             <Typography variant="h6" className="CaravanFacilities">
-              {caravanDetails.measurements}
+              {caravanDetails.measurements.length}x
+              {caravanDetails.measurements.width}
               <icons.StraightenIcon className="CaravanFacilitiesIcons" />
+            </Typography>
+            <Divider className="CaravanDivider" orientation="vertical" />
+            <Typography variant="h6" className="CaravanFacilities">
+              {caravanDetails.measurements.weight}
+              <icons.ScaleIcon className="CaravanFacilitiesIcons" />
             </Typography>
             <Divider className="CaravanDivider" orientation="vertical" />
             <Typography variant="h6" className="CaravanFacilities">
@@ -110,16 +115,21 @@ const CaravanCard = ({ caravanDetails, chosenDates }) => {
               <icons.DriveEtaIcon className="CaravanFacilitiesIcons" />
             </Typography>
           </Box>
-          <Typography variant="subtitle1" className="caravanCardReviews">
-            חוות דעת
-          </Typography>
+
           <Typography variant="h6" className="caravanCardLocation">
             מיקום
           </Typography>
           <Typography variant="subtitle1" className="caravanCardIncluded">
             כלול בקרוואן
           </Typography>
-          <Typography variant="subtitle1">קרוואן כשר</Typography>
+          {caravanDetails.features.kosherCaravan ? (
+            <Typography variant="subtitle1">קרוואן כשר</Typography>
+          ) : (
+            ""
+          )}
+          <Typography variant="subtitle1" className="caravanCardReviews">
+            חוות דעת
+          </Typography>
           <div>
             <RatingThing readOnly={true} />
           </div>
