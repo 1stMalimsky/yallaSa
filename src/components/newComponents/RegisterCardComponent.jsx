@@ -21,6 +21,7 @@ const RegisterCardComponent = ({ handleBtnClick }) => {
     phone: "",
     email: "",
     password: "",
+    license: "",
   });
   const [acceptRulesIsChecked, setAcceptRulesIsChecked] = useState(false);
   const [disableButtonState, setDisableButtonState] = useState(true);
@@ -28,9 +29,16 @@ const RegisterCardComponent = ({ handleBtnClick }) => {
 
   /* CHECK FEILDS ARE NOT EMPTY */
   const areFieldsValid = () => {
-    const allFieldsFilled = Object.values(inputState).every(
+    const fieldsToCheck = {
+      fullName: inputState.fullName,
+      phone: inputState.phone,
+      email: inputState.email,
+      password: inputState.password,
+    };
+    const allFieldsFilled = Object.values(fieldsToCheck).every(
       (value) => value.trim() !== ""
     );
+
     return acceptRulesIsChecked && allFieldsFilled;
   };
   useEffect(() => {

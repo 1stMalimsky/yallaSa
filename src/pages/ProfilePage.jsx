@@ -1,83 +1,118 @@
 import { useState, useEffect } from "react";
-import {
-  Avatar,
-  Grid,
-  Box,
-  Container,
-  Typography,
-  TextField,
-} from "@mui/material";
+import ProfileAcc1 from "../components/newComponents/profile/ProfileAcc1";
+import ProfileAcc2 from "../components/newComponents/profile/ProfileAcc2";
+import { Avatar, Box, Container, Typography, Button } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import ROUTES from "../routes/ROUTES";
-import validateProfileSchema from "../validation/profileValidation";
-import { CircularProgress } from "@mui/material";
-import { toast } from "react-toastify";
-import { useSelector } from "react-redux";
-import normalizeUser from "../utils/normalizeUser";
-import ProfileUpdateCard from "../components/newComponents/profile/ProfileUpdateCard";
+import { CircularProgress, Grid } from "@mui/material";
+import getToken from "../utils/helpers/getToken";
+import getUserDetails from "../utils/helpers/getUserDetails";
 
 const EditProfilePage = () => {
-  const [inputState, setInputState] = useState("");
-  const [inputsErrorsState, setInputsErrorsState] = useState("");
-  const navigate = useNavigate();
-  const payload = useSelector((storePie) => storePie.authSlice.payload);
+  const [inputState, setInputState] = useState(null);
+  const tokenPayload = getToken();
+  if (!tokenPayload) {
+    window.location.href = "/login";
+  }
+  console.log("inputState", inputState);
 
   useEffect(() => {
     (async () => {
       try {
-        const { data } = await axios.get("/users/" + payload.userId);
-        let newInputState = {
-          ...data,
+        const foundUser = await getUserDetails(tokenPayload.userId);
+        const dataToUpdate = {
+          _id: foundUser._id,
+          fullName: foundUser.fullName,
+          email: foundUser.email,
+          phone: foundUser.phone,
+          license: foundUser.license,
+          isOwner: foundUser.isOwner,
         };
-        delete newInputState.createdAt;
-        delete newInputState.__v;
-        delete newInputState.password;
-        delete newInputState.isAdmin;
-        delete newInputState.isOwner;
-        delete newInputState.userReservations;
-        delete newInputState.ownerReservations;
-        delete newInputState.date;
-        delete newInputState.caravanIds;
-        delete newInputState.updatedAt;
-        //console.log("newInputState", newInputState);
-
-        setInputState(newInputState);
+        setInputState(dataToUpdate);
       } catch (err) {
         console.log(err);
       }
     })();
-  }, [payload.userId]);
+  }, []);
 
   if (!inputState) {
     return <CircularProgress />;
   }
 
   return (
-    <Container component="main" maxWidth="md">
+    <Container>
       <Box
         sx={{
           marginTop: 8,
           display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
         }}
       >
-        <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-          <AccountCircleIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          הפרופיל שלי
-        </Typography>
+        <Grid container>
+          <Grid
+            item
+            xs={12}
+            sm={3}
+            md={4}
+            sx={{ border: 1, display: "flex", justifyContent: "center" }}
+          ></Grid>
+          <Grid
+            item
+            xs={12}
+            sm={5}
+            md={4}
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              border: 1,
+              flexDirection: "column",
+            }}
+          >
+            <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+              <AccountCircleIcon />
+            </Avatar>
 
-        <Box component="div" sx={{ mt: 3 }}>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <ProfileUpdateCard userDetails={inputState} />
-            </Grid>
+            <Typography
+              variant="h5"
+              sx={{ display: "flex", justifyContent: "center" }}
+            >
+              הפרופיל שלי
+            </Typography>
           </Grid>
-        </Box>
+          <Grid
+            item
+            xs={12}
+            sm={3}
+            md={4}
+            sx={{ border: 1, display: "flex", justifyContent: "center" }}
+          >
+            {inputState && inputState.isOwner && (
+              <Button
+                variant="contained"
+                color="primary"
+                href="/preaddcaravan"
+                sx={{
+                  marginTop: 2,
+                  marginBottom: 2,
+                  marginLeft: 2,
+                  marginRight: 2,
+                }}
+              >
+                הוספת קרוואן
+              </Button>
+            )}
+          </Grid>
+        </Grid>
+      </Box>
+      <Box sx={{ mt: 3 }}>
+        <Typography variant="h5" gutterBottom>
+          פרטי משתמש
+        </Typography>
+        <ProfileAcc1 userDetails={inputState} />
+        <Typography variant="h5" gutterBottom>
+          רשיון נהיגה
+        </Typography>
+        <ProfileAcc2 userDetails={inputState} />
       </Box>
     </Container>
   );

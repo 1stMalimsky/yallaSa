@@ -7,15 +7,16 @@ import { authActions } from "../store/auth";
 const LogoutRoute = ({ element }) => {
   const dispatch = useDispatch();
   const isLoggedIn = useSelector((storePie) => storePie.authSlice.isLoggedIn);
+  console.log("isLoggedIn", isLoggedIn);
+
   useEffect(() => {
     if (isLoggedIn) {
       dispatch(authActions.logout());
     }
   }, [dispatch, isLoggedIn]);
   if (!isLoggedIn) {
-    return element;
-  } else {
     return <Navigate to={ROUTES.HOME} />;
   }
+  return element;
 };
 export default LogoutRoute;

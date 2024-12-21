@@ -18,18 +18,15 @@ import Panel8 from "./checkoutAccordion/Panel8";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { calculateTotalPrice } from "./checkoutAccordion/helpers/priceCalculator";
 import CircularProgress from "@mui/material/CircularProgress";
+import { PanToolRounded } from "@mui/icons-material";
 
-const CheckoutUserDetailsComponent = ({ sendDataUp, rentalDates }) => {
-  const [isExpanded, setIsExpanded] = useState("panel8");
-  const [panelData, setPanelData] = useState([
-    rentalDates, // Initial data for panel 0
-    [null], // Panel 1
-    [null], // Panel 2
-    [null], // Panel 3
-    [null], // Panel 4
-    [], // Panel 5
-    [null], // Panel 6
-  ]);
+const CheckoutUserDetailsComponent = ({
+  sendDataUp,
+  parnetData,
+  caravanDetails,
+}) => {
+  const [isExpanded, setIsExpanded] = useState("panel1");
+  const [panelData, setPanelData] = useState(parnetData);
   const [totalPrice, setTotalPrice] = useState(null);
 
   useEffect(() => {
@@ -49,18 +46,24 @@ const CheckoutUserDetailsComponent = ({ sendDataUp, rentalDates }) => {
     setIsExpanded("panel" + (panelToChange - 1));
   };
 
+  const getTotalPrice = async () => {
+    try {
+      const rentalPrice = await calculateTotalPrice(panelData, caravanDetails);
+      setTotalPrice(rentalPrice);
+    } catch (err) {
+      console.log("useEffect err", err);
+    }
+  };
+
   useEffect(() => {
-    const getTotalPrice = async () => {
-      try {
-        const rentalPrice = await calculateTotalPrice(panelData);
-        setTotalPrice(rentalPrice);
-      } catch (err) {
-        console.log("useEffect err", err);
-      }
-    };
-    getTotalPrice();
+    if (!panelData) return console.log("useEffect no panelData");
+    if (panelData) {
+      console.log("in the IF panelData", panelData);
+      getTotalPrice();
+    }
   }, [panelData]);
-  //console.log("userDetails panel data", panelData);
+
+  console.log("totalPrice", totalPrice);
 
   if (!totalPrice) {
     return <CircularProgress />;

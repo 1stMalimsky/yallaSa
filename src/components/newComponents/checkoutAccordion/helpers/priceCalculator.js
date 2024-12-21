@@ -1,4 +1,5 @@
-import caravanCatalog from "../../helpers/caravanCatalog.js";
+import axios from "axios";
+import getCarvanData from "../../../../utils/helpers/getCaravanData";
 
 const calculateExtrasTotal = (inputState) => {
   const extrasArray = Object.values(inputState[5]);
@@ -10,16 +11,15 @@ const calculateExtrasTotal = (inputState) => {
   return grandTotal;
 };
 
-const calculateTotalPrice = async (panelData) => {
+const calculateTotalPrice = async (panelData, caravanDetails) => {
+  console.log("panelData", panelData);
   const initData = panelData[0];
   const numOfDays = panelData[0].numOfDays;
   const insurnance = panelData[4];
   const cancelPolicy = panelData[6];
   //console.log("initData", initData);
   try {
-    const currnetCaravan = caravanCatalog.find(
-      (item) => item._id === +initData.id
-    );
+    const currnetCaravan = caravanDetails;
     //console.log("currentCaravan", currnetCaravan);
 
     if (!currnetCaravan) {

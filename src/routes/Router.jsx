@@ -19,13 +19,14 @@ import NewCheckoutPage from "../pages/newPages/NewCheckoutPage";
 import CheckoutUserDetailsComponent from "../components/newComponents/CheckoutUserDetailsComponent";
 import CaravanSearchResults from "../pages/newPages/CaravanSearchResult";
 import Test from "../pages/newPages/Test";
+import BecomeOwnerRedirect from "../pages/newPages/BecomeRedirect";
 
 const Router = () => {
   return (
     <Routes>
       {/*   TEST */}
       <Route path="/test" element={<Test />} />
-      <Route path="/test2" element={<NewCheckoutPage />} />
+      <Route path="/PREADDCARAVAN" element={<BecomeOwnerRedirect />} />
 
       {/*   TEST */}
 

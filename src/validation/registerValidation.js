@@ -40,6 +40,7 @@ const registerSchema = Joi.object({
         "הסיסמא חייבת להכיל לפחות 8 תווים, ספרה אחת, אות גדולה אחת וסימן מיוחד אחד",
       "any.required": "אנא בחר סיסמא",
     }),
+  license: Joi.string().allow("").optional().label("license"),
 });
 
 const validateRegisterSchema = (userInput) =>

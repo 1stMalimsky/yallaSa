@@ -22,8 +22,8 @@ const CheckoutSummaryComponent = ({
 }) => {
   const [extrasDetails, setExtrasDetails] = useState([]);
 
-  //console.log("dateData", dateData);
-  //console.log("checkoutdata", checkoutCompData);
+  console.log("total Price", totalPrice);
+  console.log("caravanDetails", caravanDetails);
 
   useEffect(() => {
     if (checkoutCompData && checkoutCompData[5] === undefined) return;
@@ -44,16 +44,13 @@ const CheckoutSummaryComponent = ({
           <Grid item xs={12} md={6}>
             <img
               className="checkoutComponentImg"
-              src={caravanDetails.imgs[0].thumbnail}
+              src={caravanDetails.images[0].thumbnail}
               alt="checkout"
             />
           </Grid>
           {/* CARAVAN DETAILS */}
           <Grid item xs={12} md={6} sx={{ pr: 1 }}>
-            <Typography variant="h6">
-              שם: {caravanDetails.ownerDetails.name}
-            </Typography>
-            <Typography variant="h6">דגם: {caravanDetails.title}</Typography>
+            <Typography variant="h6">שם: {caravanDetails.model}</Typography>
             <Typography variant="h6">חוות דעת</Typography>
           </Grid>
           {/* PICKED DATES */}

@@ -29,7 +29,7 @@ const profileSchema = Joi.object({
       "string.empty": "אנא הכנס כתובת מייל",
       "any.required": "אנא הכנס כתובת מייל",
     }),
-  license: Joi.string().min(2).max(100).allow(""),
+  license: Joi.object().min(2).max(100).allow(""),
 });
 
 const profileSchemaValidation = (userInput) => {
