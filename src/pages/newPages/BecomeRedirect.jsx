@@ -14,6 +14,7 @@ import {
 } from "@mui/material";
 import RedirectNumbers from "../../components/newComponents/RedirectNumbers";
 import RedierctReasons from "../../components/newComponents/RedirectReasons";
+import { logDOM } from "@testing-library/react";
 
 const BecomeOwnerRedirect = () => {
   /*  console.log("iconNumbers", iconNumbers); */
@@ -43,6 +44,12 @@ const BecomeOwnerRedirect = () => {
       top: 0, // Scroll to the top of the page
       behavior: "smooth", // Smooth scrolling
     });
+  };
+
+  const onAddCaravanClick = (location, vehicleType) => {
+    console.log("location+vetype", location, vehicleType);
+
+    navigate(`/addcaravan/${location}/${vehicleType}`);
   };
 
   return (
@@ -101,7 +108,14 @@ const BecomeOwnerRedirect = () => {
           <Typography variant="h6" gutterBottom>
             הוסיפו את הקרוואן שלכם והרוויחו אלפי שקלים כל חודש!
           </Typography>
-          <Button variant="contained" color="primary" disabled={startBtn}>
+          <Button
+            variant="contained"
+            color="primary"
+            disabled={startBtn}
+            onClick={() =>
+              onAddCaravanClick(inputState.location, inputState.vehicleType)
+            }
+          >
             בואו נתחיל
           </Button>
         </Card>

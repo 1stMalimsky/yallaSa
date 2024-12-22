@@ -1,0 +1,30 @@
+/* ACC1 */
+
+.addAcc1Img {
+  padding: 1em;
+  max-width: 12em;
+}
+
+.raiseEffect {
+  border: 0.07em solid;
+  border-radius: 0.3em;
+
+  &:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
+  }
+}
+
+/* ACC2 */
+
+.Acc2Box {
+  display: flex;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
+
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5em 0.8em 0.5em 0.8em;
+  //border: 1px solid var(--text-primary);
+  border-radius: 0.5em;
+  padding: 2;
+}

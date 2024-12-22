@@ -20,15 +20,16 @@ import CheckoutUserDetailsComponent from "../components/newComponents/CheckoutUs
 import CaravanSearchResults from "../pages/newPages/CaravanSearchResult";
 import Test from "../pages/newPages/Test";
 import BecomeOwnerRedirect from "../pages/newPages/BecomeRedirect";
+import AddCaravan from "../pages/newPages/AddCaravan";
 
 const Router = () => {
   return (
     <Routes>
-      {/*   TEST */}
-      <Route path="/test" element={<Test />} />
-      <Route path="/PREADDCARAVAN" element={<BecomeOwnerRedirect />} />
-
-      {/*   TEST */}
+      <Route
+        path="/addcaravan/:location/:vehicleType"
+        element={<AddCaravan />}
+      />
+      <Route path="/preaddcaravan" element={<BecomeOwnerRedirect />} />
 
       <Route path={ROUTES.HOME} element={<Homepage />} />
       <Route path={ROUTES.REGISTER} element={<RegisterPage />} />

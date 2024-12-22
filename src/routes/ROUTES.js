@@ -6,7 +6,6 @@ const ROUTES = {
   PROFILE: "/profile",
   INVENTORY: "car-inv",
   PREADDCAR: "/preaddcaravan",
-  ADDCARAVAN: "/addcaravan",
   ABOUT: "/about",
   LIKEDCARS: "/likedCars",
   MYCARS: "/mycars",
