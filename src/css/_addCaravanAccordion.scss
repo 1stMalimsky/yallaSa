@@ -1,3 +1,25 @@
+.spaceBetween {
+  width: 100% !important;
+  display: flex !important;
+  justify-content: space-between !important;
+}
+.spaceAround {
+  display: flex;
+  justify-content: space-around;
+}
+
+.addCarTextFiled {
+  //width: 70%;
+  .MuiInputLabel-root {
+    left: unset;
+    right: 0;
+    margin-right: 2em;
+  }
+  .MuiInputLabel-shrink {
+    margin-right: 0.8em;
+  }
+}
+
 /* ACC1 */
 
 .addAcc1Img {

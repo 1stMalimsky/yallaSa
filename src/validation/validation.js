@@ -2,10 +2,8 @@ import Joi from "joi";
 import { toast } from "react-toastify";
 
 const validation = (schema, userInput) => {
-  console.log("in validation function");
-
   if (!userInput || !schema) {
-    return console.log("userInput or schema missing");
+    return false;
   }
   const { error } = schema.validate(userInput, { abortEarly: false });
   if (!error) {
@@ -23,6 +21,10 @@ const validation = (schema, userInput) => {
 };
 
 const validateInputs = (schema, input) => {
+  if (!input || !schema) {
+    toast.error("חסרים נתונים להמשך");
+    return true;
+  }
   const validationResponse = validation(schema, input);
   if (validationResponse) {
     const firstKey = Object.keys(validationResponse)[0];

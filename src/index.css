@@ -1072,6 +1072,26 @@
     font-size: 18px;
   }
 }
+.spaceBetween {
+  width: 100% !important;
+  display: flex !important;
+  justify-content: space-between !important;
+}
+
+.spaceAround {
+  display: flex;
+  justify-content: space-around;
+}
+
+.addCarTextFiled .MuiInputLabel-root {
+  left: unset;
+  right: 0;
+  margin-right: 2em;
+}
+.addCarTextFiled .MuiInputLabel-shrink {
+  margin-right: 0.8em;
+}
+
 /* ACC1 */
 .addAcc1Img {
   padding: 1em;

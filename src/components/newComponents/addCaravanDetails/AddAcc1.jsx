@@ -1,12 +1,8 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import {
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
   Box,
   Typography,
-  Grid,
   FormControl,
   FormControlLabel,
   RadioGroup,
@@ -51,6 +47,10 @@ const AddAcc1 = ({ nextBtn }) => {
       default:
         vehicleType = radioOption;
     }
+    sessionStorage.setItem(
+      "acc1Data",
+      JSON.stringify({ location, vehicleType })
+    );
     nextBtn(
       {
         location: locationName,
@@ -82,103 +82,102 @@ const AddAcc1 = ({ nextBtn }) => {
 
   //console.log("radio option", radioOption);
   return (
-    <Accordion>
-      <AccordionSummary>
-        <Typography variant="h5">סוג הקרוואן</Typography>
-      </AccordionSummary>
-      <AccordionDetails>
-        <Box>
-          <FormControl component="fieldset">
-            <FormLabel component="legend" sx={{ marginBottom: 2 }}>
-              בחר סוג רכב
-            </FormLabel>
-            <RadioGroup
-              row
-              aria-label="vehicle-type"
-              name="vehicle-type"
-              value={radioOption}
-              onChange={handleChange}
-            >
-              <FormControlLabel
-                value={10}
-                control={<Radio />}
-                label={
-                  <Box
-                    className="raiseEffect"
-                    sx={{
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                      borderColor: (theme) =>
-                        alpha(theme.palette.text.primary, 0.12),
-                    }}
-                  >
-                    <Typography variant="h6">קרוואן נגרר</Typography>
-                    <img
-                      src={`${process.env.PUBLIC_URL}/imgs/caravanPhotos/caravanIcons/towCarIcon.png`}
-                      alt="towCaravan"
-                      className="addAcc1Img"
-                    />
-                  </Box>
-                }
-              />
-              <FormControlLabel
-                value={20}
-                control={<Radio />}
-                label={
-                  <Box
-                    className="raiseEffect"
-                    sx={{
-                      className: "raiseEffect",
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                      borderColor: (theme) =>
-                        alpha(theme.palette.text.primary, 0.12),
-                    }}
-                  >
-                    <Typography variant="h6">קרוואן נוסע</Typography>
-                    <img
-                      src={`${process.env.PUBLIC_URL}/imgs/caravanPhotos/caravanIcons/drivingCamperIcon.png`}
-                      alt="towCaravan"
-                      className="addAcc1Img"
-                    />
-                  </Box>
-                }
-              />
-              <FormControlLabel
-                value={30}
-                control={<Radio />}
-                label={
-                  <Box
-                    className="raiseEffect"
-                    sx={{
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                      borderColor: (theme) =>
-                        alpha(theme.palette.text.primary, 0.12),
-                    }}
-                  >
-                    <Typography variant="h6">קרוואן מוסב</Typography>
-                    <img
-                      src={`${process.env.PUBLIC_URL}/imgs/caravanPhotos/caravanIcons/transitIcon.png`}
-                      alt="towCaravan"
-                      className="addAcc1Img"
-                    />
-                  </Box>
-                }
-              />
-            </RadioGroup>
-          </FormControl>
-        </Box>
-        <Box sx={{ display: "flex", justifyContent: "center", marginTop: 2 }}>
-          <Button variant="contained" onClick={handleNextBtnClick}>
-            הבא
-          </Button>
-        </Box>
-      </AccordionDetails>
-    </Accordion>
+    <Box>
+      <Box>
+        <FormControl component="fieldset">
+          <FormLabel component="legend" sx={{ marginBottom: 2 }}>
+            בחר סוג רכב
+          </FormLabel>
+          <RadioGroup
+            row
+            aria-label="vehicle-type"
+            name="vehicle-type"
+            value={radioOption}
+            onChange={handleChange}
+          >
+            <FormControlLabel
+              value={10}
+              control={<Radio />}
+              label={
+                <Box
+                  className="raiseEffect"
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    borderColor: (theme) =>
+                      alpha(theme.palette.text.primary, 0.12),
+                  }}
+                >
+                  <Typography variant="h6">קרוואן נגרר</Typography>
+                  <img
+                    src={`${process.env.PUBLIC_URL}/imgs/caravanPhotos/caravanIcons/towCarIcon.png`}
+                    alt="towCaravan"
+                    className="addAcc1Img"
+                  />
+                </Box>
+              }
+            />
+            <FormControlLabel
+              value={20}
+              control={<Radio />}
+              label={
+                <Box
+                  className="raiseEffect"
+                  sx={{
+                    className: "raiseEffect",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    borderColor: (theme) =>
+                      alpha(theme.palette.text.primary, 0.12),
+                  }}
+                >
+                  <Typography variant="h6">קרוואן נוסע</Typography>
+                  <img
+                    src={`${process.env.PUBLIC_URL}/imgs/caravanPhotos/caravanIcons/drivingCamperIcon.png`}
+                    alt="towCaravan"
+                    className="addAcc1Img"
+                  />
+                </Box>
+              }
+            />
+            <FormControlLabel
+              value={30}
+              control={<Radio />}
+              label={
+                <Box
+                  className="raiseEffect"
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    borderColor: (theme) =>
+                      alpha(theme.palette.text.primary, 0.12),
+                  }}
+                >
+                  <Typography variant="h6">קרוואן מוסב</Typography>
+                  <img
+                    src={`${process.env.PUBLIC_URL}/imgs/caravanPhotos/caravanIcons/transitIcon.png`}
+                    alt="towCaravan"
+                    className="addAcc1Img"
+                  />
+                </Box>
+              }
+            />
+          </RadioGroup>
+        </FormControl>
+      </Box>
+      <Box sx={{ display: "flex", justifyContent: "center", marginTop: 2 }}>
+        <Button
+          variant="contained"
+          disabled={radioOption ? false : true}
+          onClick={handleNextBtnClick}
+        >
+          הבא
+        </Button>
+      </Box>
+    </Box>
   );
 };
 
