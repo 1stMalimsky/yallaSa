@@ -8,8 +8,14 @@
   justify-content: space-around;
 }
 
+.centerElements {
+  display: flex;
+  justify-content: center;
+}
+
 .addCarTextFiled {
   //width: 70%;
+
   .MuiInputLabel-root {
     left: unset;
     right: 0;
@@ -49,4 +55,17 @@
   //border: 1px solid var(--text-primary);
   border-radius: 0.5em;
   padding: 2;
+}
+
+/* AAC6 */
+
+.acc6FormGroup {
+  display: flex !important;
+  flex-direction: row !important;
+}
+
+.groupGrid {
+  margin-bottom: 1em !important;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
+  padding-bottom: 1em;
 }

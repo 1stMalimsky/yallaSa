@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { IconButton, Typography, Popover, Box } from "@mui/material";
 import InfoIcon from "@mui/icons-material/Info";
-import CloseIcon from "@mui/icons-material/Close";
 
 const SimplePopover = ({ title, description }) => {
   //const [open, setOpen] = useState(true);

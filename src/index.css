@@ -1083,6 +1083,11 @@
   justify-content: space-around;
 }
 
+.centerElements {
+  display: flex;
+  justify-content: center;
+}
+
 .addCarTextFiled .MuiInputLabel-root {
   left: unset;
   right: 0;
@@ -1118,6 +1123,18 @@
   padding: 2;
 }
 
+/* AAC6 */
+.acc6FormGroup {
+  display: flex !important;
+  flex-direction: row !important;
+}
+
+.groupGrid {
+  margin-bottom: 1em !important;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
+  padding-bottom: 1em;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -1128,6 +1145,39 @@
 .centerContent {
   display: flex;
   justify-content: center;
+}
+
+.inputFixShort .MuiInputLabel-root {
+  left: unset;
+  right: 0;
+  margin-right: 1.7em;
+}
+.inputFixShort .MuiInputLabel-root.MuiInputLabel-shrink {
+  left: unset;
+  right: 0;
+  margin-right: 1.4em;
+}
+
+.inputFixLong .MuiInputLabel-root {
+  left: unset;
+  right: 0;
+  margin-right: 1.7em;
+}
+.inputFixLong .MuiInputLabel-root.MuiInputLabel-shrink {
+  left: unset;
+  right: 0;
+  margin-right: 0.8em;
+}
+
+.inputFixExtraLong .MuiInputLabel-root {
+  left: unset;
+  right: 0;
+  margin-right: 1.7em;
+}
+.inputFixExtraLong .MuiInputLabel-root.MuiInputLabel-shrink {
+  left: unset;
+  right: 0;
+  margin-right: 0.01em;
 }
 
 .inputRTL .MuiInputLabel-root {

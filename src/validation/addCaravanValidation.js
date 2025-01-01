@@ -65,15 +65,6 @@ const companySchema = Joi.object({
       "string.max": "שם העיר יכול להכיל עד 100 תווים",
       "any.required": "שם העיר הינו שדה חובה",
     }),
-  companyMaps: Joi.string()
-    .uri()
-    .max(255)
-    .allow("")
-    .label("מיקום במפות")
-    .messages({
-      "string.uri": "הכתובת חייבת להיות URL תקני",
-      "string.max": "הכתובת יכולה להכיל עד 255 תווים",
-    }),
 });
 
 const paymentDetailsSchema = Joi.object({
@@ -131,9 +122,72 @@ const baseCaravanDetailsSchema = Joi.object({
     }),
 });
 
+const acc7ValidationSchema = Joi.object({
+  city: Joi.string().min(2).max(100).required().messages({
+    "string.base": `"עיר" חייבת להיות מחרוזת`,
+    "string.empty": `"עיר" לא יכולה להיות ריקה`,
+    "string.min": `"עיר" צריכה להיות לפחות 2 תווים`,
+    "string.max": `"עיר" יכולה להיות עד 100 תווים`,
+    "any.required": `"עיר" היא שדה חובה`,
+  }),
+  street: Joi.string().min(2).max(100).required().messages({
+    "string.base": `"רחוב" חייב להיות מחרוזת`,
+    "string.empty": `"רחוב" לא יכול להיות ריק`,
+    "string.min": `"רחוב" צריך להיות לפחות 2 תווים`,
+    "string.max": `"רחוב" יכול להיות עד 100 תווים`,
+    "any.required": `"רחוב" הוא שדה חובה`,
+  }),
+  houseNumber: Joi.string()
+    .pattern(/^\d+[a-zA-Z]*$/)
+    .required()
+    .messages({
+      "string.pattern.base": `"מספר בית" צריך להיות מורכב ממספרים ויכול לכלול אותיות לאחר המספרים`,
+      "any.required": `"מספר בית" הינו שדה חובה`,
+      "string.empty": `"מספר בית" לא יכול להיות ריק`,
+    }),
+  mapsLocation: Joi.string().uri().allow("").messages({
+    "string.uri": `"מיקום במפות" צריך להיות URI חוקי`,
+  }),
+  pickupFrom: Joi.string()
+    .pattern(new RegExp("^([01]?[0-9]|2[0-3]):[0-5][0-9]$"))
+    .required()
+    .messages({
+      "string.empty": `"שעת איסוף" לא יכול להיות ריק`,
+      "string.pattern.base": `"שעת איסוף" צריכה להיות בפורמט שעה HH:MM`,
+      "any.required": `"שעת איסוף" היא שדה חובה`,
+    }),
+  dropoffUntil: Joi.string()
+    .pattern(new RegExp("^([01]?[0-9]|2[0-3]):[0-5][0-9]$"))
+    .required()
+    .messages({
+      "string.empty": `"שעת החזרה" לא יכול להיות ריק`,
+      "string.pattern.base": `"שעת החזרה" צריכה להיות בפורמט שעה HH:MM`,
+      "any.required": `"שעת החזרה" היא שדה חובה`,
+    }),
+});
+
+const acc8ValidationSchema = Joi.object({
+  listingName: Joi.string().min(2).max(20).required().messages({
+    "string.base": `"שם הקרוואן" חייב להיות מורכב מאותיות`,
+    "string.empty": `"שם הקרוואן" לא יכול להיות ריק`,
+    "string.min": `"שם הקרוואן" צריך להיות לפחות 2 תווים`,
+    "string.max": `"שם הקרוואן" יכול להיות עד 20 תווים`,
+    "any.required": `"שם הקרוואן" היא שדה חובה`,
+  }),
+  description: Joi.string().min(2).max(200).required().messages({
+    "string.base": `"תיאור הקרוואן" חייב להיות מורכב מאותיות`,
+    "string.empty": `"תיאור הקרוואן" לא יכול להיות ריק`,
+    "string.min": `"תיאור הקרוואן" צריך להיות לפחות 2 תווים`,
+    "string.max": `"תיאור הקרוואן" יכול להיות עד 200 תווים`,
+    "any.required": `"תיאור הקרוואן" היא שדה חובה`,
+  }),
+});
+
 export {
   companySchema,
   paymentDetailsSchema,
   baseCaravanDetailsSchema,
   phoneNumberSchema,
+  acc7ValidationSchema,
+  acc8ValidationSchema,
 };

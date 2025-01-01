@@ -1,20 +1,17 @@
-import { useEffect, useState } from "react";
-import { toast } from "react-toastify";
+import { useState } from "react";
 import {
   Box,
-  TextField,
   FormControl,
   FormControlLabel,
   RadioGroup,
   FormLabel,
   Radio,
-  Typography,
   Button,
 } from "@mui/material";
-import PrivateUserType from "./acc4Comps/PrivateUserType.jsx";
-import CompanyUserType from "./acc4Comps/CompanyUserType.jsx";
+import PrivateUserType from "./helpers/PrivateUserType.jsx";
+import CompanyUserType from "./helpers/CompanyUserType.jsx";
 import getToken from "../../../utils/helpers/getToken.js";
-import acc4Validation from "./acc4Comps/acc4Validation.js";
+import acc4Validation from "./helpers/acc4Validation.js";
 
 const AddAcc4 = ({ nextBtn }) => {
   const [privateUser, setPrivateUser] = useState(null);
@@ -68,12 +65,6 @@ const AddAcc4 = ({ nextBtn }) => {
   const handlePaymentDetailsChange = (paymentDetails) => {
     setPaymentDetails(paymentDetails);
   };
-
-  //console.log("Acc4 state", userDetails);
-  //console.log("privateUser", privateUser);
-  //console.log("paymentType", paymentType);
-  //console.log("paymentDetails", paymentDetails);
-
   return (
     <Box>
       {/* RADIO */}

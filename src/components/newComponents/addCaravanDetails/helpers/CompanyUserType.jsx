@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Box, TextField, Typography } from "@mui/material";
 import CompensationDetails from "./CompensationDetails";
 
@@ -8,8 +8,6 @@ const CompanyUserType = ({
   handlePaymentTypeChange,
 }) => {
   const [userDetails, setUserDetails] = useState(null);
-  const [paymentType, setPaymentType] = useState(null);
-  const [paymentDetails, setPaymentDetails] = useState(null);
 
   const handleUserDetailsChange = (e) => {
     const updatedDetails = {
@@ -56,12 +54,12 @@ const CompanyUserType = ({
           label="עיר"
           onChange={handleUserDetailsChange}
         />
-        <TextField
+        {/*    <TextField
           className="addCarTextFiled"
           id="companyMaps"
           label="מיקום בגוגל"
           onChange={handleUserDetailsChange}
-        />
+        /> */}
       </Box>
       <Box>
         <CompensationDetails

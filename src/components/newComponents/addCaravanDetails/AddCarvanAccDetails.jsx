@@ -11,9 +11,14 @@ import AddAcc2 from "./AddAcc2";
 import AddAcc3 from "./AddAcc3";
 import AddAcc4 from "./AddAcc4";
 import AddAcc5 from "./AddAcc5";
+import AddAcc6 from "./AddAcc6";
+import AddAcc7 from "./AddAcc7";
+import AddAcc8 from "./AddAcc8";
+import AddAcc9 from "./AddAcc9";
+
 const AddCaravanAcc = () => {
   const [accDetails, setAccDetails] = useState([]);
-  const [openState, setOpenState] = useState(4);
+  const [openState, setOpenState] = useState(8);
   //console.log("openState", openState);
 
   const handleNextBtn = (data, numberOfEntry) => {
@@ -127,6 +132,66 @@ const AddCaravanAcc = () => {
         </AccordionSummary>
         <AccordionDetails>
           <AddAcc5 nextBtn={handleNextBtn} />
+        </AccordionDetails>
+      </Accordion>
+      {/* ACC6 */}
+      <Accordion expanded={openState === 5 ? true : false}>
+        <AccordionSummary
+          expandIcon={
+            openState === 6 ? <Typography variant="h5">שינוי</Typography> : null
+          }
+          id="acc6"
+          onClick={handleBackBtn}
+        >
+          <Typography variant="h5">מתקנים וציוד</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <AddAcc6 nextBtn={handleNextBtn} />
+        </AccordionDetails>
+      </Accordion>
+      {/* ACC7 */}
+      <Accordion expanded={openState === 6 ? true : false}>
+        <AccordionSummary
+          expandIcon={
+            openState === 7 ? <Typography variant="h5">שינוי</Typography> : null
+          }
+          id="acc7"
+          onClick={handleBackBtn}
+        >
+          <Typography variant="h5">מיקום ושעות</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <AddAcc7 nextBtn={handleNextBtn} />
+        </AccordionDetails>
+      </Accordion>
+      {/* ACC8 */}
+      <Accordion expanded={openState === 7 ? true : false}>
+        <AccordionSummary
+          expandIcon={
+            openState === 8 ? <Typography variant="h5">שינוי</Typography> : null
+          }
+          id="acc8"
+          onClick={handleBackBtn}
+        >
+          <Typography variant="h5">תיאור וחוקים</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <AddAcc8 nextBtn={handleNextBtn} />
+        </AccordionDetails>
+      </Accordion>
+      {/* ACC9 */}
+      <Accordion expanded={openState === 8 ? true : false}>
+        <AccordionSummary
+          expandIcon={
+            openState === 9 ? <Typography variant="h5">שינוי</Typography> : null
+          }
+          id="acc9"
+          onClick={handleBackBtn}
+        >
+          <Typography variant="h5">הגדרות מחיר</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <AddAcc9 nextBtn={handleNextBtn} />
         </AccordionDetails>
       </Accordion>
     </Box>
