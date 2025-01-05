@@ -6,12 +6,12 @@ import { toast } from "react-toastify";
 const AddAcc5 = ({ nextBtn }) => {
   const [imageData, setImageData] = useState([
     {
-      fileName: "photo01",
+      fileName: "תמונה01",
       base64Data: "",
     },
-    { fileName: "photo02", base64Data: "" },
-    { fileName: "photo03", base64Data: "" },
-    { fileName: "photo04", base64Data: "" },
+    { fileName: "תמונה02", base64Data: "" },
+    { fileName: "תמונה03", base64Data: "" },
+    { fileName: "תמונה04", base64Data: "" },
   ]);
 
   const sendUpData = (data, numberOfEntry) => {
@@ -42,7 +42,7 @@ const AddAcc5 = ({ nextBtn }) => {
     } else return toast.error("יש להעלות לפחות תמונה אחת");
   };
 
-  console.log("imageData", imageData);
+  //console.log("imageData", imageData);
   return (
     <Box>
       <Typography variant="h6">יש להעלות עד 4 תמונות</Typography>

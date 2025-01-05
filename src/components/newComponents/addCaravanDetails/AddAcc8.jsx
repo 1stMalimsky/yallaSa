@@ -24,7 +24,7 @@ const AddAcc8 = ({ nextBtn }) => {
     }
     nextBtn(acc8Data, 7);
   };
-  console.log("accdata", acc8Data);
+  //console.log("accdata", acc8Data);
 
   return (
     <Box>

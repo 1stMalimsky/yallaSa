@@ -1,4 +1,4 @@
-import Joi from "joi";
+import Joi, { number } from "joi";
 
 const phoneNumberSchema = Joi.string()
   .min(4)
@@ -183,6 +183,53 @@ const acc8ValidationSchema = Joi.object({
   }),
 });
 
+const acc9ValidationSchema = Joi.object({
+  pricePerNight: Joi.number().min(5).max(10000).required().messages({
+    "number.base": `"מחיר ללילה" צריך להיות מספר`,
+    "number.min": `"מחיר ללילה" צריך להיות לפחות 5`,
+    "number.max": `"מחיר ללילה" צריך להיות לכל היותר 10000`,
+    "any.required": `"מחיר ללילה" הינו שדה חובה`,
+    "string.empty": `"מחיר ללילה" לא יכול להיות ריק`,
+  }),
+  minimumNights: Joi.number().min(1).max(10).required().messages({
+    "number.base": `"מינימום לילות" צריך להיות מספר`,
+    "number.min": `"מינימום לילות" צריך להיות לפחות 1`,
+    "number.max": `"מינימום לילות" צריך להיות לכל היותר 10`,
+    "any.required": `"מינימום לילות" הינו שדה חובה`,
+    "string.empty": `"מינימום לילות" לא יכול להיות ריק`,
+  }),
+  freeCancelationDays: Joi.number().min(0).max(100).allow("").messages({
+    "number.base": `"ימים לביטול חינם" צריך להיות מספר`,
+    "number.min": `"ימים לביטול חינם" צריך להיות לפחות 0`,
+    "number.max": `"ימים לביטול חינם" צריך להיות לכל היותר 100`,
+    "any.required": `"ימים לביטול חינם" הינו שדה חובה`,
+    "string.empty": `"ימים לביטול חינם" לא יכול להיות ריק`,
+  }),
+  cancelationPrice: Joi.number().min(0).max(100).allow("").messages({
+    "number.base": `"דמי ביטול" צריך להיות מספר`,
+    "number.min": `"דמי ביטול" צריך להיות לפחות 0`,
+    "number.max": `"דמי ביטול" צריך להיות לכל היותר 100`,
+    "any.required": `"דמי ביטול" הינו שדה חובה`,
+    "string.empty": `"דמי ביטול" לא יכול להיות ריק`,
+  }),
+  insuranceIncluded: Joi.boolean().required().messages({
+    "boolean.base": `"ביטוח כלול" צריך להיות כן או לא`,
+    "any.required": `"ביטוח כלול" הינו שדה חובה`,
+    "string.empty": `"ביטוח כלול" לא יכול להיות ריק`,
+  }),
+  basicInsurance: Joi.number().min(0).max(1000).allow("").messages({
+    "number.base": `"ביטוח בסיסי" צריך להיות מספר`,
+    "number.min": `"ביטוח בסיסי" צריך להיות לפחות 0 ש"ח`,
+    "number.max": `"ביטוח בסיסי" צריך להיות לכל היותר 1000 ש"ח`,
+  }),
+
+  premiumInsurance: Joi.number().min(0).max(10000).allow("").messages({
+    "number.base": `"ביטוח פרימיום" צריך להיות מספר`,
+    "number.min": `"ביטוח פרימיום" צריך להיות לפחות 0 ש"ח`,
+    "number.max": `"ביטוח פרימיום" צריך להיות לכל היותר 10000 ש"ח`,
+  }),
+});
+
 export {
   companySchema,
   paymentDetailsSchema,
@@ -190,4 +237,5 @@ export {
   phoneNumberSchema,
   acc7ValidationSchema,
   acc8ValidationSchema,
+  acc9ValidationSchema,
 };

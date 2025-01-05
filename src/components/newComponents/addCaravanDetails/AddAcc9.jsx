@@ -1,45 +1,81 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Box,
   Typography,
   TextField,
   Grid,
-  Checkbox,
+  Button,
   FormControlLabel,
-  FormGroup,
   FormControl,
   RadioGroup,
   FormLabel,
   Radio,
 } from "@mui/material";
 
+import acc9Validation from "./helpers/acc9Validation";
+
 const AddAcc9 = ({ nextBtn }) => {
-  const [acc9Data, setAcc9Data] = useState({
+  const [priceDetails, setPriceDetails] = useState({
     pricePerNight: "",
     minimumNights: "",
-    cancellationPolicy: [],
-    insuranceIncluded: "",
-    extraInsurance: "",
   });
+  const [cancelationPolicy, setCancelationPolicy] = useState({
+    freeCancelationDays: "",
+    cancelationPrice: "",
+  });
+  const [insuranceDetails, setInsuranceDetails] = useState({
+    insuranceIncluded: "",
+    basicInsurance: "",
+    premiumInsurance: "",
+  });
+  const [isCancelationPolicy, setIsCancelationPolicy] = useState("");
   const [extraInsuranceAvailable, setExtraInsuranceAvailable] = useState("");
 
+  useEffect(() => {
+    if (insuranceDetails.insuranceIncluded === "true") {
+      setInsuranceDetails((prevData) => {
+        return { ...prevData, basicInsurance: "" };
+      });
+    }
+    if (insuranceDetails.insuranceIncluded === "false")
+      setExtraInsuranceAvailable(false);
+  }, [insuranceDetails.insuranceIncluded]);
+
+  useEffect(() => {
+    if (!extraInsuranceAvailable) {
+      setInsuranceDetails((prevData) => {
+        return { ...prevData, premiumInsurance: "" };
+      });
+    }
+  }, [extraInsuranceAvailable]);
+
   const handleNextBtn = () => {
-    nextBtn(acc9Data, 9);
+    const validateResponse = acc9Validation({
+      ...priceDetails,
+      ...cancelationPolicy,
+      ...insuranceDetails,
+      isCancelationPolicy,
+      extraInsuranceAvailable,
+    });
+    console.log("validation response", validateResponse);
+
+    nextBtn({ ...priceDetails, ...cancelationPolicy, ...insuranceDetails }, 9);
   };
 
-  const handleTick = (e) => {
-    setAcc9Data((prevData) => {
+  const handleChange = (e, setState) => {
+    setState((prevData) => {
       const newData = { ...prevData };
       newData[e.target.name] = e.target.value;
       return newData;
     });
   };
 
-  console.log("insurance", acc9Data.extraInsurance);
-
   return (
     <Box>
       <Grid container spacing={1}>
+        <Grid item xs={12}>
+          <Typography variant="h6">מחיר:</Typography>
+        </Grid>
         <Grid
           item
           xs={12}
@@ -48,7 +84,9 @@ const AddAcc9 = ({ nextBtn }) => {
           sx={{ display: "flex", alignItems: "center" }}
         >
           <TextField
-            value={acc9Data.pricePerNight}
+            name="pricePerNight"
+            onChange={(e) => handleChange(e, setPriceDetails)}
+            value={priceDetails.pricePerNight}
             className="inputFixLong"
             label="מחיר ללילה"
             sx={{ marginLeft: 1 }}
@@ -62,12 +100,17 @@ const AddAcc9 = ({ nextBtn }) => {
           sx={{ display: "flex", alignItems: "center" }}
         >
           <TextField
-            value={acc9Data.minimumNights}
+            name="minimumNights"
+            onChange={(e) => handleChange(e, setPriceDetails)}
+            value={priceDetails.minimumNights}
             className="inputFixExtraLong"
             label="מינימום לילות"
             sx={{ marginLeft: 1 }}
           />
           <Typography variant="subtitle1">לילות</Typography>
+        </Grid>
+        <Grid item xs={12}>
+          <Typography variant="h6">ביטוח:</Typography>
         </Grid>
         <Grid item xs={12}>
           <Typography variant="subtitle1">ביטוח כלול במחיר?</Typography>
@@ -76,14 +119,14 @@ const AddAcc9 = ({ nextBtn }) => {
             <RadioGroup
               row
               name="insuranceIncluded"
-              value={acc9Data.insuranceIncluded}
-              onChange={handleTick}
+              value={insuranceDetails.insuranceIncluded}
+              onChange={(e) => handleChange(e, setInsuranceDetails)}
             >
-              <FormControlLabel value={true} control={<Radio />} label="כן" />
-              <FormControlLabel value={false} control={<Radio />} label="לא" />
+              <FormControlLabel value="true" control={<Radio />} label="כן" />
+              <FormControlLabel value="false" control={<Radio />} label="לא" />
             </RadioGroup>
           </FormControl>
-          {acc9Data.insuranceIncluded === "true" && (
+          {insuranceDetails.insuranceIncluded === "true" && (
             <Box>
               <Typography variant="subtitle1">
                 האם יש אפשרות לרכוש ביטוח פרמיום?
@@ -94,7 +137,6 @@ const AddAcc9 = ({ nextBtn }) => {
                   row
                   name="extraInsuranceAvailable"
                   value={extraInsuranceAvailable}
-                  onChange={handleTick}
                 >
                   <FormControlLabel
                     value={true}
@@ -112,35 +154,130 @@ const AddAcc9 = ({ nextBtn }) => {
               </FormControl>
             </Box>
           )}
-          {acc9Data.insuranceIncluded === "true" && extraInsuranceAvailable && (
-            <Box sx={{ display: "flex", alignItems: "center" }}>
-              <TextField
-                className="inputFixExtraLong"
-                label="מחיר ביטוח פרמיום"
-                name="extraInsurance"
-                value={acc9Data.extraInsurance}
-                sx={{ marginLeft: 1 }}
-                onChange={handleTick}
-              />
-              <Typography variant="subtitle1">ש"ח</Typography>
-            </Box>
-          )}
-          {acc9Data.insuranceIncluded === "false" && (
-            <Box>
-              <TextField
-                className="inputFixLong"
-                label="עלות ביטוח בסיסי"
-                sx={{ marginRight: 1, marginTop: 1 }}
-              />
-              <TextField
-                className="inputFixLong"
-                label="עלות ביטוח פרמיום"
-                sx={{ marginRight: 1, marginTop: 1 }}
-              />
-            </Box>
+          {insuranceDetails.insuranceIncluded === "true" &&
+            extraInsuranceAvailable && (
+              <Box sx={{ display: "flex", alignItems: "center" }}>
+                <TextField
+                  className="inputFixExtraLong"
+                  label="מחיר ביטוח פרמיום"
+                  name="premiumInsurance"
+                  value={insuranceDetails.premiumInsurance}
+                  sx={{ marginLeft: 1 }}
+                  onChange={(e) => handleChange(e, setInsuranceDetails)}
+                />
+                <Typography variant="subtitle1">ש"ח\לילה</Typography>
+              </Box>
+            )}
+          {insuranceDetails.insuranceIncluded === "false" && (
+            <Grid container>
+              <Grid
+                item
+                xs={12}
+                md={6}
+                lg={3}
+                sx={{ display: "flex", alignItems: "center" }}
+              >
+                <TextField
+                  className="inputFixExtraLong"
+                  name="basicInsurance"
+                  value={insuranceDetails.basicInsurance}
+                  onChange={(e) => handleChange(e, setInsuranceDetails)}
+                  label="עלות ביטוח בסיסי"
+                  sx={{ marginTop: 1, marginLeft: 1 }}
+                />
+                <Typography variant="subtitle1">ש"ח\לילה</Typography>
+              </Grid>
+              <Grid
+                item
+                xs={12}
+                md={6}
+                lg={3}
+                sx={{ display: "flex", alignItems: "center" }}
+              >
+                <TextField
+                  className="inputFixExtraLong"
+                  name="premiumInsurance"
+                  value={insuranceDetails.premiumInsurance}
+                  onChange={(e) => handleChange(e, setInsuranceDetails)}
+                  label="עלות ביטוח פרמיום"
+                  sx={{ marginTop: 1, marginLeft: 1 }}
+                />
+                <Typography variant="subtitle1">ש"ח\לילה</Typography>
+              </Grid>
+            </Grid>
           )}
         </Grid>
+        <Grid item xs={12}>
+          <Typography variant="h6">מדיניות ביטולים:</Typography>
+        </Grid>
+        <Grid item xs={12}>
+          <FormControl component="fieldset">
+            <FormLabel
+              component="legend"
+              sx={{ color: (theme) => theme.palette.text.primary }}
+            >
+              האם ניתן לבטל בחינם לפני תאריך ההזמנה?
+            </FormLabel>
+            <RadioGroup
+              row
+              name="iscancelationPolicy"
+              value={isCancelationPolicy}
+            >
+              <FormControlLabel
+                value={true}
+                control={<Radio />}
+                label="כן"
+                onClick={() => setIsCancelationPolicy(true)}
+              />
+              <FormControlLabel
+                value={false}
+                control={<Radio />}
+                label="לא"
+                onClick={() => setIsCancelationPolicy(false)}
+              />
+            </RadioGroup>
+          </FormControl>
+        </Grid>
+        {isCancelationPolicy === true && (
+          <Box>
+            <Grid item xs={12}>
+              <Typography variant="subtitle1">
+                כמה ימים לפני תאריך ההזמנה ניתן לבטל בחינם?
+              </Typography>
+              <TextField
+                value={cancelationPolicy.freeCancelationDays}
+                name="freeCancelationDays"
+                className="inputFixLong"
+                label="מספר ימים"
+                sx={{ marginLeft: 1 }}
+                onChange={(e) => handleChange(e, setCancelationPolicy)}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Typography variant="subtitle1">
+                מה עלות ביטול הזמנה לאחר מכן?
+              </Typography>
+              <Box sx={{ display: "flex", alignItems: "center" }}>
+                <TextField
+                  value={cancelationPolicy.cancelationPrice}
+                  name="cancelationPrice"
+                  className="inputFixLong"
+                  label="עלות ביטול"
+                  sx={{ marginLeft: 1 }}
+                  onChange={(e) => handleChange(e, setCancelationPolicy)}
+                />
+                <Typography variant="subtitle1">% (אחוז מסך ההזמנה)</Typography>
+              </Box>
+            </Grid>
+          </Box>
+        )}
       </Grid>
+      <Box
+        onClick={handleNextBtn}
+        sx={{ display: "flex", justifyContent: "center" }}
+      >
+        <Button variant="contained">הבא</Button>
+      </Box>
     </Box>
   );
 };
