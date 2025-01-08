@@ -131,9 +131,9 @@ const AddCaravanSummary = ({ setupDetails }) => {
                 <Typography variant="subtitle2">
                   רחוב: {accDetails[6].street} {accDetails[6].houseNumber}
                 </Typography>
-                {accDetails && accDetails[6].mapsLocation && (
+                {/* {accDetails && accDetails[6].mapsLocation && (
                   <GoogleMapsComp coords={accDetails[6].mapsLocation} />
-                )}
+                )} */}
               </Grid>
             )}
           </Grid>
