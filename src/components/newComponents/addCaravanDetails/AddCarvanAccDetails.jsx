@@ -20,7 +20,7 @@ import AddCaravanSummary from "../addCaravanSummary";
 
 const AddCaravanAcc = () => {
   const [accDetails, setAccDetails] = useState([]);
-  const [openState, setOpenState] = useState(4);
+  const [openState, setOpenState] = useState(0);
   //console.log("openState", openState);
 
   const handleNextBtn = (data, numberOfEntry) => {
@@ -30,7 +30,7 @@ const AddCaravanAcc = () => {
       return newData;
     });
     /* STOPPER */
-    if (numberOfEntry === 4) return;
+    if (numberOfEntry === 9) return;
     /* STOPPER */
     setOpenState(numberOfEntry + 1);
   };
@@ -73,7 +73,7 @@ const AddCaravanAcc = () => {
             }
             onClick={handleBackBtn}
           >
-            <Typography variant="h5">סוג הקרוואן</Typography>
+            <Typography variant="h5">1. סוג הקרוואן</Typography>
           </AccordionSummary>
           <AccordionDetails>
             <AddAcc1 nextBtn={handleNextBtn} />
@@ -90,7 +90,7 @@ const AddCaravanAcc = () => {
             }
             onClick={handleBackBtn}
           >
-            <Typography variant="h5">פרטי הלנה</Typography>
+            <Typography variant="h5">2. פרטי הלנה</Typography>
           </AccordionSummary>
           <AccordionDetails>
             <AddAcc2 nextBtn={handleNextBtn} />
@@ -107,7 +107,7 @@ const AddCaravanAcc = () => {
             }
             onClick={handleBackBtn}
           >
-            <Typography variant="h5">ביטוח ורישיון רכב</Typography>
+            <Typography variant="h5">3. ביטוח ורישיון רכב</Typography>
           </AccordionSummary>
           <AccordionDetails>
             <AddAcc3
@@ -127,7 +127,7 @@ const AddCaravanAcc = () => {
               ) : null
             }
           >
-            <Typography variant="h5">פרטים אישיים</Typography>
+            <Typography variant="h5">4. פרטים אישיים</Typography>
           </AccordionSummary>
           <AccordionDetails>
             <AddAcc4 nextBtn={handleNextBtn} />
@@ -144,7 +144,7 @@ const AddCaravanAcc = () => {
             id="acc5"
             onClick={handleBackBtn}
           >
-            <Typography variant="h5">תמונות הקרוואן</Typography>
+            <Typography variant="h5">5. תמונות הקרוואן</Typography>
           </AccordionSummary>
           <AccordionDetails>
             <AddAcc5 nextBtn={handleNextBtn} />
@@ -161,7 +161,7 @@ const AddCaravanAcc = () => {
             id="acc6"
             onClick={handleBackBtn}
           >
-            <Typography variant="h5">מתקנים וציוד</Typography>
+            <Typography variant="h5">6. מתקנים וציוד</Typography>
           </AccordionSummary>
           <AccordionDetails>
             <AddAcc6 nextBtn={handleNextBtn} />
@@ -178,7 +178,7 @@ const AddCaravanAcc = () => {
             id="acc7"
             onClick={handleBackBtn}
           >
-            <Typography variant="h5">מיקום ושעות</Typography>
+            <Typography variant="h5">7. מיקום ושעות</Typography>
           </AccordionSummary>
           <AccordionDetails>
             <AddAcc7 nextBtn={handleNextBtn} />
@@ -195,7 +195,7 @@ const AddCaravanAcc = () => {
             id="acc8"
             onClick={handleBackBtn}
           >
-            <Typography variant="h5">תיאור וחוקים</Typography>
+            <Typography variant="h5">8. תיאור וחוקים</Typography>
           </AccordionSummary>
           <AccordionDetails>
             <AddAcc8 nextBtn={handleNextBtn} />
@@ -212,7 +212,7 @@ const AddCaravanAcc = () => {
             id="acc9"
             onClick={handleBackBtn}
           >
-            <Typography variant="h5">הגדרות מחיר</Typography>
+            <Typography variant="h5">9. הגדרות מחיר</Typography>
           </AccordionSummary>
           <AccordionDetails>
             <AddAcc9 nextBtn={handleNextBtn} />
@@ -226,7 +226,7 @@ const AddCaravanAcc = () => {
             top: 0,
           }}
         >
-          <AddCaravanSummary setupDetails={accDetails} />
+          {<AddCaravanSummary setupDetails={accDetails} />}
         </div>
         <Grid />
       </Grid>

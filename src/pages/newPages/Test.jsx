@@ -1,9 +1,9 @@
-import FilePondHelper from "../../utils/helpers/FilePondHelper";
+import GoogleMapsComp from "../../components/newComponents/addCaravanDetails/helpers/GoogleMapsComp";
 
 const Test = () => {
   return (
     <div>
-      <FilePondHelper />
+      <GoogleMapsComp coords="32.0744, 34.7759" />
     </div>
   );
 };

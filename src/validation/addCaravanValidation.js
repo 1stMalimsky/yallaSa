@@ -1,4 +1,4 @@
-import Joi, { number } from "joi";
+import Joi from "joi";
 
 const phoneNumberSchema = Joi.string()
   .min(4)
@@ -145,9 +145,12 @@ const acc7ValidationSchema = Joi.object({
       "any.required": `"מספר בית" הינו שדה חובה`,
       "string.empty": `"מספר בית" לא יכול להיות ריק`,
     }),
-  mapsLocation: Joi.string().uri().allow("").messages({
-    "string.uri": `"מיקום במפות" צריך להיות URI חוקי`,
-  }),
+  mapsLocation: Joi.string()
+    .pattern(/^([-+]?\d{1,3}\.\d+),\s*([-+]?\d{1,3}\.\d+)$/)
+    .allow("")
+    .messages({
+      "string.pattern.base": `"מיקום במפות" צריך להיות בפורמט של קואורדינטות GPS ("lat,lng") ולהכיל מספרים עשרוניים`,
+    }),
   pickupFrom: Joi.string()
     .pattern(new RegExp("^([01]?[0-9]|2[0-3]):[0-5][0-9]$"))
     .required()

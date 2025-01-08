@@ -59,7 +59,7 @@ const AddAcc9 = ({ nextBtn }) => {
     });
     console.log("validation response", validateResponse);
 
-    nextBtn({ ...priceDetails, ...cancelationPolicy, ...insuranceDetails }, 9);
+    nextBtn({ ...priceDetails, ...cancelationPolicy, ...insuranceDetails }, 8);
   };
 
   const handleChange = (e, setState) => {

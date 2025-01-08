@@ -29,9 +29,11 @@ const acc4Validation = (
     }
   }
   if (privateUser === "true" && paymentType === "2") {
+    console.log("paymentdetails", paymentDetails.phoneNumber);
+
     const phoneValidationResponse = validateInputs(
       phoneNumberSchema,
-      paymentDetails
+      paymentDetails.phoneNumber
     );
     if (phoneValidationResponse) {
       return true;
@@ -58,7 +60,7 @@ const acc4Validation = (
     if (paymentType === "2") {
       const phoneValidationResponse = validateInputs(
         phoneNumberSchema,
-        paymentDetails
+        paymentDetails.phoneNumber
       );
       if (phoneValidationResponse) {
         return true;

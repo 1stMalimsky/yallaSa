@@ -27,6 +27,7 @@ const PrivateUserType = ({ handlePtype, handlePdetails }) => {
         ...prevState,
         [e.target.id]: e.target.value,
       }));
+
       handlePdetails({ ...prevState, [e.target.id]: e.target.value });
     }
     if (paymentType === 2) {

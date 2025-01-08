@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { TextField, Box, Button, Typography, Grid } from "@mui/material";
 import ImageUploadComponent from "../../../utils/helpers/FilePondHelper2";
 import { baseCaravanDetailsSchema } from "../../../validation/addCaravanValidation";
-import { validation } from "../../../validation/validation";
+import { validateInputs } from "../../../validation/validation";
 import { toast } from "react-toastify";
 
 const AddAcc3 = ({ nextBtn, photoRemoved }) => {
@@ -19,7 +19,6 @@ const AddAcc3 = ({ nextBtn, photoRemoved }) => {
     { fileName: "mandInsure", base64Data: null },
     { fileName: "3rdPartyInsure", base64Data: null },
   ]);
-  const [disabledButton, setDisabledButton] = useState(true);
 
   const checkForPhotos = (data) => {
     for (let item of data) {
@@ -29,35 +28,23 @@ const AddAcc3 = ({ nextBtn, photoRemoved }) => {
       } else return true;
     }
   };
-  useEffect(() => {
-    const validateInputs = validation(baseCaravanDetailsSchema, caravanDetails);
-    if (validateInputs) {
-      setDisabledButton(true);
-      return;
-    }
-    if (checkForPhotos(base64Data)) {
-      setDisabledButton(false);
-    } else {
-      setDisabledButton(true);
-      return;
-    }
-  }, [base64Data, caravanDetails]);
 
   const handleNextBtn = () => {
-    const validateInputs = validation(baseCaravanDetailsSchema, caravanDetails);
-    if (validateInputs) {
-      console.log("validationResponse", validateInputs);
-      const firstKey = Object.keys(validateInputs)[0];
-      const firstMessage = validateInputs[firstKey][0];
-      toast.error(firstMessage);
+    const joiResponse = validateInputs(
+      baseCaravanDetailsSchema,
+      caravanDetails
+    );
+    if (joiResponse) {
       return;
-    } else {
-      const caravanData = {
-        caravanDetails,
-        base64Data,
-      };
-      nextBtn(caravanData, 2);
     }
+    if (!checkForPhotos(base64Data)) {
+      return toast.error("אנא העלו את המסמכים הנדרשים");
+    }
+    const caravanData = {
+      caravanDetails,
+      base64Data,
+    };
+    nextBtn(caravanData, 2);
   };
 
   const sendUpData = (data, numberOfEntry) => {
@@ -153,7 +140,6 @@ const AddAcc3 = ({ nextBtn, photoRemoved }) => {
           variant="contained"
           sx={{ marginTop: 2 }}
           onClick={handleNextBtn}
-          disabled={disabledButton}
         >
           הבא
         </Button>

@@ -13,7 +13,7 @@ import {
   kitchenList,
   bathroomList,
   livingList,
-  safteyList,
+  safetyList,
   physicalList,
 } from "./helpers/acc6facilitiesList";
 import { validateInputs } from "../../../validation/validation";
@@ -23,7 +23,7 @@ const AddAcc6 = ({ nextBtn }) => {
   const [acc6Details, setAccDetails] = useState({
     kitchen: [],
     bathroom: [],
-    saftey: [],
+    safety: [],
     comfort: [],
     measurements: {
       weight: "",
@@ -36,7 +36,7 @@ const AddAcc6 = ({ nextBtn }) => {
 
   const kitchenRef = useRef(null);
   const bathroomRef = useRef(null);
-  const safteyRef = useRef(null);
+  const safetyRef = useRef(null);
   const comfortRef = useRef(null);
 
   const handleNextBtn = () => {
@@ -57,19 +57,25 @@ const AddAcc6 = ({ nextBtn }) => {
     const checkedState = e.target.checked;
     const checkBoxId = e.target.id;
     const id = catagory.current.id;
+
     if (checkedState) {
       setAccDetails((prevData) => {
         const newData = { ...prevData };
         newData[id] = prevData[id]
-          ? [...prevData[id], checkBoxId]
+          ? [...prevData[id], { [checkBoxId]: e.target.name }]
           : [checkBoxId];
+        //console.log("newData", newData);
+
         return newData;
       });
     }
     if (!checkedState) {
       setAccDetails((prevData) => {
         const newData = { ...prevData };
-        newData[id] = prevData[id].filter((item) => item !== checkBoxId);
+        newData[id] = prevData[id].filter(
+          (item) => !Object.keys(item).includes(checkBoxId)
+        );
+        console.log("newData", newData);
         return newData;
       });
     }
@@ -100,8 +106,9 @@ const AddAcc6 = ({ nextBtn }) => {
           </Typography>
           <FormGroup className="acc6FormGroup" ref={kitchenRef} id="kitchen">
             {Object.entries(kitchenList).map(([key, value]) => (
-              <Grid key={key} item xs={6} sm={4} md={2} lg={1}>
+              <Grid key={key} item xs={6} sm={4} md={2} lg={2}>
                 <FormControlLabel
+                  name={value}
                   key={key}
                   control={<Checkbox id={key} />}
                   label={value}
@@ -119,8 +126,9 @@ const AddAcc6 = ({ nextBtn }) => {
           </Typography>
           <FormGroup className="acc6FormGroup" ref={bathroomRef} id="bathroom">
             {Object.entries(bathroomList).map(([key, value]) => (
-              <Grid key={key} item xs={6} sm={4} md={2} lg={1}>
+              <Grid key={key} item xs={6} sm={4} md={2} lg={2}>
                 <FormControlLabel
+                  name={value}
                   key={key}
                   control={<Checkbox id={key} />}
                   label={value}
@@ -136,15 +144,16 @@ const AddAcc6 = ({ nextBtn }) => {
           <Typography variant="h6" sx={{ paddingRight: 2, marginBottom: 1 }}>
             אביזרי רכב:
           </Typography>
-          <FormGroup className="acc6FormGroup" ref={safteyRef} id="saftey">
-            {Object.entries(safteyList).map(([key, value]) => (
-              <Grid key={key} item xs={6} sm={4} md={2} lg={1}>
+          <FormGroup className="acc6FormGroup" ref={safetyRef} id="safety">
+            {Object.entries(safetyList).map(([key, value]) => (
+              <Grid key={key} item xs={6} sm={4} md={2}>
                 <FormControlLabel
+                  name={value}
                   key={key}
                   control={<Checkbox id={key} />}
                   label={value}
                   onClick={(e) => {
-                    handleTick(e, safteyRef);
+                    handleTick(e, safetyRef);
                   }}
                 />
               </Grid>
@@ -157,8 +166,9 @@ const AddAcc6 = ({ nextBtn }) => {
           </Typography>
           <FormGroup className="acc6FormGroup" ref={comfortRef} id="comfort">
             {Object.entries(livingList).map(([key, value]) => (
-              <Grid key={key} item xs={6} sm={4} md={2} lg={1}>
+              <Grid key={key} item xs={6} sm={4} md={2}>
                 <FormControlLabel
+                  name={value}
                   key={key}
                   control={<Checkbox id={key} />}
                   label={value}

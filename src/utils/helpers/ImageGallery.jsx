@@ -1,7 +1,5 @@
 import { useState, useEffect } from "react";
 import ImageGallery from "react-image-gallery";
-import { CircularProgress } from "@mui/material";
-import { original } from "@reduxjs/toolkit";
 
 const ImageGalleryComponent = ({ images }) => {
   const [normalizedData, setNormalizedData] = useState([]);
@@ -18,7 +16,7 @@ const ImageGalleryComponent = ({ images }) => {
     });
     setNormalizedData(normalizedData);
   };
-  console.log("normalizeImages", normalizedData);
+  //console.log("normalizeImages", normalizedData);
 
   useEffect(() => {
     if (!images) return;
@@ -74,7 +72,7 @@ const ImageGalleryComponent = ({ images }) => {
     <img
       src={item.original}
       alt={item.description}
-      style={{ height: "300px", width: "auto", objectFit: "cover" }}
+      style={{ height: "250px", width: "auto", objectFit: "cover" }}
     />
   );
 

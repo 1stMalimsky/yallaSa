@@ -31,6 +31,15 @@
   //flex-direction: column;
 }
 
+.elevated {
+  transition: box-shadow 0.3s ease-in-out; /* Smooth transition for the shadow */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08); /* Multiple layers of shadows for more depth */
+}
+
+.elevated:hover {
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2), 0 3px 6px rgba(0, 0, 0, 0.1); /* Larger and darker shadow on hover */
+}
+
 .inputFixShort {
   .MuiInputLabel-root {
     left: unset;

@@ -14,7 +14,7 @@ const bathroomList = {
   hasOutdoorShower: "מקלחת חיצונית",
 };
 
-const safteyList = {
+const safetyList = {
   hasFireExtinguisher: "מטף",
   hasFirstAidKit: "תיק עזרה ראשונה",
   hasSmokeDetector: "גלאי עשן",
@@ -45,4 +45,4 @@ const physicalList = {
   minimumAge: "גיל מינימלי להשכרה",
 };
 
-export { kitchenList, bathroomList, safteyList, livingList, physicalList };
+export { kitchenList, bathroomList, safetyList, livingList, physicalList };

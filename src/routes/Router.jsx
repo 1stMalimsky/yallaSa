@@ -25,6 +25,8 @@ import AddCaravan from "../pages/newPages/AddCaravan";
 const Router = () => {
   return (
     <Routes>
+      <Route path={"/maptest"} element={<Test />} />
+
       <Route
         path="/addcaravan/:location/:vehicleType"
         element={<AddCaravan />}

@@ -103,7 +103,7 @@ const AddAcc4 = ({ nextBtn }) => {
           handlePaymentDetailsChange={handlePaymentDetailsChange}
         />
       )}
-      <Box sx={{ display: "flex", justifyContent: "center" }}>
+      <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
         <Button variant="contained" onClick={handleNextBtn}>
           הבא
         </Button>
