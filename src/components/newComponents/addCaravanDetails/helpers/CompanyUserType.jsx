@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Box, TextField, Typography } from "@mui/material";
 import CompensationDetails from "./CompensationDetails";
 
@@ -6,8 +6,19 @@ const CompanyUserType = ({
   handleUserDetails,
   handlePaymentDetailsChange,
   handlePaymentTypeChange,
+  sessionDetails,
 }) => {
-  const [userDetails, setUserDetails] = useState(null);
+  const [userDetails, setUserDetails] = useState("");
+  const [paymentType, setPaymentType] = useState("");
+  const [paymentDetails, setPaymentDetails] = useState("");
+
+  useEffect(() => {
+    if (sessionDetails) {
+      setUserDetails(sessionDetails.userDetails);
+      setPaymentType(sessionDetails.paymentType);
+      setPaymentDetails(sessionDetails.paymentDetails);
+    }
+  }, [sessionDetails]);
 
   const handleUserDetailsChange = (e) => {
     const updatedDetails = {
@@ -18,6 +29,8 @@ const CompanyUserType = ({
     handleUserDetails(updatedDetails);
   };
 
+  console.log("companyUserType", paymentDetails);
+
   return (
     <div>
       <Box>
@@ -25,17 +38,20 @@ const CompanyUserType = ({
           className="addCarTextFiled"
           id="companyName"
           label="שם החברה"
+          value={userDetails.companyName || ""}
           onChange={handleUserDetailsChange}
         />
         <TextField
           className="addCarTextFiled"
           id="companyId"
+          value={userDetails.companyId || ""}
           label="ח.פ."
           onChange={handleUserDetailsChange}
         />
         <TextField
           className="addCarTextFiled"
           id="companyPhone"
+          value={userDetails.companyPhone || ""}
           label="טלפון משרד"
           onChange={handleUserDetailsChange}
         />
@@ -45,12 +61,14 @@ const CompanyUserType = ({
         <TextField
           className="addCarTextFiled"
           id="companyStreet"
+          value={userDetails.companyStreet || ""}
           label="רחוב"
           onChange={handleUserDetailsChange}
         />
         <TextField
           className="addCarTextFiled"
           id="companyCity"
+          value={userDetails.companyCity || ""}
           label="עיר"
           onChange={handleUserDetailsChange}
         />
@@ -65,6 +83,10 @@ const CompanyUserType = ({
         <CompensationDetails
           handlePaymentDetailsChange={handlePaymentDetailsChange}
           handlePaymentTypeChange={handlePaymentTypeChange}
+          sessionDetails={{
+            paymentDetails: paymentDetails,
+            paymentType: paymentType,
+          }}
         />
       </Box>
     </div>

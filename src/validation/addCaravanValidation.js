@@ -169,7 +169,7 @@ const acc7ValidationSchema = Joi.object({
     }),
 });
 
-const acc8ValidationSchema = Joi.object({
+const acc2ValidationSchema = Joi.object({
   listingName: Joi.string().min(2).max(20).required().messages({
     "string.base": `"שם הקרוואן" חייב להיות מורכב מאותיות`,
     "string.empty": `"שם הקרוואן" לא יכול להיות ריק`,
@@ -239,6 +239,6 @@ export {
   baseCaravanDetailsSchema,
   phoneNumberSchema,
   acc7ValidationSchema,
-  acc8ValidationSchema,
+  acc2ValidationSchema,
   acc9ValidationSchema,
 };

@@ -1,179 +1,128 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
 import {
   Box,
-  Typography,
   FormControl,
   FormControlLabel,
   RadioGroup,
   FormLabel,
   Radio,
-  alpha,
   Button,
 } from "@mui/material";
+import PrivateUserType from "./helpers/PrivateUserType.jsx";
+import CompanyUserType from "./helpers/CompanyUserType.jsx";
+import getToken from "../../../utils/helpers/getToken.js";
+import acc1Validation from "./helpers/acc1Validation.js";
+import checkSessionStorage from "../../../utils/helpers/checkSessionStorage.js";
 
 const AddAcc1 = ({ nextBtn }) => {
-  const params = useParams();
-  const [location, setLocation] = useState(params.location);
-  const [radioOption, setRadioOption] = useState(params.vehicleType);
-
-  const handleNextBtnClick = () => {
-    let locationName = location;
-    let vehicleType = radioOption;
-    switch (location) {
-      case "10":
-        locationName = "צפון";
-        break;
-      case "20":
-        locationName = "מרכז";
-        break;
-      case "30":
-        locationName = "דרום";
-        break;
-      default:
-        locationName = location;
-    }
-
-    switch (vehicleType) {
-      case "10":
-        vehicleType = "towCaravan";
-        break;
-      case "20":
-        vehicleType = "fullCaravan";
-        break;
-      case "30":
-        vehicleType = "integratedCarvan";
-        break;
-      default:
-        vehicleType = radioOption;
-    }
-    sessionStorage.setItem(
-      "acc1Data",
-      JSON.stringify({ location, vehicleType })
-    );
-    nextBtn(
-      {
-        location: locationName,
-        vehicleType: vehicleType,
-      },
-      0
-    );
-  };
+  const [privateUser, setPrivateUser] = useState(null);
+  const [userDetails, setUserDetails] = useState({});
+  const [paymentType, setPaymentType] = useState(null);
+  const [paymentDetails, setPaymentDetails] = useState(null);
+  const userId = getToken().userId;
 
   useEffect(() => {
-    switch (location) {
-      case 10:
-        setLocation("north");
-        break;
-      case 20:
-        setLocation("center");
-        break;
-      case 30:
-        setLocation("south");
-        break;
-      default:
-        break;
+    const sessionData = JSON.parse(checkSessionStorage(1));
+    console.log("session1", sessionData);
+
+    if (sessionData) {
+      setPrivateUser(sessionData.privateUser);
+      setUserDetails(sessionData.userDetails);
+      setPaymentType(sessionData.paymentType);
+      setPaymentDetails(sessionData.paymentDetails);
     }
   }, []);
 
-  const handleChange = (event) => {
-    setRadioOption(event.target.value);
+  const resetStates = () => {
+    setUserDetails({});
+    setPaymentType(null);
+    setPaymentDetails(null);
   };
 
-  //console.log("radio option", radioOption);
+  const handleNextBtn = () => {
+    let acc1Data = {
+      privateUser,
+      userDetails,
+      paymentType,
+      paymentDetails,
+    };
+    if (privateUser === "true") {
+      acc1Data.userDetails = userId;
+    }
+    const validationResponse = acc1Validation(
+      privateUser,
+      userDetails,
+      paymentType,
+      paymentDetails
+    );
+    if (validationResponse) {
+      return;
+    } else sessionStorage.setItem("acc1Data", JSON.stringify(acc1Data));
+    nextBtn(acc1Data, 0);
+  };
+
+  const handlePaymentTypeChange = (paymentTypeData) => {
+    setPaymentDetails({});
+    setPaymentType(paymentTypeData);
+  };
+
+  const handleUserTypeChange = (e) => {
+    resetStates();
+    setPrivateUser(e.target.value);
+  };
+
+  const handleUserDetailsChange = (details) => {
+    setUserDetails(details);
+  };
+
+  const handlePaymentDetailsChange = (paymentDetails) => {
+    setPaymentDetails(paymentDetails);
+  };
   return (
     <Box>
+      {/* RADIO */}
       <Box>
         <FormControl component="fieldset">
-          <FormLabel component="legend" sx={{ marginBottom: 2 }}>
-            בחר סוג רכב
-          </FormLabel>
+          <FormLabel component="legend" />
           <RadioGroup
             row
-            aria-label="vehicle-type"
-            name="vehicle-type"
-            value={radioOption}
-            onChange={handleChange}
+            name="userType"
+            value={privateUser}
+            onChange={handleUserTypeChange}
           >
             <FormControlLabel
-              value={10}
+              value={true}
               control={<Radio />}
-              label={
-                <Box
-                  className="raiseEffect"
-                  sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    borderColor: (theme) =>
-                      alpha(theme.palette.text.primary, 0.12),
-                  }}
-                >
-                  <Typography variant="h6">קרוואן נגרר</Typography>
-                  <img
-                    src={`${process.env.PUBLIC_URL}/imgs/caravanPhotos/caravanIcons/towCarIcon.png`}
-                    alt="towCaravan"
-                    className="addAcc1Img"
-                  />
-                </Box>
-              }
+              label="לקוח פרטי"
             />
             <FormControlLabel
-              value={20}
+              value={false}
               control={<Radio />}
-              label={
-                <Box
-                  className="raiseEffect"
-                  sx={{
-                    className: "raiseEffect",
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    borderColor: (theme) =>
-                      alpha(theme.palette.text.primary, 0.12),
-                  }}
-                >
-                  <Typography variant="h6">קרוואן נוסע</Typography>
-                  <img
-                    src={`${process.env.PUBLIC_URL}/imgs/caravanPhotos/caravanIcons/drivingCamperIcon.png`}
-                    alt="towCaravan"
-                    className="addAcc1Img"
-                  />
-                </Box>
-              }
-            />
-            <FormControlLabel
-              value={30}
-              control={<Radio />}
-              label={
-                <Box
-                  className="raiseEffect"
-                  sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    borderColor: (theme) =>
-                      alpha(theme.palette.text.primary, 0.12),
-                  }}
-                >
-                  <Typography variant="h6">קרוואן מוסב</Typography>
-                  <img
-                    src={`${process.env.PUBLIC_URL}/imgs/caravanPhotos/caravanIcons/transitIcon.png`}
-                    alt="towCaravan"
-                    className="addAcc1Img"
-                  />
-                </Box>
-              }
+              label="לקוח עסקי"
             />
           </RadioGroup>
         </FormControl>
       </Box>
-      <Box sx={{ display: "flex", justifyContent: "center", marginTop: 2 }}>
-        <Button
-          variant="contained"
-          disabled={radioOption ? false : true}
-          onClick={handleNextBtnClick}
-        >
+      {privateUser === "true" && (
+        <PrivateUserType
+          handlePtype={handlePaymentTypeChange}
+          handlePdetails={handlePaymentDetailsChange}
+        />
+      )}
+      {privateUser === "false" && (
+        <CompanyUserType
+          handleUserDetails={handleUserDetailsChange}
+          handlePaymentTypeChange={handlePaymentTypeChange}
+          handlePaymentDetailsChange={handlePaymentDetailsChange}
+          sessionDetails={{
+            userDetails: userDetails,
+            paymentType: paymentType,
+            paymentDetails: paymentDetails,
+          }}
+        />
+      )}
+      <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
+        <Button variant="contained" onClick={handleNextBtn}>
           הבא
         </Button>
       </Box>

@@ -7,7 +7,6 @@ import CaravanCardModal from "./caravanCard/CaravanCardModal";
 import CaravanCardGallery from "./caravanCard/CaravanCardImageGallery";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import dayjs from "dayjs";
-import { maxHeight } from "@mui/system";
 
 const CaravanCard = ({ caravanDetails, chosenDates }) => {
   const navigate = useNavigate();

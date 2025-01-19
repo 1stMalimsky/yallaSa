@@ -6,7 +6,7 @@ import {
 } from "../../../../validation/addCaravanValidation.js";
 import { toast } from "react-toastify";
 
-const acc4Validation = (
+const acc1Validation = (
   privateUser,
   userDetails,
   paymentType,
@@ -70,4 +70,4 @@ const acc4Validation = (
   return false;
 };
 
-export default acc4Validation;
+export default acc1Validation;

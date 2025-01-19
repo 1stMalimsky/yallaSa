@@ -1,6 +1,6 @@
 import Joi from "joi";
 
-const acc6ValidationSchema = Joi.object({
+const acc5ValidationSchema = Joi.object({
   weight: Joi.number()
     .min(100)
     .max(20000)
@@ -47,4 +47,4 @@ const acc6ValidationSchema = Joi.object({
   }),
 });
 
-export default acc6ValidationSchema;
+export default acc5ValidationSchema;

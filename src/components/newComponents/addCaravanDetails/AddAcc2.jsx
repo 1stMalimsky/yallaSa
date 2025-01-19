@@ -1,131 +1,66 @@
 import { useEffect, useState } from "react";
+import { Box, Button, Grid, TextField, Typography } from "@mui/material";
+import { validateInputs } from "../../../validation/validation";
+import { acc2ValidationSchema } from "../../../validation/addCaravanValidation";
+import checkSessionStorage from "../../../utils/helpers/checkSessionStorage.js";
 
-import { Box, Button, IconButton, Typography } from "@mui/material";
-import IndeterminateCheckBoxIcon from "@mui/icons-material/IndeterminateCheckBox";
-import AddBoxIcon from "@mui/icons-material/AddBox";
-
-const AddAcc2 = ({ nextBtn }) => {
-  const [inputState, setInputState] = useState({
-    numOfseats: "",
-    numOfbeds: "",
-    numOfsleepers: "",
+const AddAcc2 = ({ nextBtn, sessionData }) => {
+  const [acc2Data, setAcc2Data] = useState({
+    listingName: "",
+    description: "",
   });
-  const [seats, setSeats] = useState(0);
-  const [beds, setBeds] = useState(0);
-  const [sleepers, setSleepers] = useState(0);
-  const [disabledButton, setDisabledButton] = useState(true);
 
   useEffect(() => {
-    setInputState({
-      numOfseats: seats,
-      numOfbeds: beds,
-      numOfsleepers: sleepers,
-    });
-    if (!seats || !beds || !sleepers) {
-      setDisabledButton(true);
-    } else setDisabledButton(false);
-  }, [seats, beds, sleepers]);
+    const sessionData = JSON.parse(checkSessionStorage(2));
+    if (sessionData) {
+      setAcc2Data(sessionData);
+    }
+  }, []);
 
-  const handleNextBtn = () => {
-    sessionStorage.setItem("acc2Data", JSON.stringify(inputState));
-    nextBtn(inputState, 1);
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setAcc2Data((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
 
-  const handleAddBtn = (prev, setState) => {
-    if (prev >= 10) {
-      setState(prev);
-    } else setState(prev + 1);
+  const handleNextButton = () => {
+    const validationResult = validateInputs(acc2ValidationSchema, acc2Data);
+    if (validationResult) {
+      return;
+    }
+    sessionStorage.setItem("acc2Data", JSON.stringify(acc2Data));
+    nextBtn(acc2Data, 1);
   };
-  const handleSubBtn = (prev, setState) => {
-    if (prev === 0) {
-      setState(prev);
-    } else setState(prev - 1);
-  };
+  //console.log("accdata", acc2Data);
 
   return (
     <Box>
-      {/* FIRST  BOX */}
-      <Box
-        className="Acc2Box"
-        sx={{
-          maxWidth: "md",
-          marginBottom: 1,
-        }}
-      >
-        <Box>
-          <Typography variant="h6">מספר מושבים עם חגורת בטיחות</Typography>
-        </Box>
-        <Box sx={{ display: "flex", alignItems: "center" }}>
-          <IconButton
-            variant="contained"
-            onClick={() => handleAddBtn(seats, setSeats)}
-          >
-            <AddBoxIcon fontSize="large" color="primary" />
-          </IconButton>
-          <Typography variant="h6" sx={{ margin: 1 }}>
-            {seats}
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <Typography variant="h6">כיצד תרצו שהקרוואן יקרא:</Typography>
+          <TextField
+            name="listingName"
+            value={acc2Data.listingName}
+            onChange={handleChange}
+            sx={{ width: { xs: "100%", md: "70%", lg: "50%" }, marginTop: 1 }}
+          />
+          <Typography variant="h6" sx={{ marginTop: 2 }}>
+            רשמו תיאור קצר של הקרוואן:
           </Typography>
-          <IconButton onClick={() => handleSubBtn(seats, setSeats)}>
-            <IndeterminateCheckBoxIcon fontSize="large" color="primary" />
-          </IconButton>
-        </Box>
-      </Box>
-
-      {/* SECOND BOX */}
-      <Box
-        className="Acc2Box"
-        sx={{
-          maxWidth: "md",
-        }}
-      >
-        <Box>
-          <Typography variant="h6">מספר מיטות</Typography>
-        </Box>
-        <Box sx={{ display: "flex", alignItems: "center" }}>
-          <IconButton
-            variant="contained"
-            onClick={() => handleAddBtn(beds, setBeds)}
-          >
-            <AddBoxIcon fontSize="large" color="primary" />
-          </IconButton>
-          <Typography variant="h6" sx={{ margin: 1 }}>
-            {beds}
-          </Typography>
-          <IconButton onClick={() => handleSubBtn(beds, setBeds)}>
-            <IndeterminateCheckBoxIcon fontSize="large" color="primary" />
-          </IconButton>
-        </Box>
-      </Box>
-      <Box
-        className="Acc2Box"
-        sx={{
-          maxWidth: "md",
-        }}
-      >
-        <Box>
-          <Typography variant="h6">מספר לנים</Typography>
-        </Box>
-        <Box sx={{ display: "flex", alignItems: "center" }}>
-          <IconButton
-            variant="contained"
-            onClick={() => handleAddBtn(sleepers, setSleepers)}
-          >
-            <AddBoxIcon fontSize="large" color="primary" />
-          </IconButton>
-          <Typography variant="h6" sx={{ margin: 1 }}>
-            {sleepers}
-          </Typography>
-          <IconButton onClick={() => handleSubBtn(sleepers, setSleepers)}>
-            <IndeterminateCheckBoxIcon fontSize="large" color="primary" />
-          </IconButton>
-        </Box>
-      </Box>
+          <TextField
+            name="description"
+            multiline
+            rows={5}
+            value={acc2Data.description}
+            onChange={handleChange}
+            sx={{ width: { xs: "100%", md: "70%", lg: "50%" } }}
+          />
+        </Grid>
+      </Grid>
       <Box sx={{ display: "flex", justifyContent: "center", marginTop: 2 }}>
-        <Button
-          variant="contained"
-          disabled={disabledButton}
-          onClick={handleNextBtn}
-        >
+        <Button variant="contained" onClick={handleNextButton}>
           הבא
         </Button>
       </Box>

@@ -60,6 +60,14 @@ const AddAcc9 = ({ nextBtn, handleSubmit }) => {
     //console.log("val
     // idation response", validateResponse);
     if (validateResponse === true) return;
+    sessionStorage.setItem(
+      "acc9Data",
+      JSON.stringify({
+        ...priceDetails,
+        ...cancelationPolicy,
+        ...insuranceDetails,
+      })
+    );
     nextBtn({ ...priceDetails, ...cancelationPolicy, ...insuranceDetails }, 8);
     try {
       handleSubmit();

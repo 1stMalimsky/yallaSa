@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   TextField,
   FormControl,
@@ -13,9 +13,21 @@ import {
 const CompensationDetails = ({
   handlePaymentTypeChange,
   handlePaymentDetailsChange,
+  sessionDetails,
 }) => {
-  const [paymentType, setPaymentType] = useState(null);
-  const [paymentDetails, setPaymentDetails] = useState(null);
+  const [paymentType, setPaymentType] = useState("");
+  const [paymentDetails, setPaymentDetails] = useState({});
+
+  useEffect(() => {
+    if (
+      sessionDetails &&
+      sessionDetails.paymentType &&
+      sessionDetails.paymentDetails
+    ) {
+      setPaymentType(sessionDetails.paymentType);
+      setPaymentDetails(sessionDetails.paymentDetails);
+    }
+  }, [sessionDetails]);
 
   const handleLocalPaymentTypeChange = (e) => {
     const { value } = e.target;
@@ -29,6 +41,7 @@ const CompensationDetails = ({
     setPaymentDetails(newDetails);
     handlePaymentDetailsChange(newDetails);
   };
+  console.log("compansationDetails", paymentType);
 
   return (
     <div>
@@ -56,6 +69,7 @@ const CompensationDetails = ({
           <TextField
             className="addCarTextFiled"
             id="bankName"
+            value={paymentDetails.bankName}
             label="שם הבנק"
             onChange={(e) =>
               handleLocalPaymentDetailsChange(e.target.id, e.target.value)
@@ -64,6 +78,7 @@ const CompensationDetails = ({
           <TextField
             className="addCarTextFiled"
             id="bankBranch"
+            value={paymentDetails.bankBranch}
             label="מספר סניף"
             onChange={(e) =>
               handleLocalPaymentDetailsChange(e.target.id, e.target.value)
@@ -72,6 +87,7 @@ const CompensationDetails = ({
           <TextField
             className="addCarTextFiled"
             id="bankAccount"
+            value={paymentDetails.bankAccount}
             label="מספר חשבון"
             onChange={(e) =>
               handleLocalPaymentDetailsChange(e.target.id, e.target.value)
@@ -84,6 +100,7 @@ const CompensationDetails = ({
           <TextField
             className="addCarTextFiled"
             id="phoneNumber"
+            value={paymentDetails.phoneNumber}
             label="מספר טלפון"
             onChange={(e) =>
               handleLocalPaymentDetailsChange(e.target.id, e.target.value)

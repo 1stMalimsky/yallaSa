@@ -1,145 +1,178 @@
-import { useEffect, useState } from "react";
-import { TextField, Box, Button, Typography, Grid } from "@mui/material";
-import ImageUploadComponent from "../../../utils/helpers/FilePondHelper2";
-import { baseCaravanDetailsSchema } from "../../../validation/addCaravanValidation";
-import { validateInputs } from "../../../validation/validation";
-import { toast } from "react-toastify";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import {
+  Box,
+  Typography,
+  FormControl,
+  FormControlLabel,
+  RadioGroup,
+  FormLabel,
+  Radio,
+  alpha,
+  Button,
+} from "@mui/material";
 
-const AddAcc3 = ({ nextBtn, photoRemoved }) => {
-  const [caravanDetails, setCaravanDetails] = useState({
-    licenseNumber: "",
-    carModel: "",
-    carYear: "",
-  });
-  const [base64Data, setBase64Data] = useState([
-    {
-      fileName: "license",
-      base64Data: null,
-    },
-    { fileName: "mandInsure", base64Data: null },
-    { fileName: "3rdPartyInsure", base64Data: null },
-  ]);
+const AddAcc3 = ({ nextBtn }) => {
+  const params = useParams();
+  const [location, setLocation] = useState(params.location);
+  const [radioOption, setRadioOption] = useState(params.vehicleType);
 
-  const checkForPhotos = (data) => {
-    for (let item of data) {
-      if (item.base64Data === null) {
-        //console.log("null");
-        return false;
-      } else return true;
+  const handleNextBtnClick = () => {
+    let locationName = location;
+    let vehicleType = radioOption;
+    switch (location) {
+      case "10":
+        locationName = "צפון";
+        break;
+      case "20":
+        locationName = "מרכז";
+        break;
+      case "30":
+        locationName = "דרום";
+        break;
+      default:
+        locationName = location;
     }
-  };
 
-  const handleNextBtn = () => {
-    const joiResponse = validateInputs(
-      baseCaravanDetailsSchema,
-      caravanDetails
+    switch (vehicleType) {
+      case "10":
+        vehicleType = "towCaravan";
+        break;
+      case "20":
+        vehicleType = "fullCaravan";
+        break;
+      case "30":
+        vehicleType = "integratedCarvan";
+        break;
+      default:
+        vehicleType = radioOption;
+    }
+    /*    sessionStorage.setItem(
+      "acc3Data",
+      JSON.stringify({ location, vehicleType })
+    ); */
+    nextBtn(
+      {
+        location: locationName,
+        vehicleType: vehicleType,
+      },
+      2
     );
-    if (joiResponse) {
-      return;
+  };
+
+  useEffect(() => {
+    switch (location) {
+      case 10:
+        setLocation("north");
+        break;
+      case 20:
+        setLocation("center");
+        break;
+      case 30:
+        setLocation("south");
+        break;
+      default:
+        break;
     }
-    if (!checkForPhotos(base64Data)) {
-      return toast.error("אנא העלו את המסמכים הנדרשים");
-    }
-    const caravanData = {
-      caravanDetails,
-      base64Data,
-    };
-    nextBtn(caravanData, 2);
+  }, []);
+
+  const handleChange = (event) => {
+    setRadioOption(event.target.value);
   };
 
-  const sendUpData = (data, numberOfEntry) => {
-    setBase64Data((prevData) => {
-      const newData = [...prevData];
-      newData[numberOfEntry].base64Data = data;
-      return newData;
-    });
-  };
-
-  const handleRemoveItem = (indexNumber) => {
-    const newData = [...base64Data];
-    newData[indexNumber].base64Data = null;
-    //console.log("handleRemoveItem data", newData);
-    setBase64Data(newData);
-    photoRemoved(base64Data);
-  };
-
-  const onCaravanDetailsChange = (e) => {
-    const { name, value } = e.target;
-    setCaravanDetails((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
-  //console.log("base64Data", base64Data);
-  //console.log("caravanDetails", caravanDetails);
-
+  //console.log("radio option", radioOption);
   return (
     <Box>
-      <Typography variant="h6">פרטים בסיסיים:</Typography>
-      <Box sx={{ marginBottom: 2, marginTop: 2 }}>
-        <TextField
-          name="licenseNumber"
-          className="addCarTextFiled"
-          label="מספר רישוי"
-          value={caravanDetails.licenseNumber}
-          onChange={onCaravanDetailsChange}
-        />
-        <TextField
-          name="carModel"
-          className="addCarTextFiled"
-          label="דגם רכב"
-          value={caravanDetails.carModel}
-          sx={{ marginRight: 2 }}
-          onChange={onCaravanDetailsChange}
-        />
-        <TextField
-          name="carYear"
-          className="addCarTextFiled"
-          label="שנת ייצור"
-          value={caravanDetails.carYear}
-          sx={{ marginRight: 2 }}
-          onChange={onCaravanDetailsChange}
-        />
-      </Box>
-      <Typography variant="h6">אנא העלו את ביטוח ורישיון הרכב שלכם</Typography>
-      <Grid
-        container
-        spacing={2}
-        sx={{ display: "flex", justifyContent: "space-evenly" }}
-      >
-        <Grid item xs={12} md={3}>
-          <Typography variant="subtitle1">רישיון רכב:</Typography>
-          <Box>
-            <ImageUploadComponent
-              indexNumber={0}
-              sendUpFunc={sendUpData}
-              handleRemovePhoto={() => handleRemoveItem(0)}
-              photoRemoved={photoRemoved}
+      <Box>
+        <FormControl component="fieldset">
+          <FormLabel component="legend" sx={{ marginBottom: 2 }}>
+            בחר סוג רכב
+          </FormLabel>
+          <RadioGroup
+            row
+            aria-label="vehicle-type"
+            name="vehicle-type"
+            value={radioOption}
+            onChange={handleChange}
+          >
+            <FormControlLabel
+              value={10}
+              control={<Radio />}
+              label={
+                <Box
+                  className="raiseEffect"
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    borderColor: (theme) =>
+                      alpha(theme.palette.text.primary, 0.12),
+                  }}
+                >
+                  <Typography variant="h6">קרוואן נגרר</Typography>
+                  <img
+                    src={`${process.env.PUBLIC_URL}/imgs/caravanPhotos/caravanIcons/towCarIcon.png`}
+                    alt="towCaravan"
+                    className="addAcc1Img"
+                  />
+                </Box>
+              }
             />
-          </Box>
-        </Grid>
-        <Grid item xs={12} md={3}>
-          <Typography variant="subtitle1">ביטוח חובה:</Typography>
-          <ImageUploadComponent
-            indexNumber={1}
-            sendUpFunc={sendUpData}
-            handleRemovePhoto={() => handleRemoveItem(1)}
-          />
-        </Grid>
-        <Grid item xs={12} md={3}>
-          <Typography variant="subtitle1">ביטוח צד ג':</Typography>
-          <ImageUploadComponent
-            indexNumber={2}
-            sendUpFunc={sendUpData}
-            handleRemovePhoto={() => handleRemoveItem(2)}
-          />
-        </Grid>
-      </Grid>
-      <Box sx={{ display: "flex", justifyContent: "center" }}>
+            <FormControlLabel
+              value={20}
+              control={<Radio />}
+              label={
+                <Box
+                  className="raiseEffect"
+                  sx={{
+                    className: "raiseEffect",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    borderColor: (theme) =>
+                      alpha(theme.palette.text.primary, 0.12),
+                  }}
+                >
+                  <Typography variant="h6">קרוואן נוסע</Typography>
+                  <img
+                    src={`${process.env.PUBLIC_URL}/imgs/caravanPhotos/caravanIcons/drivingCamperIcon.png`}
+                    alt="towCaravan"
+                    className="addAcc1Img"
+                  />
+                </Box>
+              }
+            />
+            <FormControlLabel
+              value={30}
+              control={<Radio />}
+              label={
+                <Box
+                  className="raiseEffect"
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    borderColor: (theme) =>
+                      alpha(theme.palette.text.primary, 0.12),
+                  }}
+                >
+                  <Typography variant="h6">קרוואן מוסב</Typography>
+                  <img
+                    src={`${process.env.PUBLIC_URL}/imgs/caravanPhotos/caravanIcons/transitIcon.png`}
+                    alt="towCaravan"
+                    className="addAcc1Img"
+                  />
+                </Box>
+              }
+            />
+          </RadioGroup>
+        </FormControl>
+      </Box>
+      <Box sx={{ display: "flex", justifyContent: "center", marginTop: 2 }}>
         <Button
           variant="contained"
-          sx={{ marginTop: 2 }}
-          onClick={handleNextBtn}
+          disabled={radioOption ? false : true}
+          onClick={handleNextBtnClick}
         >
           הבא
         </Button>

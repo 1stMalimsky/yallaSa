@@ -44,6 +44,7 @@ const AddAcc7 = ({ nextBtn }) => {
     if (joiResponse) {
       return;
     }
+    sessionStorage.setItem("acc7Data", JSON.stringify(acc7Data));
     nextBtn(acc7Data, 6);
   };
   //console.log("acc7Data", acc7Data);

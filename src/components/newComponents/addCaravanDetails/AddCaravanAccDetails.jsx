@@ -27,31 +27,21 @@ const AddCaravanAcc = () => {
 
   const token = getToken();
 
-  useEffect(() => {
-    let sessionData = [];
-    const acc1Data = sessionStorage.getItem("acc1Data");
-    const acc2Data = sessionStorage.getItem("acc2Data");
-    const acc4Data = sessionStorage.getItem("acc4Data");
-    if (acc1Data) sessionData[0] = JSON.parse(acc1Data);
-    if (acc2Data) sessionData[1] = JSON.parse(acc2Data);
-    if (acc4Data) sessionData[3] = JSON.parse(acc4Data);
-
-    setAccDetails(sessionData);
-  }, []);
-
   const handleSubmitBtn = async () => {
     try {
       const user = await getUserDetails(token.userId);
+      console.log("user", user);
+
       if (user.isOwner === false) {
         const userChanged = await axios.patch(`/users/update/${token.userId}`, {
           isOwner: true,
         });
         console.log("userChnaged");
       }
-      const res = await axios.post("/caravan/create", {
+      /*     const res = await axios.post("/caravan/create", {
         accDetails: accDetails,
       });
-      console.log(res);
+      console.log(res); */
     } catch (err) {
       console.log(err);
     }
@@ -69,7 +59,7 @@ const AddCaravanAcc = () => {
     setOpenState(openState + 1);
   };
 
-  const handleBackBtn = (e) => {
+  const handleBackBtn = () => {
     if (openState === 0) {
       return;
     }
@@ -109,7 +99,7 @@ const AddCaravanAcc = () => {
             <Typography variant="h5">1. פרטים אישיים</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <AddAcc4 nextBtn={handleNextBtn} />
+            <AddAcc1 nextBtn={handleNextBtn} />
           </AccordionDetails>
         </Accordion>
         {/* ACC2 */}
@@ -126,7 +116,7 @@ const AddCaravanAcc = () => {
             <Typography variant="h5">2. תיאור וחוקים</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <AddAcc8 nextBtn={handleNextBtn} />
+            <AddAcc2 nextBtn={handleNextBtn} />
           </AccordionDetails>
         </Accordion>
         {/* ACC3 */}
@@ -143,7 +133,7 @@ const AddCaravanAcc = () => {
             <Typography variant="h5">3. סוג הקרוואן</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <AddAcc1 nextBtn={handleNextBtn} />
+            <AddAcc3 nextBtn={handleNextBtn} />
           </AccordionDetails>
         </Accordion>
         {/* ACC4 */}
@@ -160,7 +150,7 @@ const AddCaravanAcc = () => {
             <Typography variant="h5">4. פרטי הלנה</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <AddAcc2 nextBtn={handleNextBtn} />
+            <AddAcc4 nextBtn={handleNextBtn} />
           </AccordionDetails>
         </Accordion>
         {/* ACC5 */}
@@ -177,7 +167,7 @@ const AddCaravanAcc = () => {
             <Typography variant="h5">5. מתקנים וציוד</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <AddAcc6 nextBtn={handleNextBtn} />
+            <AddAcc5 nextBtn={handleNextBtn} />
           </AccordionDetails>
         </Accordion>
         {/* ACC6 */}
@@ -194,7 +184,7 @@ const AddCaravanAcc = () => {
             <Typography variant="h5">6. תמונות הקרוואן</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <AddAcc5 nextBtn={handleNextBtn} />
+            <AddAcc6 nextBtn={handleNextBtn} />
           </AccordionDetails>
         </Accordion>
         {/* ACC7 */}
@@ -228,7 +218,7 @@ const AddCaravanAcc = () => {
             <Typography variant="h5">8. ביטוח ורישיון רכב</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <AddAcc3
+            <AddAcc8
               nextBtn={handleNextBtn}
               photoRemoved={updatePhotoRemoved}
             />

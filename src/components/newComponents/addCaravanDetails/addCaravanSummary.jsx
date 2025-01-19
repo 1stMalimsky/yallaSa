@@ -13,21 +13,21 @@ import GoogleMapsComp from "./helpers/GoogleMapsComp";
 
 const AddCaravanSummary = ({ setupDetails }) => {
   const [accDetails, setAccDetails] = useState(setupDetails);
-  const [images, setImages] = useState(setupDetails[4]);
+  const [images, setImages] = useState(setupDetails[5]);
   const [priceDetails, setPriceDetails] = useState(setupDetails[9]);
-  const [personCapacity, setPersonCapacity] = useState(setupDetails[1]);
-  const [features, setFeatures] = useState(setupDetails[5]);
-  const [listingtext, setListingtext] = useState(setupDetails[7]);
+  const [personCapacity, setPersonCapacity] = useState(setupDetails[3]);
+  const [features, setFeatures] = useState(setupDetails[4]);
+  const [listingtext, setListingtext] = useState(setupDetails[1]);
   const [locationDetails, setLocationDetails] = useState(setupDetails[6]);
 
   useEffect(() => {
     setAccDetails(setupDetails);
-    setImages(setupDetails[4]);
+    setImages(setupDetails[5]);
     setPriceDetails(setupDetails[9]);
-    setFeatures(setupDetails[5]);
-    setListingtext(setupDetails[7]);
+    setFeatures(setupDetails[4]);
+    setListingtext(setupDetails[1]);
     setLocationDetails(setupDetails[6]);
-    setPersonCapacity(setupDetails[1]);
+    setPersonCapacity(setupDetails[3]);
   }, [setupDetails]);
 
   //console.log("summaryState", accDetails);
@@ -60,7 +60,7 @@ const AddCaravanSummary = ({ setupDetails }) => {
             <Grid item xs={12}>
               {personCapacity && features && (
                 <CaravanIconRow
-                  data={[personCapacity, features, accDetails[0].vehicleType]}
+                  data={[personCapacity, features, accDetails[2].vehicleType]}
                 />
               )}
             </Grid>
