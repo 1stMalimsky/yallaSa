@@ -1,10 +1,27 @@
 import { useState, useEffect, Fragment } from "react";
 import { Box, Typography, Divider, CircularProgress } from "@mui/material";
 import icons from "../../helpers/icons";
+import towCaravan from "../../../../assets/imgs/caravanIcons/towCarIconSmall.png";
+import fullCaravan from "../../../../assets/imgs/caravanIcons/drivingCamperIconSmall.png";
+import integratedCaravan from "../../../../assets/imgs/caravanIcons/transitIconSmall.png";
+
 const CaravanIconRow = ({ data }) => {
   const [iconData, setIconData] = useState(data);
-
+  const [iconImg, setIconImg] = useState(data.vehicleType);
   useEffect(() => {
+    switch (data.vehicleType) {
+      case "towCaravan":
+        setIconImg(towCaravan);
+        break;
+      case "fullCaravan":
+        setIconImg(fullCaravan);
+        break;
+      case "integratedCarvan":
+        setIconImg(integratedCaravan);
+        break;
+      default:
+        setIconImg(towCaravan);
+    }
     setIconData(data);
   }, [data]);
 
@@ -60,6 +77,9 @@ const CaravanIconRow = ({ data }) => {
         {iconData[1].measurements.licenseClass}
         <icons.DriveEtaIcon className="CaravanFacilitiesIcons" />
       </Typography>
+      {/*  <Box sx={{ width: "50px" }}>
+        <img src={iconImg} alt="vehicleTypeIcon" style={{ width: "100%" }} />
+      </Box> */}
     </Box>
   );
 };

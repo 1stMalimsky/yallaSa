@@ -3,7 +3,7 @@ import { validateInputs } from "../../../../validation/validation";
 import { toast } from "react-toastify";
 
 const acc9Validation = (data) => {
-  console.log("data", data);
+  //console.log("data", data);
 
   if (data.extraInsuranceAvailable === "" || data.isCancelationPolicy === "") {
     toast.error("אנא ענו על כל השאלות");

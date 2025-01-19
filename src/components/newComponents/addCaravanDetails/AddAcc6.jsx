@@ -75,7 +75,7 @@ const AddAcc6 = ({ nextBtn }) => {
         newData[id] = prevData[id].filter(
           (item) => !Object.keys(item).includes(checkBoxId)
         );
-        console.log("newData", newData);
+        //console.log("newData", newData);
         return newData;
       });
     }

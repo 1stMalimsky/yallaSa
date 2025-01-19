@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import {
   AdvancedMarker,
   APIProvider,
@@ -39,27 +39,35 @@ const Test = ({ location, info }) => {
     }
   };
   return (
-    <APIProvider apiKey="">
-      <Box sx={{ width: "400px", height: "400px", border: 1 }}>
-        <Map
-          defaultCenter={defaultPosition}
-          defaultZoom={10}
-          mapId="DEMO_MAP_ID"
-          disableDefaultUI={true}
-        >
-          <AdvancedMarker
-            ref={markerRef}
-            position={defaultPosition}
-            onClick={handleMarkerClick}
-          />
-          {infoWindowShown && (
-            <InfoWindow anchor={marker} onClose={handleClose}>
-              <h5>Hello World</h5>
-              <p>I am an info window.</p>
-            </InfoWindow>
-          )}
-        </Map>
-      </Box>
+    <APIProvider apiKey="AIzaSyBtJ9sNi4g703bq6QXBfXbAYo99J7BQFGY">
+      {locationData && (
+        <Box sx={{ width: "400px", height: "400px", border: 1 }}>
+          <Map
+            defaultCenter={defaultPosition}
+            defaultZoom={10}
+            mapId="DEMO_MAP_ID"
+            disableDefaultUI={true}
+          >
+            <AdvancedMarker
+              ref={markerRef}
+              position={defaultPosition}
+              onClick={handleMarkerClick}
+            />
+            {infoWindowShown && (
+              <InfoWindow anchor={marker} onClose={handleClose}>
+                <Typography
+                  variant="subtitle1"
+                  sx={{ textDecoration: "underline" }}
+                >
+                  כתובת
+                </Typography>
+                <Typography variant="body2">רחוב + מס בית</Typography>
+                <Typography variant="body2">עיר</Typography>
+              </InfoWindow>
+            )}
+          </Map>
+        </Box>
+      )}
     </APIProvider>
   );
 };

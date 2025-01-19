@@ -7,14 +7,15 @@ import {
   CardContent,
   Grid,
 } from "@mui/material";
-import ImageGallery from "../../utils/helpers/ImageGallery";
-import CaravanIconRow from "./addCaravanDetails/helpers/CaravanIcons";
-import GoogleMapsComp from "./addCaravanDetails/helpers/GoogleMapsComp";
+import ImageGallery from "../../../utils/helpers/ImageGallery";
+import CaravanIconRow from "./helpers/CaravanIcons";
+import GoogleMapsComp from "./helpers/GoogleMapsComp";
 
 const AddCaravanSummary = ({ setupDetails }) => {
   const [accDetails, setAccDetails] = useState(setupDetails);
   const [images, setImages] = useState(setupDetails[4]);
   const [priceDetails, setPriceDetails] = useState(setupDetails[9]);
+  const [personCapacity, setPersonCapacity] = useState(setupDetails[1]);
   const [features, setFeatures] = useState(setupDetails[5]);
   const [listingtext, setListingtext] = useState(setupDetails[7]);
   const [locationDetails, setLocationDetails] = useState(setupDetails[6]);
@@ -25,6 +26,8 @@ const AddCaravanSummary = ({ setupDetails }) => {
     setPriceDetails(setupDetails[9]);
     setFeatures(setupDetails[5]);
     setListingtext(setupDetails[7]);
+    setLocationDetails(setupDetails[6]);
+    setPersonCapacity(setupDetails[1]);
   }, [setupDetails]);
 
   //console.log("summaryState", accDetails);
@@ -55,8 +58,10 @@ const AddCaravanSummary = ({ setupDetails }) => {
               </Typography>
             </Grid>
             <Grid item xs={12}>
-              {accDetails[1] && accDetails[5] && (
-                <CaravanIconRow data={[accDetails[1], accDetails[5]]} />
+              {personCapacity && features && (
+                <CaravanIconRow
+                  data={[personCapacity, features, accDetails[0].vehicleType]}
+                />
               )}
             </Grid>
             <Grid item xs={12}>
@@ -120,20 +125,33 @@ const AddCaravanSummary = ({ setupDetails }) => {
                 ))}
               </Grid>
             )}
-            {accDetails && accDetails[6] && (
-              <Grid>
-                <Typography variant="h5" sx={{ textDecoration: "underline" }}>
-                  מיקום
-                </Typography>
-                <Typography variant="subtitle2">
-                  עיר: {accDetails[6].city}
-                </Typography>
-                <Typography variant="subtitle2">
-                  רחוב: {accDetails[6].street} {accDetails[6].houseNumber}
-                </Typography>
-                {/* {accDetails && accDetails[6].mapsLocation && (
-                  <GoogleMapsComp coords={accDetails[6].mapsLocation} />
-                )} */}
+            {locationDetails && locationDetails.city && (
+              <Fragment>
+                <Grid item xs={12}>
+                  <Typography variant="h5" sx={{ textDecoration: "underline" }}>
+                    מיקום
+                  </Typography>
+                </Grid>
+                <Grid item xs={12} md={3}>
+                  <Typography variant="subtitle2">
+                    עיר: {locationDetails.city}
+                  </Typography>
+                  <Typography variant="subtitle2">
+                    רחוב: {locationDetails.street} {locationDetails.houseNumber}
+                  </Typography>
+                </Grid>
+              </Fragment>
+            )}
+            {locationDetails && locationDetails.mapsLocation && (
+              <Grid item xs={12} md={9}>
+                <GoogleMapsComp
+                  coords={locationDetails.mapsLocation}
+                  info={{
+                    city: locationDetails.city,
+                    street: locationDetails.street,
+                    houseNumber: locationDetails.houseNumber,
+                  }}
+                />
               </Grid>
             )}
           </Grid>

@@ -3,7 +3,6 @@ import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
-  Box,
   Typography,
   Grid,
 } from "@mui/material";
@@ -16,12 +15,47 @@ import AddAcc6 from "./AddAcc6";
 import AddAcc7 from "./AddAcc7";
 import AddAcc8 from "./AddAcc8";
 import AddAcc9 from "./AddAcc9";
-import AddCaravanSummary from "../addCaravanSummary";
+import AddCaravanSummary from "./addCaravanSummary";
+import axios from "axios";
+import getToken from "../../../utils/helpers/getToken";
+import getUserDetails from "../../../utils/helpers/getUserDetails";
 
 const AddCaravanAcc = () => {
   const [accDetails, setAccDetails] = useState([]);
   const [openState, setOpenState] = useState(0);
   //console.log("openState", openState);
+
+  const token = getToken();
+
+  useEffect(() => {
+    let sessionData = [];
+    const acc1Data = sessionStorage.getItem("acc1Data");
+    const acc2Data = sessionStorage.getItem("acc2Data");
+    const acc4Data = sessionStorage.getItem("acc4Data");
+    if (acc1Data) sessionData[0] = JSON.parse(acc1Data);
+    if (acc2Data) sessionData[1] = JSON.parse(acc2Data);
+    if (acc4Data) sessionData[3] = JSON.parse(acc4Data);
+
+    setAccDetails(sessionData);
+  }, []);
+
+  const handleSubmitBtn = async () => {
+    try {
+      const user = await getUserDetails(token.userId);
+      if (user.isOwner === false) {
+        const userChanged = await axios.patch(`/users/update/${token.userId}`, {
+          isOwner: true,
+        });
+        console.log("userChnaged");
+      }
+      const res = await axios.post("/caravan/create", {
+        accDetails: accDetails,
+      });
+      console.log(res);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const handleNextBtn = (data, numberOfEntry) => {
     setAccDetails((prevData) => {
@@ -32,17 +66,16 @@ const AddCaravanAcc = () => {
     /* STOPPER */
     if (numberOfEntry === 9) return;
     /* STOPPER */
-    setOpenState(numberOfEntry + 1);
+    setOpenState(openState + 1);
   };
 
   const handleBackBtn = (e) => {
     if (openState === 0) {
       return;
     }
-
-    const currentTarget = e.currentTarget.id;
+    /* const currentTarget = e.currentTarget.id;
     const idNumber = +currentTarget.slice(-1);
-    if (idNumber < openState || idNumber > openState) return;
+    if (idNumber < openState || idNumber > openState) return; */
     setOpenState(openState - 1);
   };
 
@@ -73,10 +106,10 @@ const AddCaravanAcc = () => {
             }
             onClick={handleBackBtn}
           >
-            <Typography variant="h5">1. סוג הקרוואן</Typography>
+            <Typography variant="h5">1. פרטים אישיים</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <AddAcc1 nextBtn={handleNextBtn} />
+            <AddAcc4 nextBtn={handleNextBtn} />
           </AccordionDetails>
         </Accordion>
         {/* ACC2 */}
@@ -90,10 +123,10 @@ const AddCaravanAcc = () => {
             }
             onClick={handleBackBtn}
           >
-            <Typography variant="h5">2. פרטי הלנה</Typography>
+            <Typography variant="h5">2. תיאור וחוקים</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <AddAcc2 nextBtn={handleNextBtn} />
+            <AddAcc8 nextBtn={handleNextBtn} />
           </AccordionDetails>
         </Accordion>
         {/* ACC3 */}
@@ -107,13 +140,10 @@ const AddCaravanAcc = () => {
             }
             onClick={handleBackBtn}
           >
-            <Typography variant="h5">3. ביטוח ורישיון רכב</Typography>
+            <Typography variant="h5">3. סוג הקרוואן</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <AddAcc3
-              nextBtn={handleNextBtn}
-              photoRemoved={updatePhotoRemoved}
-            />
+            <AddAcc1 nextBtn={handleNextBtn} />
           </AccordionDetails>
         </Accordion>
         {/* ACC4 */}
@@ -127,10 +157,10 @@ const AddCaravanAcc = () => {
               ) : null
             }
           >
-            <Typography variant="h5">4. פרטים אישיים</Typography>
+            <Typography variant="h5">4. פרטי הלנה</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <AddAcc4 nextBtn={handleNextBtn} />
+            <AddAcc2 nextBtn={handleNextBtn} />
           </AccordionDetails>
         </Accordion>
         {/* ACC5 */}
@@ -144,10 +174,10 @@ const AddCaravanAcc = () => {
             id="acc5"
             onClick={handleBackBtn}
           >
-            <Typography variant="h5">5. תמונות הקרוואן</Typography>
+            <Typography variant="h5">5. מתקנים וציוד</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <AddAcc5 nextBtn={handleNextBtn} />
+            <AddAcc6 nextBtn={handleNextBtn} />
           </AccordionDetails>
         </Accordion>
         {/* ACC6 */}
@@ -161,10 +191,10 @@ const AddCaravanAcc = () => {
             id="acc6"
             onClick={handleBackBtn}
           >
-            <Typography variant="h5">6. מתקנים וציוד</Typography>
+            <Typography variant="h5">6. תמונות הקרוואן</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <AddAcc6 nextBtn={handleNextBtn} />
+            <AddAcc5 nextBtn={handleNextBtn} />
           </AccordionDetails>
         </Accordion>
         {/* ACC7 */}
@@ -195,10 +225,13 @@ const AddCaravanAcc = () => {
             id="acc8"
             onClick={handleBackBtn}
           >
-            <Typography variant="h5">8. תיאור וחוקים</Typography>
+            <Typography variant="h5">8. ביטוח ורישיון רכב</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <AddAcc8 nextBtn={handleNextBtn} />
+            <AddAcc3
+              nextBtn={handleNextBtn}
+              photoRemoved={updatePhotoRemoved}
+            />
           </AccordionDetails>
         </Accordion>
         {/* ACC9 */}
@@ -215,7 +248,10 @@ const AddCaravanAcc = () => {
             <Typography variant="h5">9. הגדרות מחיר</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <AddAcc9 nextBtn={handleNextBtn} />
+            <AddAcc9
+              nextBtn={handleNextBtn}
+              handleSubmit={() => handleSubmitBtn()}
+            />
           </AccordionDetails>
         </Accordion>
       </Grid>

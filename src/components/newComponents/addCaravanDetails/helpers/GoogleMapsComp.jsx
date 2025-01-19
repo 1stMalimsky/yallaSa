@@ -1,16 +1,31 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Loader } from "@googlemaps/js-api-loader";
-import { Marker } from "@googlemaps/adv-markers-utils";
+import { useCallback, useEffect, useState } from "react";
+import { Box, Typography } from "@mui/material";
+import {
+  AdvancedMarker,
+  APIProvider,
+  Map,
+  useMarkerRef,
+  InfoWindow,
+} from "@vis.gl/react-google-maps";
 
-const loader = new Loader({
-  apiKey: "Your aPI", // Replace with your actual Google Maps API key
-  version: "weekly",
-  libraries: ["places", "marker"], // Add 'marker' only if it is a recognized library
-});
+const Test = ({ coords, info }) => {
+  const [locationData, setLocationData] = useState(null);
+  const [markerRef, marker] = useMarkerRef();
+  const [infoWindowShown, setInfoWindowShown] = useState(false);
 
-const GoogleMapsComp = ({ coords }) => {
-  const mapRef = useRef(null);
-  const [map, setMap] = useState(null);
+  //console.log("map init");
+
+  useEffect(() => {
+    const parsedCoords = parseCoords(coords);
+    setLocationData(parsedCoords);
+  }, [coords]);
+
+  const handleMarkerClick = useCallback(
+    () => setInfoWindowShown((isShown) => !isShown),
+    []
+  );
+
+  const handleClose = useCallback(() => setInfoWindowShown(false), []);
 
   const parseCoords = (coords) => {
     if (!coords) return null;
@@ -24,35 +39,39 @@ const GoogleMapsComp = ({ coords }) => {
     }
   };
 
-  useEffect(() => {
-    loader.load().then((google) => {
-      const { lat, lng } = parseCoords(coords);
-      const initialMap = new google.maps.Map(mapRef.current, {
-        mapId: "test-map",
-        center: { lat, lng },
-        zoom: 8,
-        disableDefaultUI: true,
-        // Include any additional options needed for your setup
-      });
-      setMap(initialMap);
+  //console.log("parsedCoords", locationData);
 
-      const marker = new Marker({
-        position: { lat, lng },
-        map: initialMap,
-        title: "Click me!",
-      });
-
-      const infoWindow = new google.maps.InfoWindow({
-        content: "Hello World! Here is more info.",
-      });
-
-      marker.addListener("click", () => {
-        infoWindow.open(initialMap, marker);
-      });
-    });
-  }, [coords]);
-
-  return <div ref={mapRef} style={{ width: "400px", height: "400px" }} />;
+  return (
+    <APIProvider apiKey="AIzaSyBtJ9sNi4g703bq6QXBfXbAYo99J7BQFGY">
+      {locationData && (
+        <Box sx={{ width: "250px", height: "250px" }}>
+          <Map
+            defaultCenter={locationData}
+            defaultZoom={10}
+            mapId="DEMO_MAP_ID"
+            disableDefaultUI={true}
+          >
+            <AdvancedMarker
+              ref={markerRef}
+              position={locationData}
+              onClick={handleMarkerClick}
+            />
+            {infoWindowShown && (
+              <InfoWindow anchor={marker} onClose={handleClose}>
+                <Typography variant="h6" sx={{ textDecoration: "underline" }}>
+                  כתובת
+                </Typography>
+                <Typography variant="body2">
+                  {info.street} {info.houseNumber}
+                </Typography>
+                <Typography variant="body2">{info.city}</Typography>
+              </InfoWindow>
+            )}
+          </Map>
+        </Box>
+      )}
+    </APIProvider>
+  );
 };
 
-export default GoogleMapsComp;
+export default Test;

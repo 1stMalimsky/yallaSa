@@ -14,7 +14,7 @@ import {
 
 import acc9Validation from "./helpers/acc9Validation";
 
-const AddAcc9 = ({ nextBtn }) => {
+const AddAcc9 = ({ nextBtn, handleSubmit }) => {
   const [priceDetails, setPriceDetails] = useState({
     pricePerNight: "",
     minimumNights: "",
@@ -49,7 +49,7 @@ const AddAcc9 = ({ nextBtn }) => {
     }
   }, [extraInsuranceAvailable]);
 
-  const handleNextBtn = () => {
+  const handleNextBtn = async () => {
     const validateResponse = acc9Validation({
       ...priceDetails,
       ...cancelationPolicy,
@@ -57,9 +57,15 @@ const AddAcc9 = ({ nextBtn }) => {
       isCancelationPolicy,
       extraInsuranceAvailable,
     });
-    console.log("validation response", validateResponse);
-
+    //console.log("val
+    // idation response", validateResponse);
+    if (validateResponse === true) return;
     nextBtn({ ...priceDetails, ...cancelationPolicy, ...insuranceDetails }, 8);
+    try {
+      handleSubmit();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleChange = (e, setState) => {

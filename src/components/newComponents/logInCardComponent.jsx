@@ -29,8 +29,8 @@ const LoginCardComponent = () => {
         navigate(ROUTES.HOME);
       }
     } catch (err) {
+      toast.error(err.response.data);
       console.log("login error from axios", err.response.data);
-      toast.error(err.response.data.message);
     }
   };
 
@@ -74,6 +74,7 @@ const LoginCardComponent = () => {
           <TextField
             className="loginTextField"
             id="password"
+            type="password"
             required={true}
             label={"סיסמא"}
             value={inputState.password}

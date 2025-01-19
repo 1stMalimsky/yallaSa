@@ -7,7 +7,7 @@ import {
   AccordionSummary,
   Typography,
 } from "@mui/material";
-import AddCaravanAcc from "../../components/newComponents/addCaravanDetails/AddCarvanAccDetails";
+import AddCaravanAcc from "../../components/newComponents/addCaravanDetails/AddCaravanAccDetails";
 
 const AddCaravan = () => {
   const params = useParams();
