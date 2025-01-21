@@ -14,7 +14,7 @@ const acc1Validation = (
 ) => {
   if (!privateUser || !paymentType || !paymentDetails || !userDetails) {
     //console.log("data", privateUser, paymentType, paymentDetails, userDetails);
-    console.log("acc4 validation error. missing data");
+    console.log("acc1 validation error. missing data");
     toast.error("אנא מלאו את כל הפרטים");
     return true;
   }

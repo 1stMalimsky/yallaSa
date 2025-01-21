@@ -29,7 +29,7 @@ const CompanyUserType = ({
     handleUserDetails(updatedDetails);
   };
 
-  console.log("companyUserType", paymentDetails);
+  //console.log("companyUserType", paymentDetails);
 
   return (
     <div>
@@ -72,12 +72,12 @@ const CompanyUserType = ({
           label="עיר"
           onChange={handleUserDetailsChange}
         />
-        {/*    <TextField
+        <TextField
           className="addCarTextFiled"
-          id="companyMaps"
-          label="מיקום בגוגל"
+          id="companyEmail"
+          label="מייל משרד"
           onChange={handleUserDetailsChange}
-        /> */}
+        />
       </Box>
       <Box>
         <CompensationDetails

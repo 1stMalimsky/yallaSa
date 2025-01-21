@@ -11,8 +11,8 @@ import {
   FormLabel,
   Radio,
 } from "@mui/material";
-
 import acc9Validation from "./helpers/acc9Validation";
+import checkSessionStorage from "../../../utils/helpers/checkSessionStorage";
 
 const AddAcc9 = ({ nextBtn, handleSubmit }) => {
   const [priceDetails, setPriceDetails] = useState({
@@ -28,26 +28,42 @@ const AddAcc9 = ({ nextBtn, handleSubmit }) => {
     basicInsurance: "",
     premiumInsurance: "",
   });
-  const [isCancelationPolicy, setIsCancelationPolicy] = useState("");
-  const [extraInsuranceAvailable, setExtraInsuranceAvailable] = useState("");
+  const [isCancelationPolicy, setIsCancelationPolicy] = useState(null);
+  const [extraInsuranceAvailable, setExtraInsuranceAvailable] = useState(null);
+
+  useEffect(() => {
+    const sessionData = JSON.parse(checkSessionStorage(9));
+
+    if (sessionData) {
+      console.log("session9", sessionData);
+      setInsuranceDetails({
+        insuranceIncluded: sessionData.insuranceIncluded || "",
+        basicInsurance: sessionData.basicInsurance || "",
+        premiumInsurance: sessionData.premiumInsurance,
+      });
+      setPriceDetails({
+        pricePerNight: sessionData.pricePerNight || "",
+        minimumNights: sessionData.minimumNights || "",
+      });
+      setCancelationPolicy({
+        isCancelationPolicy: sessionData.isCancelationPolicy || "",
+        freeCancelationDays: sessionData.freeCancelationDays || "",
+        cancelationPrice: sessionData.cancelationPrice || "",
+      });
+      setIsCancelationPolicy(sessionData.isCancelationPolicy || "");
+      setExtraInsuranceAvailable(sessionData.extraInsuranceAvailable || "");
+    }
+  }, []);
 
   useEffect(() => {
     if (insuranceDetails.insuranceIncluded === "true") {
       setInsuranceDetails((prevData) => {
-        return { ...prevData, basicInsurance: "" };
+        return { ...prevData, basicInsurance: "", premiumInsurance: "" };
       });
     }
     if (insuranceDetails.insuranceIncluded === "false")
       setExtraInsuranceAvailable(false);
   }, [insuranceDetails.insuranceIncluded]);
-
-  useEffect(() => {
-    if (!extraInsuranceAvailable) {
-      setInsuranceDetails((prevData) => {
-        return { ...prevData, premiumInsurance: "" };
-      });
-    }
-  }, [extraInsuranceAvailable]);
 
   const handleNextBtn = async () => {
     const validateResponse = acc9Validation({
@@ -66,6 +82,8 @@ const AddAcc9 = ({ nextBtn, handleSubmit }) => {
         ...priceDetails,
         ...cancelationPolicy,
         ...insuranceDetails,
+        isCancelationPolicy,
+        extraInsuranceAvailable,
       })
     );
     nextBtn({ ...priceDetails, ...cancelationPolicy, ...insuranceDetails }, 8);
@@ -83,6 +101,8 @@ const AddAcc9 = ({ nextBtn, handleSubmit }) => {
       return newData;
     });
   };
+
+  // console.log("isCancelationPolicy", isCancelationPolicy);
 
   return (
     <Box>
@@ -286,11 +306,10 @@ const AddAcc9 = ({ nextBtn, handleSubmit }) => {
           </Box>
         )}
       </Grid>
-      <Box
-        onClick={handleNextBtn}
-        sx={{ display: "flex", justifyContent: "center" }}
-      >
-        <Button variant="contained">הבא</Button>
+      <Box sx={{ display: "flex", justifyContent: "center" }}>
+        <Button variant="contained" onClick={handleNextBtn}>
+          הבא
+        </Button>
       </Box>
     </Box>
   );

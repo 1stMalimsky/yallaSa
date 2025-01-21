@@ -55,39 +55,38 @@ const AddAcc5 = ({ nextBtn }) => {
     if (validationResponse) {
       return;
     }
-    sessionStorage.setItem("acc5Data", JSON.stringify(acc5Details));
+    //sessionStorage.setItem("acc5Data", JSON.stringify(acc5Details));
     nextBtn(acc5Details, 4);
   };
 
-  const handleTick = (e, catagory) => {
-    if (!catagory) return console.log("no catagory selected");
-    //console.log("checkbox ID", e.target.id);
-    //console.log("checkbox checked", e.target.checked);
-    const checkedState = e.target.checked;
-    const checkBoxId = e.target.id;
-    const id = catagory.current.id;
-
-    if (checkedState) {
-      setAccDetails((prevData) => {
-        const newData = { ...prevData };
-        newData[id] = prevData[id]
-          ? [...prevData[id], { [checkBoxId]: e.target.name }]
-          : [checkBoxId];
-        //console.log("newData", newData);
-
-        return newData;
-      });
+  const handleTick = (e, categoryRef) => {
+    if (!categoryRef) {
+      console.log("No category selected");
+      return;
     }
-    if (!checkedState) {
-      setAccDetails((prevData) => {
-        const newData = { ...prevData };
-        newData[id] = prevData[id].filter(
+
+    const { checked, id: checkBoxId, name } = e.target;
+    const category = categoryRef.current.id;
+
+    setAccDetails((prevData) => {
+      // Copy previous data
+      const newData = { ...prevData };
+      // Handle the current category based on its existing data in state
+      const currentCategory = newData[category] ?? [];
+
+      if (checked) {
+        // Add the new item if it's not already included
+        const newItem = { [checkBoxId]: name };
+        newData[category] = [...currentCategory, newItem];
+      } else {
+        // Remove the item if unchecked
+        newData[category] = currentCategory.filter(
           (item) => !Object.keys(item).includes(checkBoxId)
         );
-        //console.log("newData", newData);
-        return newData;
-      });
-    }
+      }
+
+      return newData;
+    });
   };
 
   const handleMeasurementsChange = (e) => {
@@ -99,7 +98,7 @@ const AddAcc5 = ({ nextBtn }) => {
     });
   };
 
-  console.log("acc5Details", acc5Details);
+  //console.log("acc5Details", acc5Details);
 
   return (
     <Box>
@@ -144,6 +143,9 @@ const AddAcc5 = ({ nextBtn }) => {
                   key={key}
                   control={<Checkbox id={key} />}
                   label={value}
+                  checked={acc5Details.bathroom.some((item) =>
+                    Object.keys(item).includes(key)
+                  )}
                   onClick={(e) => {
                     handleTick(e, bathroomRef);
                   }}
@@ -164,6 +166,9 @@ const AddAcc5 = ({ nextBtn }) => {
                   key={key}
                   control={<Checkbox id={key} />}
                   label={value}
+                  checked={acc5Details.safety.some((item) =>
+                    Object.keys(item).includes(key)
+                  )}
                   onClick={(e) => {
                     handleTick(e, safetyRef);
                   }}
@@ -184,6 +189,9 @@ const AddAcc5 = ({ nextBtn }) => {
                   key={key}
                   control={<Checkbox id={key} />}
                   label={value}
+                  checked={acc5Details.comfort.some((item) =>
+                    Object.keys(item).includes(key)
+                  )}
                   onClick={(e) => {
                     handleTick(e, comfortRef);
                   }}

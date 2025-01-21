@@ -19,6 +19,7 @@ import AddCaravanSummary from "./addCaravanSummary";
 import axios from "axios";
 import getToken from "../../../utils/helpers/getToken";
 import getUserDetails from "../../../utils/helpers/getUserDetails";
+import arrToObj from "../../../utils/helpers/arrToObj";
 
 const AddCaravanAcc = () => {
   const [accDetails, setAccDetails] = useState([]);
@@ -30,20 +31,31 @@ const AddCaravanAcc = () => {
   const handleSubmitBtn = async () => {
     try {
       const user = await getUserDetails(token.userId);
-      console.log("user", user);
-
+      //console.log("user", user);
       if (user.isOwner === false) {
         const userChanged = await axios.patch(`/users/update/${token.userId}`, {
           isOwner: true,
         });
         console.log("userChnaged");
       }
-      /*     const res = await axios.post("/caravan/create", {
-        accDetails: accDetails,
-      });
-      console.log(res); */
+      const dataToSend = arrToObj(accDetails);
+      console.log("dataToSend", dataToSend);
+      const stamOBJ = {
+        ...accDetails[0],
+        ...accDetails[1],
+        ...accDetails[2],
+        ...accDetails[3],
+        ...accDetails[4],
+        ...accDetails[6],
+        ...accDetails[7].caravanDetails,
+        ...accDetails[8],
+      };
+      console.log("stamOBJ", stamOBJ);
+
+      const res = await axios.post("/caravans/create", stamOBJ);
+      console.log(res);
     } catch (err) {
-      console.log(err);
+      console.log(err.response);
     }
   };
 

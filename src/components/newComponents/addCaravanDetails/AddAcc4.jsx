@@ -18,10 +18,12 @@ const AddAcc4 = ({ nextBtn }) => {
 
   useEffect(() => {
     const sessionData = JSON.parse(checkSessionStorage(4));
-    console.log("session4", sessionData);
-    setSeats(sessionData.numOfseats);
-    setBeds(sessionData.numOfbeds);
-    setSleepers(sessionData.numOfsleepers);
+    if (sessionData) {
+      console.log("session4", sessionData);
+      setSeats(sessionData.numOfseats);
+      setBeds(sessionData.numOfbeds);
+      setSleepers(sessionData.numOfsleepers);
+    }
   }, []);
 
   useEffect(() => {

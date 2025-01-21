@@ -65,6 +65,14 @@ const companySchema = Joi.object({
       "string.max": "שם העיר יכול להכיל עד 100 תווים",
       "any.required": "שם העיר הינו שדה חובה",
     }),
+  companyEmail: Joi.string()
+    .email({ tlds: { allow: false } })
+    .required()
+    .messages({
+      "string.email": "אנא הכנס כתובת מייל תקינה",
+      "string.empty": "אנא הכנס כתובת מייל",
+      "any.required": "אנא הכנס כתובת מייל",
+    }),
 });
 
 const paymentDetailsSchema = Joi.object({

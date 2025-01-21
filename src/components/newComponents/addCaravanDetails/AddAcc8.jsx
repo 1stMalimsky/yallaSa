@@ -4,6 +4,7 @@ import ImageUploadComponent from "../../../utils/helpers/FilePondHelper2";
 import { baseCaravanDetailsSchema } from "../../../validation/addCaravanValidation";
 import { validateInputs } from "../../../validation/validation";
 import { toast } from "react-toastify";
+import checkSessionStorage from "../../../utils/helpers/checkSessionStorage";
 
 const AddAcc8 = ({ nextBtn, photoRemoved }) => {
   const [caravanDetails, setCaravanDetails] = useState({
@@ -19,6 +20,12 @@ const AddAcc8 = ({ nextBtn, photoRemoved }) => {
     { fileName: "mandInsure", base64Data: null },
     { fileName: "3rdPartyInsure", base64Data: null },
   ]);
+  useEffect(() => {
+    const sessionData = JSON.parse(checkSessionStorage(8));
+    if (sessionData) {
+      setCaravanDetails(sessionData);
+    }
+  }, []);
 
   const checkForPhotos = (data) => {
     for (let item of data) {

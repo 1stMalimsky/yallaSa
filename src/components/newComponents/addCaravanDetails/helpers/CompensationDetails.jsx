@@ -41,7 +41,7 @@ const CompensationDetails = ({
     setPaymentDetails(newDetails);
     handlePaymentDetailsChange(newDetails);
   };
-  console.log("compansationDetails", paymentType);
+  //console.log("compansationDetails", paymentType);
 
   return (
     <div>

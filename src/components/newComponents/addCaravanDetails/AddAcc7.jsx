@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Box,
   TextField,
@@ -14,6 +14,7 @@ import generateTimeOptions from "../../../utils/generateTimeOptions";
 import { acc7ValidationSchema } from "../../../validation/addCaravanValidation";
 import { validateInputs } from "../../../validation/validation";
 import { toast } from "react-toastify";
+import checkSessionStorage from "../../../utils/helpers/checkSessionStorage";
 
 const AddAcc7 = ({ nextBtn }) => {
   const [acc7Data, setAcc7Data] = useState({
@@ -24,6 +25,13 @@ const AddAcc7 = ({ nextBtn }) => {
     pickupFrom: "",
     dropoffUntil: "",
   });
+
+  useEffect(() => {
+    const sessionData = JSON.parse(checkSessionStorage(7));
+    if (sessionData) {
+      setAcc7Data(sessionData);
+    }
+  }, []);
 
   const handleInputChange = (e, key) => {
     const value = e.target.value;

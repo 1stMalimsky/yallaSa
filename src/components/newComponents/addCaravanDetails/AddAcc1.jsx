@@ -57,8 +57,14 @@ const AddAcc1 = ({ nextBtn }) => {
     );
     if (validationResponse) {
       return;
-    } else sessionStorage.setItem("acc1Data", JSON.stringify(acc1Data));
-    nextBtn(acc1Data, 0);
+    } else {
+      sessionStorage.setItem("acc1Data", JSON.stringify(acc1Data));
+      const newData = {
+        ...acc1Data,
+        userDetails: { ...acc1Data.userDetails, userId: userId },
+      };
+      nextBtn(newData, 0);
+    }
   };
 
   const handlePaymentTypeChange = (paymentTypeData) => {
