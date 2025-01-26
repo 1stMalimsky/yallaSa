@@ -30,7 +30,7 @@ const CaravanSearchResults = () => {
     updateEnd: dayjs.unix(params.end),
   });
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(1);
+  const [limit, setLimit] = useState(5);
   const currentDate = dayjs();
 
   const fetchData = async () => {
@@ -44,7 +44,7 @@ const CaravanSearchResults = () => {
       if (!searchResult) {
         toast.error("אין קרוואנים זמינים בתאריכים אלו");
         setTimeout(() => {
-          //return navigate("/");
+          return navigate("/");
         }, 5000);
       }
       setQueryData(searchResult.data.caravans);
@@ -80,7 +80,7 @@ const CaravanSearchResults = () => {
     fetchData();
   }, [page, limit]);
 
-  console.log("queryData", queryData);
+  //console.log("queryData", queryData);
 
   const onSortPick = (value) => {
     setSortState(value);
@@ -184,12 +184,7 @@ const CaravanSearchResults = () => {
             }}
           >
             {searchResults.map((caravan) => (
-              <Grid
-                key={caravan.model}
-                item
-                xs={12}
-                sx={{ marginBottom: "1em" }}
-              >
+              <Grid key={caravan._id} item xs={12} sx={{ marginBottom: "1em" }}>
                 <CaravanCard
                   caravanDetails={caravan}
                   chosenDates={chosenDates}

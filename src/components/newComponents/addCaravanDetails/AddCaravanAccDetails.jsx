@@ -19,13 +19,12 @@ import AddCaravanSummary from "./addCaravanSummary";
 import axios from "axios";
 import getToken from "../../../utils/helpers/getToken";
 import getUserDetails from "../../../utils/helpers/getUserDetails";
-import arrToObj from "../../../utils/helpers/arrToObj";
 
 const AddCaravanAcc = () => {
   const [accDetails, setAccDetails] = useState([]);
   const [openState, setOpenState] = useState(0);
-  //console.log("openState", openState);
-
+  const [caravanId, setCaravanId] = useState("");
+  const [imageUploadTrigger, setImageUploadTrigger] = useState(false);
   const token = getToken();
 
   const handleSubmitBtn = async () => {
@@ -38,22 +37,28 @@ const AddCaravanAcc = () => {
         });
         console.log("userChnaged");
       }
-      const dataToSend = arrToObj(accDetails);
-      console.log("dataToSend", dataToSend);
-      const stamOBJ = {
+
+      const objToSend = {
         ...accDetails[0],
         ...accDetails[1],
-        ...accDetails[2],
         ...accDetails[3],
         ...accDetails[4],
         ...accDetails[6],
         ...accDetails[7].caravanDetails,
         ...accDetails[8],
       };
-      console.log("stamOBJ", stamOBJ);
+      //console.log("stamOBJ", stamOBJ);
 
-      const res = await axios.post("/caravans/create", stamOBJ);
-      console.log(res);
+      const res = await axios.post("/caravans/create", objToSend);
+      const caravavnId = res.data.newCaravan._id;
+      setImageUploadTrigger(true);
+      console.log("in main trigger", imageUploadTrigger);
+      setTimeout(() => {
+        setImageUploadTrigger(false);
+      }, 1000);
+      setCaravanId(caravavnId);
+      sessionStorage.clear();
+      //console.log("caravanId", caravavnId);
     } catch (err) {
       console.log(err.response);
     }
@@ -75,9 +80,6 @@ const AddCaravanAcc = () => {
     if (openState === 0) {
       return;
     }
-    /* const currentTarget = e.currentTarget.id;
-    const idNumber = +currentTarget.slice(-1);
-    if (idNumber < openState || idNumber > openState) return; */
     setOpenState(openState - 1);
   };
 
@@ -93,7 +95,6 @@ const AddCaravanAcc = () => {
   useEffect(() => {
     console.log("accDetails", accDetails);
   }, [accDetails]);
-
   return (
     <Grid container sx={{ display: "flex" }}>
       <Grid item xs={12} md={8} lg={8}>
@@ -196,7 +197,11 @@ const AddCaravanAcc = () => {
             <Typography variant="h5">6. תמונות הקרוואן</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <AddAcc6 nextBtn={handleNextBtn} />
+            <AddAcc6
+              nextBtn={handleNextBtn}
+              carId={caravanId}
+              uploadTrigger={imageUploadTrigger}
+            />
           </AccordionDetails>
         </Accordion>
         {/* ACC7 */}
@@ -233,6 +238,8 @@ const AddCaravanAcc = () => {
             <AddAcc8
               nextBtn={handleNextBtn}
               photoRemoved={updatePhotoRemoved}
+              caravanId={caravanId}
+              uploadTrigger={imageUploadTrigger}
             />
           </AccordionDetails>
         </Accordion>

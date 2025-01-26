@@ -1,4 +1,4 @@
-import React, { useState, useRef, Fragment } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import { Divider, Grid, Typography, Button, Box } from "@mui/material";
 import RatingThing from "./helpers/RatingThing";
 import { useNavigate } from "react-router-dom";
@@ -7,6 +7,8 @@ import CaravanCardModal from "./caravanCard/CaravanCardModal";
 import CaravanCardGallery from "./caravanCard/CaravanCardImageGallery";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import dayjs from "dayjs";
+import axios from "axios";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const CaravanCard = ({ caravanDetails, chosenDates }) => {
   const navigate = useNavigate();
@@ -17,10 +19,29 @@ const CaravanCard = ({ caravanDetails, chosenDates }) => {
   });
   const [modalOpen, setModalOpen] = useState(false);
   const [currentImage, setCurrentImage] = useState(0);
+  const [caravanPhotos, setCaravanPhotos] = useState([]);
+
+  const caravanId = caravanDetails._id;
+  console.log("caravavanDetails", caravanDetails);
+
+  const fetchImages = async () => {
+    try {
+      //console.log("CaravanCard init");
+      const caravanPhotos = await axios.get(`/caravans/images/${caravanId}`);
+      setCaravanPhotos(caravanPhotos);
+      //console.log("caravan photos", caravanPhotos.data.caravanImages);
+    } catch (err) {
+      console.log("caravan photo search error", err);
+    }
+  };
+
+  useEffect(() => {
+    fetchImages();
+  }, []);
 
   const handleImageClick = (index) => {
-    if (index !== undefined && caravanDetails.images[index]) {
-      setCurrentImage(caravanDetails.images[index].original);
+    if (index !== undefined && caravanPhotos.data.caravanImages[index]) {
+      setCurrentImage(caravanPhotos.data.caravanImages[index].original);
       setModalOpen(true);
     }
   };
@@ -29,6 +50,8 @@ const CaravanCard = ({ caravanDetails, chosenDates }) => {
     setModalOpen(false);
     setCurrentImage(null);
   };
+  //console.log("caravanPhotos", caravanPhotos);
+  if (caravanPhotos.length < 1) return <CircularProgress />;
 
   return (
     <div style={{ display: "flex", justifyContent: "center" }}>
@@ -43,7 +66,7 @@ const CaravanCard = ({ caravanDetails, chosenDates }) => {
           sx={{ order: { xs: 2, md: 1 } }}
         >
           <CaravanCardGallery
-            caravanImgs={caravanDetails.images}
+            caravanImgs={caravanPhotos}
             handleImageClick={handleImageClick}
           />
           <CaravanCardModal
@@ -63,7 +86,7 @@ const CaravanCard = ({ caravanDetails, chosenDates }) => {
           sx={{ order: { xs: 1, md: 2 }, padding: 2 }}
         >
           <Typography variant="h3" className="caravanCardTitle">
-            {caravanDetails.model}
+            {caravanDetails.listingName}
           </Typography>
           <Box
             sx={{
@@ -75,12 +98,12 @@ const CaravanCard = ({ caravanDetails, chosenDates }) => {
             }}
           >
             <Typography variant="h6" className="CaravanFacilities">
-              {caravanDetails.numOfBeds}
+              {caravanDetails.personCapacity.numOfBeds}
               <icons.HotelIcon className="CaravanFacilitiesIcons" />
             </Typography>
             <Divider className="CaravanDivider" orientation="vertical" />
             <Typography variant="h6" className="CaravanFacilities">
-              {caravanDetails.numOfSeats}
+              {caravanDetails.personCapacity.numOfSeats}
               <icons.EventSeatIcon className="CaravanFacilitiesIcons" />
             </Typography>
             <Fragment>
@@ -110,7 +133,7 @@ const CaravanCard = ({ caravanDetails, chosenDates }) => {
             </Typography>
             <Divider className="CaravanDivider" orientation="vertical" />
             <Typography variant="h6" className="CaravanFacilities">
-              {caravanDetails.licenseRequired}
+              {caravanDetails.licenseDetails.licenseRequired}
               <icons.DriveEtaIcon className="CaravanFacilitiesIcons" />
             </Typography>
           </Box>
@@ -147,11 +170,12 @@ const CaravanCard = ({ caravanDetails, chosenDates }) => {
           }}
         >
           <Typography variant="h4">
-            מחיר: {caravanDetails.pricePerNight} ש"ח \{" "}
+            מחיר: {caravanDetails.priceDetails.pricePerNight} ש"ח \{" "}
             <span style={{ fontSize: "0.5em" }}>ללילה</span>
           </Typography>
           <Typography variant="h6">
-            סה"כ: {+caravanDetails.pricePerNight * +chosenDates.numOfDay}
+            סה"כ:{" "}
+            {+caravanDetails.priceDetails.pricePerNight * +chosenDates.numOfDay}
           </Typography>
           <Button
             variant="contained"

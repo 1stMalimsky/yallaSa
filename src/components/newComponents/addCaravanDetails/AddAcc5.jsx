@@ -55,7 +55,7 @@ const AddAcc5 = ({ nextBtn }) => {
     if (validationResponse) {
       return;
     }
-    //sessionStorage.setItem("acc5Data", JSON.stringify(acc5Details));
+    sessionStorage.setItem("acc5Data", JSON.stringify(acc5Details));
     nextBtn(acc5Details, 4);
   };
 

@@ -13,6 +13,7 @@ import {
 } from "@mui/material";
 import acc9Validation from "./helpers/acc9Validation";
 import checkSessionStorage from "../../../utils/helpers/checkSessionStorage";
+import FinalizeModal from "./helpers/FinalizeAddModal";
 
 const AddAcc9 = ({ nextBtn, handleSubmit }) => {
   const [priceDetails, setPriceDetails] = useState({
@@ -31,11 +32,13 @@ const AddAcc9 = ({ nextBtn, handleSubmit }) => {
   const [isCancelationPolicy, setIsCancelationPolicy] = useState(null);
   const [extraInsuranceAvailable, setExtraInsuranceAvailable] = useState(null);
 
+  const [modalOpenState, setModalOpenState] = useState(false);
+
   useEffect(() => {
     const sessionData = JSON.parse(checkSessionStorage(9));
 
     if (sessionData) {
-      console.log("session9", sessionData);
+      //console.log("session9", sessionData);
       setInsuranceDetails({
         insuranceIncluded: sessionData.insuranceIncluded || "",
         basicInsurance: sessionData.basicInsurance || "",
@@ -73,8 +76,6 @@ const AddAcc9 = ({ nextBtn, handleSubmit }) => {
       isCancelationPolicy,
       extraInsuranceAvailable,
     });
-    //console.log("val
-    // idation response", validateResponse);
     if (validateResponse === true) return;
     sessionStorage.setItem(
       "acc9Data",
@@ -87,11 +88,7 @@ const AddAcc9 = ({ nextBtn, handleSubmit }) => {
       })
     );
     nextBtn({ ...priceDetails, ...cancelationPolicy, ...insuranceDetails }, 8);
-    try {
-      handleSubmit();
-    } catch (error) {
-      console.log(error);
-    }
+    setModalOpenState(true);
   };
 
   const handleChange = (e, setState) => {
@@ -102,7 +99,9 @@ const AddAcc9 = ({ nextBtn, handleSubmit }) => {
     });
   };
 
-  // console.log("isCancelationPolicy", isCancelationPolicy);
+  const handleCloseModal = () => {
+    setModalOpenState(false);
+  };
 
   return (
     <Box>
@@ -310,6 +309,12 @@ const AddAcc9 = ({ nextBtn, handleSubmit }) => {
         <Button variant="contained" onClick={handleNextBtn}>
           הבא
         </Button>
+
+        <FinalizeModal
+          modalOpenState={modalOpenState}
+          handleClose={handleCloseModal}
+          handleSubmit={handleSubmit}
+        />
       </Box>
     </Box>
   );

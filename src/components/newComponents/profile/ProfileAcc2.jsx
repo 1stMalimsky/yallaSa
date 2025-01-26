@@ -30,7 +30,7 @@ const ProfileAcc2 = ({ userDetails, onDetailsUpdated, renderFunc }) => {
   //console.log("userDetailsState", userDetailsState);
   useEffect(() => {
     if (userDetailsState && !userDetailsState.license.path) {
-      console.log("no image found");
+      console.log("no private license image found");
       setShowImageWindow(false);
     } else {
       console.log("Image Exists!");

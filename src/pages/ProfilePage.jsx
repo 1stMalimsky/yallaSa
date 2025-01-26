@@ -14,7 +14,7 @@ const EditProfilePage = () => {
   if (!tokenPayload) {
     window.location.href = "/login";
   }
-  console.log("inputState", inputState);
+  //console.log("inputState", inputState);
 
   useEffect(() => {
     (async () => {

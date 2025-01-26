@@ -5,8 +5,9 @@ import { baseCaravanDetailsSchema } from "../../../validation/addCaravanValidati
 import { validateInputs } from "../../../validation/validation";
 import { toast } from "react-toastify";
 import checkSessionStorage from "../../../utils/helpers/checkSessionStorage";
+import getToken from "../../../utils/helpers/getToken";
 
-const AddAcc8 = ({ nextBtn, photoRemoved }) => {
+const AddAcc8 = ({ nextBtn, photoRemoved, caravanId, uploadTrigger }) => {
   const [caravanDetails, setCaravanDetails] = useState({
     licenseNumber: "",
     carModel: "",
@@ -20,12 +21,19 @@ const AddAcc8 = ({ nextBtn, photoRemoved }) => {
     { fileName: "mandInsure", base64Data: null },
     { fileName: "3rdPartyInsure", base64Data: null },
   ]);
+  const [imageUploadTrigger, setImageUploadTrigger] = useState(false);
+
   useEffect(() => {
     const sessionData = JSON.parse(checkSessionStorage(8));
     if (sessionData) {
       setCaravanDetails(sessionData);
     }
   }, []);
+
+  useEffect(() => {
+    setImageUploadTrigger(uploadTrigger);
+  }, [uploadTrigger]);
+  const userId = getToken().userId;
 
   const checkForPhotos = (data) => {
     for (let item of data) {
@@ -119,25 +127,39 @@ const AddAcc8 = ({ nextBtn, photoRemoved }) => {
           <Typography variant="subtitle1">רישיון רכב:</Typography>
           <Box>
             <ImageUploadComponent
+              imageTypeName="licenseImages"
+              uploadTrigger={imageUploadTrigger}
+              userId={userId}
               indexNumber={0}
+              serverUrl={`http://localhost:5000/api/images/uploadimage/licenseImages/${userId}/${caravanId}`}
+              fileType="licenseImages"
               sendUpFunc={sendUpData}
               handleRemovePhoto={() => handleRemoveItem(0)}
-              photoRemoved={photoRemoved}
             />
           </Box>
         </Grid>
         <Grid item xs={12} md={3}>
           <Typography variant="subtitle1">ביטוח חובה:</Typography>
           <ImageUploadComponent
+            imageTypeName="licenseImages"
+            uploadTrigger={imageUploadTrigger}
+            serverUrl={`http://localhost:5000/api/images/uploadimage/licenseImages/${userId}/${caravanId}`}
+            fileType="licenseImages"
             indexNumber={1}
             sendUpFunc={sendUpData}
             handleRemovePhoto={() => handleRemoveItem(1)}
+            userId={userId}
           />
         </Grid>
         <Grid item xs={12} md={3}>
           <Typography variant="subtitle1">ביטוח צד ג':</Typography>
           <ImageUploadComponent
+            userId={userId}
+            imageTypeName="licenseImages"
+            uploadTrigger={imageUploadTrigger}
             indexNumber={2}
+            serverUrl={`http://localhost:5000/api/images/uploadimage/licenseImages/${userId}/${caravanId}`}
+            fileType="licenseImages"
             sendUpFunc={sendUpData}
             handleRemovePhoto={() => handleRemoveItem(2)}
           />

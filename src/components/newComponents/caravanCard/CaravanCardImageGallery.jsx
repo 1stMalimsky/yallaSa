@@ -3,6 +3,9 @@ import ImageGallery from "react-image-gallery";
 
 const CaravanCardGallery = ({ caravanImgs, handleImageClick }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [dataCaravanImgs, setDataCaravanImgs] = useState(
+    caravanImgs.data.caravanImages
+  );
 
   const renderLeftNav = (onClick, disabled) => (
     <button
@@ -49,20 +52,23 @@ const CaravanCardGallery = ({ caravanImgs, handleImageClick }) => {
       ▶
     </button>
   );
+
+  //console.log("caravanImgs", dataCaravanImgs);
+
   return (
     <ImageGallery
       showPlayButton={false}
       showThumbnails={false}
       isRTL={true}
-      items={caravanImgs}
+      items={dataCaravanImgs}
       showFullscreenButton={false}
       onSlide={(index) => setCurrentIndex(index)} // Track the current index
       onClick={() => handleImageClick(currentIndex)} // Pass the current index when clicked
       renderItem={(item) => (
         <div className="image-gallery-custom-image-wrapper">
           <img
-            src={item.thumbnail}
-            alt={item.description}
+            src={item.original}
+            alt={item.filename}
             onClick={() => handleImageClick(currentIndex)}
             style={{
               width: "100%",
