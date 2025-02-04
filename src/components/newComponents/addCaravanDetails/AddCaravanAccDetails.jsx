@@ -6,6 +6,7 @@ import {
   Typography,
   Grid,
 } from "@mui/material";
+import CircularProgress from "@mui/material/CircularProgress";
 import AddAcc1 from "./AddAcc1";
 import AddAcc2 from "./AddAcc2";
 import AddAcc3 from "./AddAcc3";
@@ -19,17 +20,36 @@ import AddCaravanSummary from "./addCaravanSummary";
 import axios from "axios";
 import getToken from "../../../utils/helpers/getToken";
 import getUserDetails from "../../../utils/helpers/getUserDetails";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const AddCaravanAcc = () => {
   const [accDetails, setAccDetails] = useState([]);
   const [openState, setOpenState] = useState(0);
   const [caravanId, setCaravanId] = useState("");
   const [imageUploadTrigger, setImageUploadTrigger] = useState(false);
+  const [user, setUser] = useState("");
   const token = getToken();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const setUserDetails = async () => {
+      try {
+        const user = await getUserDetails(token.userId);
+        if (user) {
+          console.log("user", user);
+
+          setUser(user);
+        } else return console.log("no user found");
+      } catch (err) {
+        console.error("Error:", err);
+      }
+    };
+    setUserDetails();
+  }, []);
 
   const handleSubmitBtn = async () => {
     try {
-      const user = await getUserDetails(token.userId);
       //console.log("user", user);
       if (user.isOwner === false) {
         const userChanged = await axios.patch(`/users/update/${token.userId}`, {
@@ -41,23 +61,52 @@ const AddCaravanAcc = () => {
       const objToSend = {
         ...accDetails[0],
         ...accDetails[1],
+        ...accDetails[2],
         ...accDetails[3],
         ...accDetails[4],
         ...accDetails[6],
         ...accDetails[7].caravanDetails,
         ...accDetails[8],
       };
-      //console.log("stamOBJ", stamOBJ);
+      console.log("obj to send", objToSend);
 
+      const newData =
+        accDetails[0].privateUser === false
+          ? {
+              isBusiness: true,
+              businessDetails: {
+                companyName: accDetails[0].userDetails.companyName,
+                companyId: accDetails[0].userDetails.companyId,
+                phone: accDetails[0].userDetails.phone,
+                city: accDetails[0].userDetails.city,
+                street: accDetails[0].userDetails.street,
+                email: accDetails[0].userDetails.email,
+              },
+            }
+          : {
+              isBusiness: false,
+            };
+
+      const userUpdate = await axios.put(
+        `/users/update/${token.userId}`,
+        newData
+      );
       const res = await axios.post("/caravans/create", objToSend);
+      console.log("res from addCaravab", res);
+
       const caravavnId = res.data.newCaravan._id;
       setImageUploadTrigger(true);
-      console.log("in main trigger", imageUploadTrigger);
+      //console.log("main trigger", imageUploadTrigger);
       setTimeout(() => {
         setImageUploadTrigger(false);
       }, 1000);
       setCaravanId(caravavnId);
-      sessionStorage.clear();
+      //
+      // sessionStorage.clear();
+      toast.success("הטופס נשלח בהצלחה");
+      /* setTimeout(() => {
+        navigate("/profile");
+      }, 2000); */
       //console.log("caravanId", caravavnId);
     } catch (err) {
       console.log(err.response);
@@ -95,6 +144,8 @@ const AddCaravanAcc = () => {
   useEffect(() => {
     console.log("accDetails", accDetails);
   }, [accDetails]);
+
+  if (!user) return <CircularProgress />;
   return (
     <Grid container sx={{ display: "flex" }}>
       <Grid item xs={12} md={8} lg={8}>
@@ -112,7 +163,7 @@ const AddCaravanAcc = () => {
             <Typography variant="h5">1. פרטים אישיים</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <AddAcc1 nextBtn={handleNextBtn} />
+            <AddAcc1 nextBtn={handleNextBtn} user={user} />
           </AccordionDetails>
         </Accordion>
         {/* ACC2 */}

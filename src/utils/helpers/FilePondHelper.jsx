@@ -19,6 +19,8 @@ const FilePondHelper = ({
 }) => {
   const [files, setFiles] = useState([]);
   const [isLicense, setIsLicense] = useState(false);
+  const [imageId, setImageId] = useState("");
+
   const pondRef = useRef(null);
 
   useEffect(() => {
@@ -28,41 +30,39 @@ const FilePondHelper = ({
   }, [userDetails]);
 
   const handleUploadClick = () => {
-    if (pondRef.current) {
+    if (pondRef.current && !isLicense) {
       pondRef.current.processFiles();
       setIsLicense(true);
-      return true;
+      //return true;
     } else {
       setIsLicense(false);
-      return false;
+      //return false;
     }
   };
 
-  const handleDeleteClick = async () => {
-    try {
-      const userToUpdate = {
-        ...userDetails,
-        license: {
-          filename: "",
-          path: "",
-          contentType: "",
-        },
-      };
-      await axios.patch(`/users/update/${userDetails._id}`, userToUpdate);
-      toast.error("הרישיון נמחק בהצלחה");
-    } catch (err) {
-      console.log("handleDelete error", err);
+  const handleDeleteClick = (imageId) => {
+    if (!imageId) {
+      return console.log("no ImageId to delete");
+    }
+    if (!pondRef) {
+      return console.log("no pondRef");
+    }
+    if (pondRef.current) {
+      pondRef.current.removeFile(imageId);
     }
   };
+
+  //console.log("userDetails", userDetails);
+
   return (
     <div>
       <FilePond
         ref={pondRef}
         files={files}
+        name={fileType}
         onupdatefiles={setFiles}
         allowMultiple={allowMultiple}
         maxFiles={maxFiles}
-        debug={true}
         server={{
           url: serverUrl,
           process: {
@@ -70,38 +70,50 @@ const FilePondHelper = ({
               "x-auth-token": localStorage.getItem("token"),
             },
             onload: async (response) => {
-              const updatedUserDetails = await axios.get(
-                `/users/${userDetails._id}`
-              );
-              if (!updatedUserDetails) return console.log("no user details");
-              onUploadComplete(response);
+              try {
+                const foundUser = await axios.get(
+                  `/users/${userDetails.userId}`
+                );
+                if (!foundUser) {
+                  console.log("no user details");
+                  return;
+                }
+                setImageId(response._id); // Assuming the response contains an _id field
+                onUploadComplete(response);
+              } catch (error) {
+                console.error("Error processing uploaded file:", error);
+                onUploadComplete(false);
+              }
             },
             onerror: (error) => {
               console.error("Error uploading file:", error);
               onUploadComplete(false);
             },
-            onprogress: (progress) =>
-              console.log(`Upload progress: ${progress}%`),
+            onprogress: (progress) => {
+              console.log(`Upload progress: ${progress}%`);
+            },
           },
-          revert: (source, load, error) => {
-            axios
-              .patch(`images/resetlicense/${userDetails._id}`, {
-                headers: {
-                  "x-auth-token": localStorage.getItem("token"),
-                },
-              })
-              .then((response) => {
-                console.log("File deleted successfully", response.data);
-                load();
-                // Notify FilePond of successful deletion
-              })
-              .catch((err) => {
-                console.error("Error deleting file:", err);
-                error("Failed to delete file");
-              });
+          revert: async (load, error) => {
+            ///console.log("load in helper", load);
+            console.log("imageId", imageId);
+
+            try {
+              const deleteFile = await axios.delete(
+                `images/deletelicense/${userDetails.userId}/${imageId}`,
+                {
+                  headers: {
+                    "x-auth-token": localStorage.getItem("token"),
+                  },
+                }
+              );
+
+              //load(); // This function must be called to signal that the revert has been processed
+            } catch (err) {
+              console.error("Filepond revert error", err);
+              error("Failed to delete file");
+            }
           },
         }}
-        name={fileType}
         instantUpload={false}
         labelIdle='גרור ושחרר תמונה כאן או <span class="filepond--label-action">בחר קובץ</span>'
       />
@@ -123,7 +135,7 @@ const FilePondHelper = ({
           variant="contained"
           color="error"
           disabled={isLicense ? false : true}
-          onClick={handleDeleteClick}
+          onClick={() => handleDeleteClick(imageId)}
           sx={{ width: 250 }}
         >
           הסר

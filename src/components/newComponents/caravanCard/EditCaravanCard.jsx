@@ -1,47 +1,53 @@
 import React, { useState, useEffect, Fragment } from "react";
 import { Divider, Grid, Typography, Button, Box } from "@mui/material";
-import RatingThing from "./helpers/RatingThing";
+import RatingThing from "../helpers/RatingThing";
 import { useNavigate } from "react-router-dom";
-import icons from "./helpers/icons";
-import CaravanCardModal from "./caravanCard/CaravanCardModal";
-import CaravanCardGallery from "./caravanCard/CaravanCardImageGallery";
+import icons from "../helpers/icons";
+import CaravanCardModal from "./CaravanCardModal";
+import CaravanCardGallery from "./CaravanCardImageGallery";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import dayjs from "dayjs";
 import axios from "axios";
 import CircularProgress from "@mui/material/CircularProgress";
 
-const CaravanCard = ({ caravanDetails, chosenDates }) => {
+const EditCaravanCard = ({ caravanDetails }) => {
   const navigate = useNavigate();
 
-  const [unixDates, setUnixDates] = useState({
-    start: dayjs(chosenDates.start).unix(),
-    end: dayjs(chosenDates.end).unix(),
-  });
   const [modalOpen, setModalOpen] = useState(false);
   const [currentImage, setCurrentImage] = useState(0);
   const [caravanPhotos, setCaravanPhotos] = useState([]);
 
   const caravanId = caravanDetails._id;
-  console.log("caravavanDetails", caravanDetails);
-
-  const fetchImages = async () => {
-    try {
-      //console.log("CaravanCard init");
-      const caravanPhotos = await axios.get(`/caravans/images/${caravanId}`);
-      setCaravanPhotos(caravanPhotos);
-      //console.log("caravan photos", caravanPhotos.data.caravanImages);
-    } catch (err) {
-      console.log("caravan photo search error", err);
-    }
-  };
+  /* console.log(
+    "caravavanDetails",
+    caravanDetails.ownerDetails.ownerId,
+    caravanDetails.listingName
+  ); */
 
   useEffect(() => {
-    fetchImages();
+    const fetchCaravanImages = async (caravanId, setState) => {
+      try {
+        const caravanPhotos = await axios.get(`/caravans/images/${caravanId}`);
+        if (caravanPhotos) {
+          console.log("caravanPhotos", caravanPhotos);
+        }
+        if (!caravanPhotos || caravanPhotos.data.caravanImages.length < 1) {
+          return console.log("no caravan found");
+        }
+        setState(caravanPhotos.data.caravanImages);
+        return caravanPhotos.data.caravanImages;
+      } catch (err) {
+        console.log("caravan photo search error", err);
+      }
+    };
+    fetchCaravanImages(caravanId, setCaravanPhotos);
   }, []);
 
   const handleImageClick = (index) => {
-    if (index !== undefined && caravanPhotos.data.caravanImages[index]) {
-      setCurrentImage(caravanPhotos.data.caravanImages[index].original);
+    //console.log("caravanPhotos in imageclick", caravanPhotos);
+
+    if (index !== undefined && caravanPhotos && caravanPhotos[index]) {
+      setCurrentImage(caravanPhotos[index].original);
       setModalOpen(true);
     }
   };
@@ -149,12 +155,6 @@ const CaravanCard = ({ caravanDetails, chosenDates }) => {
           ) : (
             ""
           )}
-          <Typography variant="subtitle1" className="caravanCardReviews">
-            חוות דעת
-          </Typography>
-          <div>
-            <RatingThing readOnly={true} />
-          </div>
         </Grid>
         {/* PRICE CARD */}
         <Grid
@@ -173,19 +173,12 @@ const CaravanCard = ({ caravanDetails, chosenDates }) => {
             מחיר: {caravanDetails.priceDetails.pricePerNight} ש"ח \{" "}
             <span style={{ fontSize: "0.5em" }}>ללילה</span>
           </Typography>
-          <Typography variant="h6">
-            סה"כ:{" "}
-            {+caravanDetails.priceDetails.pricePerNight * +chosenDates.numOfDay}
-          </Typography>
           <Button
             variant="contained"
-            onClick={() =>
-              navigate(
-                `/checkout/${caravanDetails._id}/${unixDates.start}/${unixDates.end}/${chosenDates.numOfDay}`
-              )
-            }
+            sx={{ width: "100%" }}
+            onClick={() => navigate(`/profile/editcaravan/${caravanId}`)}
           >
-            הזמן עכשיו
+            עריכה
           </Button>
         </Grid>
       </Grid>
@@ -193,4 +186,4 @@ const CaravanCard = ({ caravanDetails, chosenDates }) => {
   );
 };
 
-export default CaravanCard;
+export default EditCaravanCard;

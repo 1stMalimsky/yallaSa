@@ -3,9 +3,7 @@ import ImageGallery from "react-image-gallery";
 
 const CaravanCardGallery = ({ caravanImgs, handleImageClick }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [dataCaravanImgs, setDataCaravanImgs] = useState(
-    caravanImgs.data.caravanImages
-  );
+  const [dataCaravanImgs, setDataCaravanImgs] = useState(caravanImgs);
 
   const renderLeftNav = (onClick, disabled) => (
     <button

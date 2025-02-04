@@ -27,7 +27,7 @@ const NewCheckoutPage = () => {
   const [totalPrice, setTotalPrice] = useState(0);
   const [currentCaravan, setCurrentCaravan] = useState(null);
 
-  console.log("currentCarava", currentCaravan);
+  //console.log("currentCaravan", currentCaravan);
 
   useEffect(() => {
     (async () => {
@@ -49,7 +49,7 @@ const NewCheckoutPage = () => {
     setPanelData(dataArr);
     setTotalPrice(priceObj);
   };
-  console.log("new checkoue panel data", panelData);
+  //console.log("new checkoue panel data", panelData);
 
   if (!currentCaravan || !panelData) {
     return <CircularProgress />;

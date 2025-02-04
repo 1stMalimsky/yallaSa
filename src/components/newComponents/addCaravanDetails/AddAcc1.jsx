@@ -11,32 +11,55 @@ import {
 import PrivateUserType from "./helpers/PrivateUserType.jsx";
 import CompanyUserType from "./helpers/CompanyUserType.jsx";
 import getToken from "../../../utils/helpers/getToken.js";
-import acc1Validation from "./helpers/acc1Validation.js";
+import addAcc1Validation from "./helpers/addAcc1Validation.js";
 import checkSessionStorage from "../../../utils/helpers/checkSessionStorage.js";
 
-const AddAcc1 = ({ nextBtn }) => {
-  const [privateUser, setPrivateUser] = useState(null);
-  const [userDetails, setUserDetails] = useState({});
-  const [paymentType, setPaymentType] = useState(null);
-  const [paymentDetails, setPaymentDetails] = useState(null);
+const AddAcc1 = ({ nextBtn, user }) => {
+  const [privateUser, setPrivateUser] = useState("");
+  const [userDetails, setUserDetails] = useState("");
+  const [paymentType, setPaymentType] = useState("");
+  const [paymentDetails, setPaymentDetails] = useState(
+    user.paymentDetails || ""
+  );
+  const [userTypeDisabled, setUserTypeDisabled] = useState(true);
   const userId = getToken().userId;
 
   useEffect(() => {
-    const sessionData = JSON.parse(checkSessionStorage(1));
-    console.log("session1", sessionData);
-
-    if (sessionData) {
-      setPrivateUser(sessionData.privateUser);
-      setUserDetails(sessionData.userDetails);
-      setPaymentType(sessionData.paymentType);
-      setPaymentDetails(sessionData.paymentDetails);
+    if (user) {
+      if (user.caravanIds.length > 0) {
+        setUserTypeDisabled(true);
+        if (user.isBusiness) setPrivateUser("false");
+        if (!user.isBusiness) setPrivateUser("true");
+        setPaymentDetails(user.paymentDetails);
+        if (user.paymentDetails.phone) {
+          setPaymentType(2);
+        }
+        if (user.paymentDetails.bankAccount) {
+          setPaymentType(1);
+        }
+        if (user.isBusiness) {
+          setUserDetails(user.businessDetails);
+        }
+        if (!user.isBusiness) {
+          setUserDetails(userId);
+        }
+      } else setUserTypeDisabled(false);
     }
-  }, []);
+    if (!user) {
+      const sessionData = JSON.parse(checkSessionStorage(1));
+      if (sessionData) {
+        setPrivateUser(sessionData.privateUser);
+        setUserDetails(sessionData.userDetails);
+        setPaymentType(sessionData.paymentType);
+        setPaymentDetails(sessionData.paymentDetails);
+      }
+    }
+  }, [user]);
 
   const resetStates = () => {
     setUserDetails({});
-    setPaymentType(null);
-    setPaymentDetails(null);
+    setPaymentType("");
+    setPaymentDetails("");
   };
 
   const handleNextBtn = () => {
@@ -49,12 +72,14 @@ const AddAcc1 = ({ nextBtn }) => {
     if (privateUser === "true") {
       acc1Data.userDetails = userId;
     }
-    const validationResponse = acc1Validation(
+    console.log("acc1Data", acc1Data);
+
+    const validationResponse = addAcc1Validation({
       privateUser,
       userDetails,
       paymentType,
-      paymentDetails
-    );
+      paymentDetails,
+    });
     if (validationResponse) {
       return;
     } else {
@@ -84,6 +109,11 @@ const AddAcc1 = ({ nextBtn }) => {
   const handlePaymentDetailsChange = (paymentDetails) => {
     setPaymentDetails(paymentDetails);
   };
+
+  console.log("user", user);
+  console.log("privateUser", privateUser);
+  console.log("userDisableType", typeof userTypeDisabled);
+
   return (
     <Box>
       {/* RADIO */}
@@ -92,18 +122,18 @@ const AddAcc1 = ({ nextBtn }) => {
           <FormLabel component="legend" />
           <RadioGroup
             row
-            name="userType"
+            name="privateUser"
             value={privateUser}
             onChange={handleUserTypeChange}
           >
             <FormControlLabel
-              value={true}
-              control={<Radio />}
+              value="true"
+              control={<Radio disabled={userTypeDisabled} />}
               label="לקוח פרטי"
             />
             <FormControlLabel
-              value={false}
-              control={<Radio />}
+              value="false"
+              control={<Radio disabled={userTypeDisabled} />}
               label="לקוח עסקי"
             />
           </RadioGroup>
@@ -111,6 +141,11 @@ const AddAcc1 = ({ nextBtn }) => {
       </Box>
       {privateUser === "true" && (
         <PrivateUserType
+          parentData={{
+            paymentType,
+            paymentDetails,
+            caravanIds: user.caravanIds.length > 0 ? user.caravanIds : [],
+          }}
           handlePtype={handlePaymentTypeChange}
           handlePdetails={handlePaymentDetailsChange}
         />

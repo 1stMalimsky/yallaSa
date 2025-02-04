@@ -42,10 +42,9 @@ const validatePanel1 = (userInput) => {
 
 /* SCHEMA FOR PANEL 2  & PANEL 3*/
 
-const validTimeOptions = generateTimeOptions();
-
 const earliestTime = "08:00";
 const latestTime = "20:00";
+const validTimeOptions = generateTimeOptions(earliestTime, latestTime);
 
 const panel2Schema = Joi.string()
   .valid(...validTimeOptions)

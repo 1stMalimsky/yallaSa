@@ -20,17 +20,19 @@ const AddAcc9 = ({ nextBtn, handleSubmit }) => {
     pricePerNight: "",
     minimumNights: "",
   });
+  const [isCancelationPolicy, setIsCancelationPolicy] = useState("");
   const [cancelationPolicy, setCancelationPolicy] = useState({
     freeCancelationDays: "",
     cancelationPrice: "",
+    isCancelationPolicy: isCancelationPolicy,
   });
   const [insuranceDetails, setInsuranceDetails] = useState({
-    insuranceIncluded: "",
+    insuranceIncluded: "false",
     basicInsurance: "",
     premiumInsurance: "",
   });
-  const [isCancelationPolicy, setIsCancelationPolicy] = useState(null);
-  const [extraInsuranceAvailable, setExtraInsuranceAvailable] = useState(null);
+  const [extraInsuranceAvailable, setExtraInsuranceAvailable] =
+    useState("false");
 
   const [modalOpenState, setModalOpenState] = useState(false);
 
@@ -40,20 +42,20 @@ const AddAcc9 = ({ nextBtn, handleSubmit }) => {
     if (sessionData) {
       //console.log("session9", sessionData);
       setInsuranceDetails({
-        insuranceIncluded: sessionData.insuranceIncluded || "",
+        insuranceIncluded: sessionData.insuranceIncluded || "false",
         basicInsurance: sessionData.basicInsurance || "",
-        premiumInsurance: sessionData.premiumInsurance,
+        premiumInsurance: sessionData.premiumInsurance || "",
       });
       setPriceDetails({
         pricePerNight: sessionData.pricePerNight || "",
         minimumNights: sessionData.minimumNights || "",
       });
       setCancelationPolicy({
-        isCancelationPolicy: sessionData.isCancelationPolicy || "",
+        isCancelationPolicy: sessionData.isCancelationPolicy || "false",
         freeCancelationDays: sessionData.freeCancelationDays || "",
         cancelationPrice: sessionData.cancelationPrice || "",
       });
-      setIsCancelationPolicy(sessionData.isCancelationPolicy || "");
+      setIsCancelationPolicy(sessionData.isCancelationPolicy || "false");
       setExtraInsuranceAvailable(sessionData.extraInsuranceAvailable || "");
     }
   }, []);
@@ -65,8 +67,25 @@ const AddAcc9 = ({ nextBtn, handleSubmit }) => {
       });
     }
     if (insuranceDetails.insuranceIncluded === "false")
-      setExtraInsuranceAvailable(false);
+      setExtraInsuranceAvailable("false");
   }, [insuranceDetails.insuranceIncluded]);
+
+  useEffect(() => {
+    if (isCancelationPolicy === "true") {
+      console.log("cancel true");
+
+      setCancelationPolicy((prevData) => {
+        return { ...prevData, isCancelationPolicy: "true" };
+      });
+    }
+
+    if (isCancelationPolicy === "false") {
+      console.log("cancel false");
+      setCancelationPolicy((prevData) => {
+        return { ...prevData, isCancelationPolicy: "false" };
+      });
+    }
+  }, [isCancelationPolicy]);
 
   const handleNextBtn = async () => {
     const validateResponse = acc9Validation({
@@ -83,11 +102,20 @@ const AddAcc9 = ({ nextBtn, handleSubmit }) => {
         ...priceDetails,
         ...cancelationPolicy,
         ...insuranceDetails,
-        isCancelationPolicy,
-        extraInsuranceAvailable,
+        ...isCancelationPolicy,
+        ...extraInsuranceAvailable,
       })
     );
-    nextBtn({ ...priceDetails, ...cancelationPolicy, ...insuranceDetails }, 8);
+    nextBtn(
+      {
+        ...priceDetails,
+        ...cancelationPolicy,
+        ...insuranceDetails,
+        ...isCancelationPolicy,
+        ...extraInsuranceAvailable,
+      },
+      8
+    );
     setModalOpenState(true);
   };
 
@@ -102,6 +130,9 @@ const AddAcc9 = ({ nextBtn, handleSubmit }) => {
   const handleCloseModal = () => {
     setModalOpenState(false);
   };
+
+  //console.log("canacelationPolicy", cancelationPolicy);
+  //console.log("insuraneceIncluded", insuranceDetails.insuranceIncluded);
 
   return (
     <Box>
@@ -153,7 +184,16 @@ const AddAcc9 = ({ nextBtn, handleSubmit }) => {
               row
               name="insuranceIncluded"
               value={insuranceDetails.insuranceIncluded}
-              onChange={(e) => handleChange(e, setInsuranceDetails)}
+              onChange={(e) => {
+                console.log(
+                  "insuranceDetails.insuranceIncluded",
+                  insuranceDetails.insuranceIncluded
+                );
+                setInsuranceDetails((prevState) => ({
+                  ...prevState,
+                  insuranceIncluded: e.target.value,
+                }));
+              }}
             >
               <FormControlLabel value="true" control={<Radio />} label="כן" />
               <FormControlLabel value="false" control={<Radio />} label="לא" />
@@ -170,25 +210,31 @@ const AddAcc9 = ({ nextBtn, handleSubmit }) => {
                   row
                   name="extraInsuranceAvailable"
                   value={extraInsuranceAvailable}
+                  onChange={(e) => {
+                    console.log(
+                      "extraInsuranceavailable",
+                      extraInsuranceAvailable
+                    );
+                    setExtraInsuranceAvailable(e.target.value);
+                  }}
                 >
                   <FormControlLabel
-                    value={true}
+                    value="true"
                     control={<Radio />}
                     label="כן"
-                    onClick={() => setExtraInsuranceAvailable(true)}
                   />
                   <FormControlLabel
-                    value={false}
+                    value="false"
                     control={<Radio />}
                     label="לא"
-                    onClick={() => setExtraInsuranceAvailable(false)}
+                    o
                   />
                 </RadioGroup>
               </FormControl>
             </Box>
           )}
           {insuranceDetails.insuranceIncluded === "true" &&
-            extraInsuranceAvailable && (
+            extraInsuranceAvailable === "true" && (
               <Box sx={{ display: "flex", alignItems: "center" }}>
                 <TextField
                   className="inputFixExtraLong"
@@ -253,25 +299,18 @@ const AddAcc9 = ({ nextBtn, handleSubmit }) => {
             </FormLabel>
             <RadioGroup
               row
-              name="iscancelationPolicy"
+              name="isCancelationPolicy"
               value={isCancelationPolicy}
+              onChange={(e) => {
+                setIsCancelationPolicy(e.target.value);
+              }}
             >
-              <FormControlLabel
-                value={true}
-                control={<Radio />}
-                label="כן"
-                onClick={() => setIsCancelationPolicy(true)}
-              />
-              <FormControlLabel
-                value={false}
-                control={<Radio />}
-                label="לא"
-                onClick={() => setIsCancelationPolicy(false)}
-              />
+              <FormControlLabel value="true" control={<Radio />} label="כן" />
+              <FormControlLabel value="false" control={<Radio />} label="לא" />
             </RadioGroup>
           </FormControl>
         </Grid>
-        {isCancelationPolicy === true && (
+        {isCancelationPolicy === "true" && (
           <Box>
             <Grid item xs={12}>
               <Typography variant="subtitle1">

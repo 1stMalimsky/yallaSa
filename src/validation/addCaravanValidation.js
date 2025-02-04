@@ -3,8 +3,8 @@ import Joi from "joi";
 const phoneNumberSchema = Joi.string()
   .min(4)
   .max(50)
-  .required()
   .label("טלפון")
+  .allow("")
   .messages({
     "string.base": "מספר הטלפון צריך להיות מורכב מתווים",
     "string.empty": "מספר הטלפון לא יכול להיות ריק",
@@ -37,7 +37,7 @@ const companySchema = Joi.object({
       "string.max": "מזהה החברה יכול להכיל עד 20 תווים",
       "any.required": "מזהה החברה הינו שדה חובה",
     }),
-  companyPhone: Joi.string()
+  phone: Joi.string()
     .pattern(new RegExp("^0([23489]|5[0123456789])-?\\d{7}$"))
     .required()
     .label("טלפון החברה")
@@ -45,27 +45,17 @@ const companySchema = Joi.object({
       "string.pattern.base": "מספר הטלפון אינו בפורמט הנכון",
       "any.required": "מספר הטלפון הינו שדה חובה",
     }),
-  companyStreet: Joi.string()
-    .min(2)
-    .max(100)
-    .required()
-    .label("רחוב החברה")
-    .messages({
-      "string.min": "שם הרחוב חייב להכיל לפחות שני תווים",
-      "string.max": "שם הרחוב יכול להכיל עד 100 תווים",
-      "any.required": "שם הרחוב הינו שדה חובה",
-    }),
-  companyCity: Joi.string()
-    .min(2)
-    .max(100)
-    .required()
-    .label("עיר החברה")
-    .messages({
-      "string.min": "שם העיר חייב להכיל לפחות שני תווים",
-      "string.max": "שם העיר יכול להכיל עד 100 תווים",
-      "any.required": "שם העיר הינו שדה חובה",
-    }),
-  companyEmail: Joi.string()
+  street: Joi.string().min(2).max(100).required().label("רחוב החברה").messages({
+    "string.min": "שם הרחוב חייב להכיל לפחות שני תווים",
+    "string.max": "שם הרחוב יכול להכיל עד 100 תווים",
+    "any.required": "שם הרחוב הינו שדה חובה",
+  }),
+  city: Joi.string().min(2).max(100).required().label("עיר החברה").messages({
+    "string.min": "שם העיר חייב להכיל לפחות שני תווים",
+    "string.max": "שם העיר יכול להכיל עד 100 תווים",
+    "any.required": "שם העיר הינו שדה חובה",
+  }),
+  email: Joi.string()
     .email({ tlds: { allow: false } })
     .required()
     .messages({
@@ -97,6 +87,7 @@ const paymentDetailsSchema = Joi.object({
       "any.required": "מספר החשבון הינו שדה חובה",
       "string.empty": "יש למלא מספר החשבון",
     }),
+  phone: phoneNumberSchema,
 });
 
 const baseCaravanDetailsSchema = Joi.object({

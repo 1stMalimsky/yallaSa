@@ -1,6 +1,10 @@
-const generateTimeOptions = (start = 8, end = 20) => {
+const generateTimeOptions = (start, end) => {
+  //console.log("strat:", start, "end:", end);
+
+  const startHour = parseInt(start.split(":")[0]);
+  const endHour = parseInt(end.split(":")[0]);
   const timeOptions = [];
-  for (let hour = start; hour <= end; hour++) {
+  for (let hour = startHour; hour <= endHour; hour++) {
     const time = `${hour.toString().padStart(2, "0")}:00`;
     timeOptions.push(time);
   }

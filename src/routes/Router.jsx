@@ -21,18 +21,22 @@ import CaravanSearchResults from "../pages/newPages/CaravanSearchResult";
 import Test from "../pages/newPages/Test";
 import BecomeOwnerRedirect from "../pages/newPages/BecomeRedirect";
 import AddCaravan from "../pages/newPages/AddCaravan";
-
+import EditCaravanPage from "../pages/newPages/EditCaravanPage";
 const Router = () => {
   return (
     <Routes>
-      <Route path={"/maptest"} element={<Test />} />
+      {/* EDIT CARAVAN PAGE*/}
+      <Route
+        path={"profile/editcaravan/:caravanId"}
+        element={<EditCaravanPage />}
+      />
 
+      <Route path={"/maptest"} element={<Test />} />
       <Route
         path="/addcaravan/:location/:vehicleType"
         element={<AddCaravan />}
       />
       <Route path="/preaddcaravan" element={<BecomeOwnerRedirect />} />
-
       <Route path={ROUTES.HOME} element={<Homepage />} />
       <Route path={ROUTES.REGISTER} element={<RegisterPage />} />
       <Route path={ROUTES.LOGIN} element={<LoginPage />} />

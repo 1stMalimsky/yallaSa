@@ -7,7 +7,7 @@ import { DatePicker } from "@mui/x-date-pickers";
 import dayjs from "dayjs";
 import { Grid, Box, Button, Card, CardHeader, Pagination } from "@mui/material";
 import { toast } from "react-toastify";
-import CaravanCard from "../../components/newComponents/CaravanCard";
+import CaravanCard from "../../components/newComponents/caravanCard/CaravanCard.jsx";
 import fetchUserLocation from "../../components/newComponents/helpers/fetchUserLocation";
 import { heIL } from "@mui/x-date-pickers/locales";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";

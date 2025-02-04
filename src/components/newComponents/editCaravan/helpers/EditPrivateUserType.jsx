@@ -11,18 +11,17 @@ import {
   Button,
 } from "@mui/material";
 
-const PrivateUserType = ({ parentData, handlePtype, handlePdetails }) => {
-  const [paymentType, setPaymentType] = useState(
-    parentData.paymentType.toString() || null
+const EditPrivateUserType = ({ parentData, handlePtype, handlePdetails }) => {
+  const [paymentType, setPaymentType] = useState(parentData.paymentType);
+  const [paymentDetails, setPaymentDetails] = useState(
+    parentData.paymentDetails
   );
-  const [paymentDetails, setPaymentDetails] = useState(null);
-  const [disableRadio, setDisableRadio] = useState(true);
+  console.log("parentData in editPrivateUser", parentData);
 
   useEffect(() => {
     if (parentData) {
-      setPaymentType(parentData.paymentType.toString());
+      setPaymentType(parentData.paymentType);
       setPaymentDetails(parentData.paymentDetails);
-      setDisableRadio(Boolean(parentData.caravanIds.length > 0));
     }
   }, [parentData]);
 
@@ -46,9 +45,9 @@ const PrivateUserType = ({ parentData, handlePtype, handlePdetails }) => {
       handlePdetails({ [e.target.id]: e.target.value });
     }
   };
-  //console.log("parentData", parentData);
-  //console.log("disabaled", disableRadio);
-  //console.log("paymentType");
+
+  //console.log("paymentType", paymentType);
+  console.log("paymentType", paymentType);
 
   return (
     <div>
@@ -58,52 +57,50 @@ const PrivateUserType = ({ parentData, handlePtype, handlePdetails }) => {
           <FormLabel component="legend" />
           <RadioGroup
             row
-            name="paymentType"
             value={paymentType}
             onChange={handlePaymentTypeChange}
           >
             <FormControlLabel
               value="1"
-              control={<Radio disabled={disableRadio} />}
+              control={<Radio />}
               label="העברה בנקאית"
-              onChange={handlePaymentTypeChange}
             />
-            <FormControlLabel
-              value="2"
-              control={<Radio disabled={disableRadio} />}
-              label="ביט"
-            />
+            <FormControlLabel value="2" control={<Radio />} label="ביט" />
           </RadioGroup>
         </FormControl>
       </Box>
-      {paymentType === "1" && disableRadio && (
+      {paymentType === "1" && (
         <div>
           <TextField
             className="addCarTextFiled"
             id="bankName"
             label="שם הבנק"
+            value={paymentDetails.bankName}
             onChange={(e) => handlePaymentDetailsChange(e, 1)}
           />
           <TextField
             className="addCarTextFiled"
             id="bankBranch"
             label="מספר סניף"
+            value={paymentDetails.bankBranch}
             onChange={(e) => handlePaymentDetailsChange(e, 1)}
           />
           <TextField
             className="addCarTextFiled"
             id="bankAccount"
             label="מספר חשבון"
+            value={paymentDetails.bankAccount}
             onChange={(e) => handlePaymentDetailsChange(e, 1)}
           />
         </div>
       )}
-      {paymentType === "2" && !disableRadio && (
+      {paymentType === "2" && (
         <div>
           <TextField
             className="addCarTextFiled"
-            id="phoneNumber"
+            id="phone"
             label="מספר טלפון"
+            value={paymentDetails.phone || ""}
             onChange={(e) => handlePaymentDetailsChange(e, 2)}
           />
         </div>
@@ -112,4 +109,4 @@ const PrivateUserType = ({ parentData, handlePtype, handlePdetails }) => {
   );
 };
 
-export default PrivateUserType;
+export default EditPrivateUserType;

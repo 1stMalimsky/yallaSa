@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 import RedirectNumbers from "../../components/newComponents/RedirectNumbers";
 import RedierctReasons from "../../components/newComponents/RedirectReasons";
-import { logDOM } from "@testing-library/react";
+import getUserDetails from "../../utils/helpers/getUserDetails";
 
 const BecomeOwnerRedirect = () => {
   /*  console.log("iconNumbers", iconNumbers); */
@@ -29,7 +29,6 @@ const BecomeOwnerRedirect = () => {
   const handleInputChange = (e) => {
     setInputState({ ...inputState, [e.target.name]: e.target.value });
   };
-
   useEffect(() => {
     if (!inputState.location || !inputState.vehicleType) {
       setStartBtn(true);

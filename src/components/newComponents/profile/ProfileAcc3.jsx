@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Button,
   Grid,
@@ -8,30 +8,58 @@ import {
   AccordionSummary,
   AccordionDetails,
 } from "@mui/material";
+import getUserCaravans from "../../../utils/helpers/getUserCaravans";
 import axios from "axios";
+import EditCaravanCard from "../caravanCard/EditCaravanCard";
 
-const ProfileAcc3 = (userDetails) => {
-  const [inputState, setInputState] = useState(userDetails);
+const ProfileAcc3 = ({ userData }) => {
+  const [userDetails, setUserDetails] = useState(userData);
   const [accordionOpen, setAccordionOpen] = useState(false);
+  const [caravanArr, setCaravanArr] = useState([]);
+  //console.log("userDetails", userDetails);
 
-  const getUserCaravans = async () => {
-    try {
-      const response = await axios.get(
-        `http://localhost:3001/api/caravan/getCaravansByUserId/${userDetails._id}`
-      );
-      //console.log(response.data);
-      return response.data;
-    } catch (err) {
-      console.log(err);
+  useEffect(() => {
+    if (userData) {
+      setUserDetails(userData);
     }
-  };
+  }, [userData]);
+
+  useEffect(() => {
+    const getCaravans = async () => {
+      if (!userData) {
+        return console.log("no user details yet Acc3");
+      }
+      try {
+        const foundCaravanArr = await getUserCaravans(userData.userId);
+
+        if (foundCaravanArr) {
+          setCaravanArr(foundCaravanArr.caravansByUser);
+        } else return console.log("no Caravans Found");
+      } catch (err) {
+        console.log("getCaravans error", err);
+      }
+    };
+    getCaravans();
+  }, []);
+
+  console.log("caravaArr", caravanArr);
+
   return (
     <Accordion
       open={accordionOpen}
       onClick={() => setAccordionOpen(!accordionOpen)}
     >
       <AccordionSummary>ניהול הקרוואנים שלי</AccordionSummary>
-      <AccordionDetails></AccordionDetails>
+      <AccordionDetails>
+        {caravanArr.length > 0 &&
+          caravanArr.map((caravan) => {
+            return (
+              <Grid item xs={12} key={caravan._id}>
+                <EditCaravanCard caravanDetails={caravan} />
+              </Grid>
+            );
+          })}
+      </AccordionDetails>
     </Accordion>
   );
 };

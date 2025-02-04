@@ -18,7 +18,6 @@ import Panel8 from "./checkoutAccordion/Panel8";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { calculateTotalPrice } from "./checkoutAccordion/helpers/priceCalculator";
 import CircularProgress from "@mui/material/CircularProgress";
-import { PanToolRounded } from "@mui/icons-material";
 
 const CheckoutUserDetailsComponent = ({
   sendDataUp,
@@ -27,7 +26,7 @@ const CheckoutUserDetailsComponent = ({
 }) => {
   const [isExpanded, setIsExpanded] = useState("panel1");
   const [panelData, setPanelData] = useState(parnetData);
-  const [totalPrice, setTotalPrice] = useState(null);
+  const [totalPrice, setTotalPrice] = useState(0);
 
   useEffect(() => {
     sendDataUp(panelData, totalPrice);
@@ -47,23 +46,32 @@ const CheckoutUserDetailsComponent = ({
   };
 
   const getTotalPrice = async () => {
-    try {
-      const rentalPrice = await calculateTotalPrice(panelData, caravanDetails);
-      setTotalPrice(rentalPrice);
-    } catch (err) {
-      console.log("useEffect err", err);
+    if (!caravanDetails) {
+      console.log("no caravanDetails in cehckoutDetalisComp");
+      return;
+    }
+    if (caravanDetails && panelData && panelData[4] != null) {
+      try {
+        const rentalPrice = await calculateTotalPrice(
+          panelData,
+          caravanDetails
+        );
+        setTotalPrice(rentalPrice);
+      } catch (err) {
+        console.log("useEffect err", err);
+      }
     }
   };
 
   useEffect(() => {
     if (!panelData) return console.log("useEffect no panelData");
     if (panelData) {
-      console.log("in the IF panelData", panelData);
+      //console.log("in the IF panelData", panelData);
       getTotalPrice();
     }
-  }, [panelData]);
+  }, [panelData[5]]);
 
-  console.log("totalPrice", totalPrice);
+  //console.log("totalPrice", totalPrice);
 
   if (!totalPrice) {
     return <CircularProgress />;
@@ -120,6 +128,7 @@ const CheckoutUserDetailsComponent = ({
         </AccordionSummary>
         <AccordionDetails>
           <Panel2
+            locationData={caravanDetails.locationDetails}
             expandedState={isExpanded}
             setExpanded={setIsExpanded}
             onSubmit={(data) => handlePanelData(2, data)}
@@ -144,6 +153,7 @@ const CheckoutUserDetailsComponent = ({
         </AccordionSummary>
         <AccordionDetails>
           <Panel3
+            locationData={caravanDetails.locationDetails}
             expandedState={isExpanded}
             setExpanded={setIsExpanded}
             onSubmit={(data) => handlePanelData(3, data)}
@@ -168,6 +178,7 @@ const CheckoutUserDetailsComponent = ({
         </AccordionSummary>
         <AccordionDetails>
           <Panel4
+            caravanDetails={caravanDetails}
             expandedState={isExpanded}
             setExpanded={setIsExpanded}
             onSubmit={(data) => handlePanelData(4, data)}
@@ -216,6 +227,7 @@ const CheckoutUserDetailsComponent = ({
         </AccordionSummary>
         <AccordionDetails>
           <Panel6
+            caravanDetails={caravanDetails}
             expandedState={isExpanded}
             setExpanded={setIsExpanded}
             onSubmit={(data) => handlePanelData(6, data)}

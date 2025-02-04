@@ -37,18 +37,15 @@ const ImageUploadComponent = ({
   };
 
   const onAdd = (file) => {
-    console.log("onAdd init", file.file.type);
-    if (
-      file.file.type === "image/jpeg" ||
-      file.file.type === "image/png" ||
-      file.file.type === "image/jpg"
-    )
-      return;
-    else toast.error("התמונה חייבת להיות בפורמט תמונה (jpg, jpeg, png)");
-    if (pond.current) {
-      pond.current.removeFile(file.id);
+    console.log("File added", file.fileExtension);
+    const fileExtension = file.fileExtension;
+    if (!["jpg", "jpeg", "png"].includes(fileExtension.toLowerCase())) {
+      toast.error("התמונה חייבת להיות בפורמט תמונה (jpg, jpeg, png)");
+      if (pond.current) {
+        pond.current.removeFile(file.id);
+      }
+      return false; // Stop further processing
     }
-    return;
   };
 
   const uploadFiles = () => {
@@ -81,9 +78,6 @@ const ImageUploadComponent = ({
     });
   }, [base64Data]);
 
-  //  console.log("uploadTrriger", uploadTrigger);
-  console.log("imageId", imageId);
-
   return (
     <div>
       <FilePond
@@ -101,20 +95,24 @@ const ImageUploadComponent = ({
               const updatedUserDetails = await axios.get(`/users/${userId}`);
               if (!updatedUserDetails) return console.log("no user details");
               let resp = JSON.parse(response);
-              console.log("upload commplete", imageTypeName);
-              console.log("FilePond Res:", resp, "resp/_id", resp._id);
+              //console.log("upload commplete", imageTypeName);
+              //console.log("FilePond resp/_id", resp._id);
 
               setImageId(resp._id);
               return resp._id;
             },
             onerror: (error) => {
               console.error("Error during upload:", error);
+              toast.error(
+                "התמונה לא הועלתה",
+                error.response.data.message || error
+              );
             },
             onprogress: (progress) => {
               console.log(`Upload progress: ${progress}%`);
             },
           },
-          revert: async (load, error) => {
+          revert: async (error) => {
             console.log("deleteAttempt");
             if (!imageId) {
               console.log("no image id");
@@ -131,7 +129,6 @@ const ImageUploadComponent = ({
                   },
                 }
               );
-              load();
             } catch (err) {
               console.error("Error deleting file:", err);
               error("Failed to delete file");

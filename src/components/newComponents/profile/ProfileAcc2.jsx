@@ -13,69 +13,66 @@ import { toast } from "react-toastify";
 import CircularProgress from "@mui/material/CircularProgress";
 import getUserDetails from "../../../utils/helpers/getUserDetails";
 
-const ProfileAcc2 = ({ userDetails, onDetailsUpdated, renderFunc }) => {
+const ProfileAcc2 = ({ userDetailsData, onDetailsUpdated, renderFunc }) => {
   const [accordionOpen, setAccordionOpen] = useState(false);
-  const [serverResponseData, setServerResponseData] = useState({});
-  const [userDetailsState, setUserDetailsState] = useState(userDetails);
+  const [userDetails, setUserDetailsState] = useState(userDetailsData);
   const [showUploadWindow, setShowUploadWindow] = useState(true);
   const [showImageWindow, setShowImageWindow] = useState(false);
+  const [licenseImageId, setLicenseImageId] = useState("");
 
-  //console.log("userDetails", userDetailsState);
-  /*   //console.log(
-    "showUploadWindow",
-    showUploadWindow,
-    "showImageWindow",
-    showImageWindow
-  ); */
-  //console.log("userDetailsState", userDetailsState);
+  //console.log("userDetails", userDetails);
   useEffect(() => {
-    if (userDetailsState && !userDetailsState.license.path) {
-      console.log("no private license image found");
-      setShowImageWindow(false);
-    } else {
-      console.log("Image Exists!");
+    // console.log("userDetalisData", userDetailsData);
+    if (
+      userDetails &&
+      userDetailsData.license &&
+      userDetailsData.license.path
+    ) {
       setShowUploadWindow(false);
       setShowImageWindow(true);
     }
-  }, [userDetailsState]);
+    setUserDetailsState(userDetailsData);
+  }, [userDetailsData]);
 
   const handleUploadComplete = (response) => {
+    //console.log("in handle Comeplete");
+    renderFunc();
     const uploadCompleteResponse = JSON.parse(response);
+    console.log(
+      "uploadCompleteResponse",
+      uploadCompleteResponse._id,
+      uploadCompleteResponse.filename
+    );
     setUserDetailsState((prevState) => ({
       ...prevState,
       license: {
-        filename: uploadCompleteResponse.license.filename,
-        path: uploadCompleteResponse.license.path,
-        contentType: uploadCompleteResponse.license.contentType,
+        filename: uploadCompleteResponse.filename,
+        path: uploadCompleteResponse.path,
+        contentType: uploadCompleteResponse.contentType,
       },
     }));
   };
 
   const handleRemoveLicenseClick = async () => {
     try {
-      if (userDetailsState.license.path === "") {
+      if (userDetails.license.path === "") {
         return console.log("no license found");
       }
-      const userToUpdate = {
-        ...userDetailsState,
+      /*      const userToUpdate = {
+        ...userDetails,
         license: {
           filename: "",
           path: "",
           contentType: "",
         },
-      };
-      const updatedState = await axios.patch(
-        `/users/update/${userDetails._id}`,
-        userToUpdate
+      }; */
+      const deleteUserImage = await axios.delete(
+        `images/deletelicense/${userDetails.userId}/${userDetails.license._id}`
       );
-      console.log("updatedState", updatedState);
-
-      if (updatedState) {
-        setUserDetailsState(userToUpdate);
-        setShowUploadWindow(true);
-        setShowImageWindow(false);
-        toast.error("הרישיון נמחק בהצלחה");
-      } else console.log("no license updated");
+      //setUserDetailsState(userToUpdate);
+      setShowUploadWindow(true);
+      setShowImageWindow(false);
+      toast.error("הרישיון נמחק בהצלחה");
     } catch (err) {
       console.log("removeLicenseClick Err", err.response.data);
     }
@@ -104,19 +101,19 @@ const ProfileAcc2 = ({ userDetails, onDetailsUpdated, renderFunc }) => {
       <AccordionDetails>
         {showUploadWindow ? (
           <FilePondHelper
-            serverUrl={`http://localhost:5000/api/images/uploadimage/${userDetailsState._id}`}
+            serverUrl={`http://localhost:5000/api/images/uploadlicense/${userDetails.userId}`}
             allowMultiple={false}
             maxFiles={1}
-            fileType="licenseImage"
+            fileType="userImages"
             onUploadComplete={handleUploadComplete}
-            userDetails={userDetailsState}
+            userDetails={userDetails}
           />
         ) : null}
         {showImageWindow ? (
           <div>
             <Box sx={{ display: "flex", justifyContent: "center" }}>
               <img
-                src={userDetailsState.license.path}
+                src={userDetails.license.path}
                 alt="license"
                 style={{ maxWidth: "40%" }}
               />

@@ -125,7 +125,7 @@ const AddAcc7 = ({ nextBtn }) => {
                 },
               }}
             >
-              {generateTimeOptions().map((time) => (
+              {generateTimeOptions("08:00", "22:00").map((time) => (
                 <MenuItem key={time} value={time}>
                   {time}
                 </MenuItem>
@@ -147,7 +147,7 @@ const AddAcc7 = ({ nextBtn }) => {
                 },
               }}
             >
-              {generateTimeOptions().map((time) => (
+              {generateTimeOptions("08:00", "22:00").map((time) => (
                 <MenuItem key={time} value={time}>
                   {time}
                 </MenuItem>

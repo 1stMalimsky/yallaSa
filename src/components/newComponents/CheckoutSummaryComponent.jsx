@@ -14,6 +14,8 @@ import CheckoutDateComponent from "./CheckoutDateComponent";
 import extractDataToArr from "./checkoutAccordion/helpers/extractDataToArr";
 import CircularProgress from "@mui/material/CircularProgress";
 import ChcekoutDateComponent from "./CheckoutDateComponent";
+import axios from "axios";
+import fetchCaravanImages from "./helpers/fetchCaravanImages";
 
 const CheckoutSummaryComponent = ({
   checkoutCompData,
@@ -22,8 +24,16 @@ const CheckoutSummaryComponent = ({
 }) => {
   const [extrasDetails, setExtrasDetails] = useState([]);
 
-  console.log("total Price", totalPrice);
+  const [caravanPhotos, setCaravanPhotos] = useState([]);
+  const caravanId = caravanDetails._id;
+
+  /* console.log("total Price", totalPrice);
   console.log("caravanDetails", caravanDetails);
+  console.log("checkoutCompData", checkoutCompData);
+ */
+  useEffect(() => {
+    fetchCaravanImages(caravanId, setCaravanPhotos);
+  }, []);
 
   useEffect(() => {
     if (checkoutCompData && checkoutCompData[5] === undefined) return;
@@ -33,7 +43,7 @@ const CheckoutSummaryComponent = ({
   //console.log("checkoutCompData", checkoutCompData);
   //console.log("Total price arr", totalPrice);
 
-  if (!totalPrice) {
+  if (!totalPrice || caravanPhotos.length < 1) {
     return <CircularProgress />;
   }
   return (
@@ -44,13 +54,15 @@ const CheckoutSummaryComponent = ({
           <Grid item xs={12} md={6}>
             <img
               className="checkoutComponentImg"
-              src={caravanDetails.images[0].thumbnail}
+              src={caravanPhotos[0].thumbnail}
               alt="checkout"
             />
           </Grid>
           {/* CARAVAN DETAILS */}
           <Grid item xs={12} md={6} sx={{ pr: 1 }}>
-            <Typography variant="h6">שם: {caravanDetails.model}</Typography>
+            <Typography variant="h6">
+              שם: {caravanDetails.listingName}
+            </Typography>
             <Typography variant="h6">חוות דעת</Typography>
           </Grid>
           {/* PICKED DATES */}
@@ -102,7 +114,7 @@ const CheckoutSummaryComponent = ({
                 <div className="checkoutAccordionSummary">
                   <Typography variant="body1">סה"כ תוספות</Typography>
                   <Typography variant="body1">
-                    {totalPrice.totalExtras}
+                    {totalPrice.totalExtras || null}
                   </Typography>
                 </div>
               </AccordionSummary>
@@ -138,7 +150,8 @@ const CheckoutSummaryComponent = ({
                 <div className="checkoutAccordionSummary">
                   <Typography variant="body1">שירותים נוספים</Typography>
                   <Typography variant="body1">
-                    {totalPrice.totalInsurance + totalPrice.totalCancellation}
+                    {totalPrice.totalInsurance + totalPrice.totalCancellation ||
+                      null}
                   </Typography>
                 </div>{" "}
               </AccordionSummary>
@@ -158,7 +171,7 @@ const CheckoutSummaryComponent = ({
                           ביטוח: {checkoutCompData[4].insuranceType}
                         </Typography>
                         <Typography variant="body1">
-                          {totalPrice.totalInsurance}
+                          {totalPrice.totalInsurance || null}
                         </Typography>
                       </Box>
                     )}
@@ -176,7 +189,7 @@ const CheckoutSummaryComponent = ({
                           ביטוח ביטולים: {checkoutCompData[6].policyChoice}
                         </Typography>
                         <Typography variant="body1">
-                          {totalPrice.totalCancellation}
+                          {totalPrice.totalCancellation || null}
                         </Typography>
                       </Box>
                     )}
@@ -185,7 +198,9 @@ const CheckoutSummaryComponent = ({
             </Accordion>
             <div className="checkoutAccordionSummary">
               <Typography variant="h6">סה"כ</Typography>
-              <Typography variant="h6">{+totalPrice.grandTotal}</Typography>
+              <Typography variant="h6">
+                {+totalPrice.grandTotal || null}
+              </Typography>
             </div>
           </Grid>
         </Grid>

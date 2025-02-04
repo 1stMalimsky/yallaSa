@@ -22,11 +22,15 @@ const validation = (schema, userInput) => {
 
 const validateInputs = (schema, input) => {
   if (!input || !schema) {
+    console.log("details missing", input, schema);
+
     toast.error("חסרים נתונים להמשך");
     return true;
   }
   const validationResponse = validation(schema, input);
   if (validationResponse) {
+    console.log("validationResponse", validationResponse, input);
+
     const firstKey = Object.keys(validationResponse)[0];
     const firstMessage = validationResponse[firstKey][0];
     toast.error(firstMessage);

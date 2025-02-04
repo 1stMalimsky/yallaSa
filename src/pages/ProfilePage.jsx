@@ -2,30 +2,41 @@ import { useState, useEffect } from "react";
 import ProfileAcc1 from "../components/newComponents/profile/ProfileAcc1";
 import ProfileAcc2 from "../components/newComponents/profile/ProfileAcc2";
 import { Avatar, Box, Container, Typography, Button } from "@mui/material";
+import ProfileAcc3 from "../components/newComponents/profile/ProfileAcc3";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import axios from "axios";
 import { CircularProgress, Grid } from "@mui/material";
 import getToken from "../utils/helpers/getToken";
 import getUserDetails from "../utils/helpers/getUserDetails";
+import getUserImages from "../utils/helpers/getUserImages";
 
 const EditProfilePage = () => {
   const [inputState, setInputState] = useState(null);
+  const [renderTrigger, setRendertrigger] = useState(false);
   const tokenPayload = getToken();
   if (!tokenPayload) {
     window.location.href = "/login";
   }
   //console.log("inputState", inputState);
 
+  const triggerInit = () => {
+    setRendertrigger(!renderTrigger);
+    console.log("trigger set");
+  };
+
   useEffect(() => {
     (async () => {
       try {
         const foundUser = await getUserDetails(tokenPayload.userId);
+        const userImages = await getUserImages(tokenPayload.userId);
+        //console.log("foundUser", foundUser);
+        //console.log("userImages", userImages);
         const dataToUpdate = {
-          _id: foundUser._id,
+          userId: foundUser._id,
           fullName: foundUser.fullName,
           email: foundUser.email,
           phone: foundUser.phone,
-          license: foundUser.license,
+          license: userImages[0] || "",
           isOwner: foundUser.isOwner,
         };
         setInputState(dataToUpdate);
@@ -33,7 +44,9 @@ const EditProfilePage = () => {
         console.log(err);
       }
     })();
-  }, []);
+  }, [renderTrigger]);
+
+  //console.log("profile page in put state", inputState);
 
   if (!inputState) {
     return <CircularProgress />;
@@ -112,7 +125,11 @@ const EditProfilePage = () => {
         <Typography variant="h5" gutterBottom>
           רשיון נהיגה
         </Typography>
-        <ProfileAcc2 userDetails={inputState} />
+        <ProfileAcc2 userDetailsData={inputState} renderFunc={triggerInit} />
+        <Typography variant="h5" gutterBottom>
+          הקרוואנים שלי
+        </Typography>
+        <ProfileAcc3 userData={inputState} />
       </Box>
     </Container>
   );

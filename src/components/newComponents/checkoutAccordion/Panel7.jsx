@@ -10,20 +10,51 @@ import {
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import extractDataToArr from "./helpers/extractDataToArr";
+import axios from "axios";
+import getToken from "../../../utils/helpers/getToken";
+import dayjs from "dayjs";
+import { toast } from "react-toastify";
 
 const Panel7 = ({ prevInputData, grandTotal, setExpanded }) => {
   //console.log("panelData", prevInputData, "Gradn Total", grandTotal);
 
   const [extrasDetails, setExtrasDetails] = useState(null);
+  const userId = getToken().userId;
 
   useEffect(() => {
     if (prevInputData[5] === undefined) return;
     else setExtrasDetails(extractDataToArr(prevInputData[5]));
   }, [prevInputData]);
 
-  const handlePanel7Submit = () => {
-    setExpanded("panel8");
+  const handlePanel7Submit = async () => {
+    const dateData = {
+      month: dayjs(prevInputData[0].start * 1000).format("MM"),
+      year: dayjs(prevInputData[0].start * 1000).format("YYYY"),
+      start: prevInputData[0].start,
+      end: prevInputData[0].end,
+      numOfDays: prevInputData[0].numOfDays,
+      pickupTime: prevInputData[2].pickupTime,
+      dropoffTime: prevInputData[3].dropoffTime,
+    };
+    try {
+      const newReservation = await axios.post("/reservations/create", {
+        userId: userId,
+        caravanId: prevInputData[0].id,
+        dates: dateData,
+        priceDetails: grandTotal,
+        extras: prevInputData[5],
+        insuranceSelected: prevInputData[4].insuranceType,
+        cancelationPolicy: prevInputData[6].policyChoice,
+      });
+      console.log("newReservation", newReservation);
+
+      toast.success("ההזמנה נשמרה בהצלחה");
+    } catch (err) {
+      console.log("Panel7 err", err);
+    }
+    //setExpanded("panel8");
   };
+  console.log("prevInput data ", prevInputData, "grandTotal", grandTotal);
 
   return (
     <div>

@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import dayjs from "dayjs";
 import {
   Grid,
   Typography,
@@ -9,18 +11,35 @@ import {
   Box,
   Button,
   Alert,
+  CircularProgress,
 } from "@mui/material";
 import generateTimeOptions from "../../../utils/generateTimeOptions";
 import { validatePanel2 } from "../../../validation/checkoutAccordion";
 
-const Panel2 = ({ setExpanded, onSubmit }) => {
+const Panel2 = ({ setExpanded, onSubmit, locationData }) => {
   const [inputState, setInputState] = useState({
-    pickupLocation: "",
     pickupTime: "",
     pickupDate: null,
   });
 
+  const [timeOptions, setTimeOptions] = useState([]);
+
   const [isError, setIsError] = useState(false);
+
+  const params = useParams();
+  useEffect(() => {
+    console.log("locationData", locationData);
+
+    const startDate = dayjs.unix(params.start).format("YYYY-MM-DD");
+    const endDate = dayjs.unix(params.end).format("YYYY-MM-DD");
+    const pickupTime = locationData.pickupTime;
+    const dropoffTime = locationData.dropoffTime;
+    const timeOptions = generateTimeOptions(pickupTime, dropoffTime);
+    console.log("timeOptions", pickupTime, dropoffTime);
+
+    setInputState({ ...inputState, pickupDate: startDate });
+    setTimeOptions(timeOptions);
+  }, [params]);
 
   const handleInputChange = (e) => {
     const value = e.target.value;
@@ -47,16 +66,19 @@ const Panel2 = ({ setExpanded, onSubmit }) => {
       setExpanded("panel3");
     }
   };
-
+  if (timeOptions.length === 0) {
+    return <CircularProgress />;
+  }
   return (
     <div>
       <Grid container spacing={2}>
         {/* PICKUP DATE & LOCATION */}
         <Grid item xs={12}>
-          <Typography variant="h4">כפר סבא (variant)</Typography>
+          <Typography variant="h4">{locationData.city}</Typography>
           <Typography variant="h6">
-            תאריך: {inputState.pickupLocation}
+            {locationData.street} {locationData.houseNumber}
           </Typography>
+          <Typography variant="h6">תאריך: {inputState.pickupDate}</Typography>
         </Grid>
         {/* PICKUP TIME */}
         <Grid item xs={12} sm={6}>
@@ -74,7 +96,7 @@ const Panel2 = ({ setExpanded, onSubmit }) => {
                 },
               }}
             >
-              {generateTimeOptions().map((time) => (
+              {timeOptions.map((time) => (
                 <MenuItem key={time} value={time}>
                   {time}
                 </MenuItem>

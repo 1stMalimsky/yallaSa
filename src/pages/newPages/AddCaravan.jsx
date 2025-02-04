@@ -8,7 +8,6 @@ import {
   Typography,
 } from "@mui/material";
 import AddCaravanAcc from "../../components/newComponents/addCaravanDetails/AddCaravanAccDetails";
-
 const AddCaravan = () => {
   const params = useParams();
   const [inputState, setInputState] = useState({

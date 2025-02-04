@@ -2,6 +2,7 @@ import axios from "axios";
 import getCarvanData from "../../../../utils/helpers/getCaravanData";
 
 const calculateExtrasTotal = (inputState) => {
+  if (!inputState[5]) return 0;
   const extrasArray = Object.values(inputState[5]);
 
   let grandTotal = 0;
@@ -14,8 +15,8 @@ const calculateExtrasTotal = (inputState) => {
 const calculateTotalPrice = async (panelData, caravanDetails) => {
   console.log("panelData", panelData);
   const initData = panelData[0];
-  const numOfDays = panelData[0].numOfDays;
-  const insurnance = panelData[4];
+  const numOfDays = +panelData[0].numOfDays;
+  const insurance = panelData[4];
   const cancelPolicy = panelData[6];
   //console.log("initData", initData);
   try {
@@ -26,9 +27,29 @@ const calculateTotalPrice = async (panelData, caravanDetails) => {
       return;
     }
 
+    const insuranceCalc = () => {
+      if (insurance.insuranceType === "basic") {
+        if (insurance.basicIncluded) return 0;
+        if (insurance.basicIncluded === false) {
+          console.log(
+            "insurance calc",
+            numOfDays * +insurance.basicInsurancePrice
+          );
+
+          return numOfDays * +insurance.basicInsurancePrice;
+        }
+      }
+      if (insurance.insuranceType === "premium") {
+        return +numOfDays * +insurance.premiumInsurancePrice;
+      } else {
+        //console.log("no insuranceType returning null");
+        return null;
+      }
+    };
+
     let totals = {
-      totalRentalPrice: numOfDays * currnetCaravan.pricePerNight,
-      totalInsurance: insurnance.insuranceType === "basic" ? 0 : numOfDays * 50,
+      totalRentalPrice: numOfDays * +currnetCaravan.priceDetails.pricePerNight,
+      totalInsurance: insuranceCalc(),
       totalExtras: calculateExtrasTotal(panelData),
       totalCancellation:
         cancelPolicy.policyChoice === "basic" ? 0 : numOfDays * 10,

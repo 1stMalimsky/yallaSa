@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Grid,
   Typography,
@@ -9,19 +9,40 @@ import {
   Box,
   Button,
   Alert,
+  CircularProgress,
 } from "@mui/material";
 import generateTimeOptions from "../../../utils/generateTimeOptions";
 import { validatePanel2 } from "../../../validation/checkoutAccordion";
+import { useParams } from "react-router-dom";
+import dayjs from "dayjs";
 
-const Panel3 = ({ setExpanded, onSubmit }) => {
+const Panel3 = ({ setExpanded, onSubmit, locationData }) => {
   const [inputState, setInputState] = useState({
-    dropoffLocation: "",
     dropoffTime: "",
     dropoffDate: null,
   });
 
+  const [timeOptions, setTimeOptions] = useState([]);
   const [isError, setIsError] = useState(null);
 
+  const params = useParams();
+  useEffect(() => {
+    const startDate = dayjs.unix(params.start).format("YYYY-MM-DD");
+    const endDate = dayjs.unix(params.end).format("YYYY-MM-DD");
+    //console.log("locationData", locationData);
+
+    const pickupTime = locationData.pickupTime;
+    const dropoffTime = locationData.dropoffTime;
+    const timeOptions = generateTimeOptions(pickupTime, dropoffTime);
+    //console.log("timeOptions", pickupTime, dropoffTime);
+
+    setInputState({
+      ...inputState,
+      pickupDate: startDate,
+      dropoffDate: endDate,
+    });
+    setTimeOptions(timeOptions);
+  }, [params]);
   const handleInputChange = (e) => {
     const value = e.target.value;
     setInputState((prevState) => ({
@@ -46,13 +67,18 @@ const Panel3 = ({ setExpanded, onSubmit }) => {
       setExpanded("panel4");
     }
   };
-
+  if (timeOptions.length === 0) {
+    return <CircularProgress />;
+  }
   return (
     <div>
       <Grid container spacing={2}>
         {/* DROPOFF DATE & LOCATION */}
         <Grid item xs={12}>
-          <Typography variant="h4">כפר סבא (variant)</Typography>
+          <Typography variant="h4">{locationData.city}</Typography>
+          <Typography variant="h6">
+            {locationData.street} {locationData.houseNumber}
+          </Typography>
           <Typography variant="h6">
             תאריך: {inputState.dropoffLocation}
           </Typography>
@@ -73,7 +99,7 @@ const Panel3 = ({ setExpanded, onSubmit }) => {
                 },
               }}
             >
-              {generateTimeOptions().map((time) => (
+              {timeOptions.map((time) => (
                 <MenuItem key={time} value={time}>
                   {time}
                 </MenuItem>
