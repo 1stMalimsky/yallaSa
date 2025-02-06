@@ -120,6 +120,8 @@ const AddAcc9 = ({ nextBtn, handleSubmit }) => {
   };
 
   const handleChange = (e, setState) => {
+    console.log("e", e.target.name, e.target.value);
+
     setState((prevData) => {
       const newData = { ...prevData };
       newData[e.target.name] = e.target.value;
@@ -186,8 +188,8 @@ const AddAcc9 = ({ nextBtn, handleSubmit }) => {
               value={insuranceDetails.insuranceIncluded}
               onChange={(e) => {
                 console.log(
-                  "insuranceDetails.insuranceIncluded",
-                  insuranceDetails.insuranceIncluded
+                  "insuranceDetails.insuranceIncluded e",
+                  e.target.value
                 );
                 setInsuranceDetails((prevState) => ({
                   ...prevState,
@@ -213,7 +215,7 @@ const AddAcc9 = ({ nextBtn, handleSubmit }) => {
                   onChange={(e) => {
                     console.log(
                       "extraInsuranceavailable",
-                      extraInsuranceAvailable
+                      typeof extraInsuranceAvailable
                     );
                     setExtraInsuranceAvailable(e.target.value);
                   }}
@@ -227,7 +229,6 @@ const AddAcc9 = ({ nextBtn, handleSubmit }) => {
                     value="false"
                     control={<Radio />}
                     label="לא"
-                    o
                   />
                 </RadioGroup>
               </FormControl>

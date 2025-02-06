@@ -11,12 +11,13 @@ import {
   Button,
 } from "@mui/material";
 
+import CircularProgress from "@mui/material/CircularProgress";
 const EditPrivateUserType = ({ parentData, handlePtype, handlePdetails }) => {
   const [paymentType, setPaymentType] = useState(parentData.paymentType);
   const [paymentDetails, setPaymentDetails] = useState(
-    parentData.paymentDetails
+    parentData.paymentDetails || ""
   );
-  console.log("parentData in editPrivateUser", parentData);
+  //console.log("parentData in editPrivateUser", parentData);
 
   useEffect(() => {
     if (parentData) {
@@ -32,7 +33,7 @@ const EditPrivateUserType = ({ parentData, handlePtype, handlePdetails }) => {
   const handlePaymentDetailsChange = (e, paymentType) => {
     const prevState = { ...paymentDetails };
     if (paymentType === 1) {
-      delete prevState.phoneNumber;
+      delete prevState.phone;
       setPaymentDetails(() => ({
         ...prevState,
         [e.target.id]: e.target.value,
@@ -47,7 +48,8 @@ const EditPrivateUserType = ({ parentData, handlePtype, handlePdetails }) => {
   };
 
   //console.log("paymentType", paymentType);
-  console.log("paymentType", paymentType);
+  //console.log("paymentType", paymentType);
+  if (!parentData) return <CircularProgress />;
 
   return (
     <div>

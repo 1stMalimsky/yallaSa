@@ -16,7 +16,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import CircularProgress from "@mui/material/CircularProgress";
 
-const EditAcc1 = ({ nextBtn, parentData, caravanId }) => {
+const EditAcc1 = ({ nextBtn, parentData, caravanId, numOfCaravansOwned }) => {
   //console.log("parentData", parentData);
   const [privateUser, setPrivateUser] = useState(parentData.privateUser);
   const [userDetails, setUserDetails] = useState(parentData.userDetails);
@@ -26,6 +26,8 @@ const EditAcc1 = ({ nextBtn, parentData, caravanId }) => {
   const [paymentDetails, setPaymentDetails] = useState(
     parentData.paymentDetails
   );
+
+  const [disabled, setDisabled] = useState(true);
   const userId = getToken().userId;
 
   useEffect(() => {
@@ -34,6 +36,11 @@ const EditAcc1 = ({ nextBtn, parentData, caravanId }) => {
       setUserDetails(parentData.userDetails);
       setPaymentType(parentData.paymentDetails.phone ? 2 : 1);
       setPaymentDetails(parentData.paymentDetails);
+      if (numOfCaravansOwned > 1) {
+        setDisabled(true);
+      } else {
+        setDisabled(false);
+      }
     }
   }, [parentData]);
 
@@ -112,9 +119,9 @@ const EditAcc1 = ({ nextBtn, parentData, caravanId }) => {
 
     if (paymentType === 1) {
       dataToUpdate.paymentDetails = {
-        bankAccount: "",
-        bankBranch: "",
-        bankName: "",
+        //bankAccount: "",
+        //bankBranch: "",
+        //bankName: "",
         phone: dataToUpdate.paymentDetails.phone,
       };
     }
@@ -123,7 +130,7 @@ const EditAcc1 = ({ nextBtn, parentData, caravanId }) => {
         bankAccount: dataToUpdate.paymentDetails.bankAccount,
         bankBranch: dataToUpdate.paymentDetails.bankBranch,
         bankName: dataToUpdate.paymentDetails.bankName,
-        phone: "",
+        //phone: "",
       };
     }
     try {
@@ -171,7 +178,7 @@ const EditAcc1 = ({ nextBtn, parentData, caravanId }) => {
     <Box>
       {/* RADIO */}
       <Box>
-        <FormControl component="fieldset">
+        <FormControl component="fieldset" disabled={disabled}>
           <FormLabel component="legend" />
           <RadioGroup
             row

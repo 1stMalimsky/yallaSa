@@ -8,6 +8,8 @@ const generateTimeOptions = (start, end) => {
     const time = `${hour.toString().padStart(2, "0")}:00`;
     timeOptions.push(time);
   }
+  //console.log("timeOptions", timeOptions);
+
   return timeOptions;
 };
 

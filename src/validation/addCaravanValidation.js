@@ -150,7 +150,7 @@ const acc7ValidationSchema = Joi.object({
     .messages({
       "string.pattern.base": `"מיקום במפות" צריך להיות בפורמט של קואורדינטות GPS ("lat,lng") ולהכיל מספרים עשרוניים`,
     }),
-  pickupFrom: Joi.string()
+  pickupTime: Joi.string()
     .pattern(new RegExp("^([01]?[0-9]|2[0-3]):[0-5][0-9]$"))
     .required()
     .messages({
@@ -158,7 +158,7 @@ const acc7ValidationSchema = Joi.object({
       "string.pattern.base": `"שעת איסוף" צריכה להיות בפורמט שעה HH:MM`,
       "any.required": `"שעת איסוף" היא שדה חובה`,
     }),
-  dropoffUntil: Joi.string()
+  dropoffTime: Joi.string()
     .pattern(new RegExp("^([01]?[0-9]|2[0-3]):[0-5][0-9]$"))
     .required()
     .messages({

@@ -23,8 +23,10 @@ const ProfileAcc1 = ({ userDetails }) => {
     license: userDetails.license || "",
   });
 
+  console.log("userDetails", userDetails);
+
   const navigate = useNavigate();
-  const userId = userDetails._id;
+  const userId = userDetails.userId;
 
   const handleSaveUserDeetsClick = async () => {
     console.log("editUserDetails", editUserDetails.license);
@@ -36,7 +38,7 @@ const ProfileAcc1 = ({ userDetails }) => {
       return;
     }
     try {
-      await axios.patch(`/users/update/${userId}`, editUserDetails);
+      await axios.put(`/users/update/${userId}`, editUserDetails);
       toast.success("הפרטים שונו בהצלחה");
       setInputState((prevState) => ({ ...prevState, ...editUserDetails }));
     } catch (err) {

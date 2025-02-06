@@ -17,9 +17,9 @@ import EditAcc2 from "../../components/newComponents/editCaravan/EditAcc2";
 import EditAcc3 from "../../components/newComponents/editCaravan/EditAcc3";
 import EditAcc4 from "../../components/newComponents/editCaravan/EditAcc4";
 import EditAcc5 from "../../components/newComponents/editCaravan/EditAcc5";
-import AddAcc6 from "../../components/newComponents/addCaravanDetails/AddAcc6";
-import AddAcc7 from "../../components/newComponents/addCaravanDetails/AddAcc7";
-import AddAcc8 from "../../components/newComponents/addCaravanDetails/AddAcc8";
+import EditAcc6 from "../../components/newComponents/editCaravan/EditAcc6";
+import EditAcc7 from "../../components/newComponents/editCaravan/EditAcc7";
+import EditAcc8 from "../../components/newComponents/editCaravan/EditAcc8";
 import AddAcc9 from "../../components/newComponents/addCaravanDetails/AddAcc9";
 import normalizeEditCaravan from "../../utils/helpers/normalizeEditCaravan";
 import getUserDetails from "../../utils/helpers/getUserDetails";
@@ -31,6 +31,7 @@ const EditCaravanPage = () => {
   const [accDetails, setAccDetails] = useState([]);
   const [detailsLoaded, setDetailsLoaded] = useState(false);
   const [userDetails, setUserDetails] = useState({});
+  const [isExpanded, setIsExpanded] = useState(0);
 
   useEffect(() => {
     const getCaravanData = async () => {
@@ -57,6 +58,7 @@ const EditCaravanPage = () => {
   }, []);
 
   const handleNextBtn = (data, numberOfEntry) => {
+    setIsExpanded(isExpanded + 1);
     setAccDetails((prevData) => {
       const newData = [...prevData];
       newData[numberOfEntry] = data;
@@ -68,7 +70,21 @@ const EditCaravanPage = () => {
     console.log("submit clicked");
   };
 
+  const accordionClick = (id) => {
+    if (id > 9 || id < 0) {
+      console.log("isExpanded wrong id");
+      setIsExpanded(22);
+      return;
+    }
+    if (isExpanded === id) {
+      setIsExpanded(22);
+      return;
+    }
+    setIsExpanded(id);
+  };
+
   console.log("accDetails", accDetails);
+  //console.log("carqavasnIds", userDetails);
 
   if (accDetails.length < 1) return <CircularProgress />;
 
@@ -77,8 +93,11 @@ const EditCaravanPage = () => {
       <Typography variant="h2">Edit Caravan</Typography>
       {detailsLoaded && (
         /* ACC1 */
-        <Accordion>
-          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+        <Accordion id="0" expanded={isExpanded === 0}>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            onClick={() => accordionClick(0)}
+          >
             <Box
               sx={{
                 display: "flex",
@@ -95,13 +114,17 @@ const EditCaravanPage = () => {
               nextBtn={handleNextBtn}
               parentData={accDetails[0]}
               caravanId={params.caravanId}
+              numOfCaravansOwned={2}
             />
           </AccordionDetails>
         </Accordion>
       )}
       {/* ACC2 */}
-      <Accordion>
-        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+      <Accordion id="1" expanded={isExpanded === 1}>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          onClick={() => accordionClick(1)}
+        >
           <Box
             sx={{
               display: "flex",
@@ -122,8 +145,12 @@ const EditCaravanPage = () => {
         </AccordionDetails>
       </Accordion>
       {/* ACC3 */}
-      <Accordion>
-        <AccordionSummary id="acc3" expandIcon={<ExpandMoreIcon />}>
+
+      <Accordion id="2" expanded={isExpanded === 2}>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          onClick={() => accordionClick(2)}
+        >
           <Box
             sx={{
               display: "flex",
@@ -144,8 +171,11 @@ const EditCaravanPage = () => {
         </AccordionDetails>
       </Accordion>
       {/* ACC4 */}
-      <Accordion>
-        <AccordionSummary id="acc4" expandIcon={<ExpandMoreIcon />}>
+      <Accordion expanded={isExpanded === 3}>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          onClick={() => accordionClick(3)}
+        >
           <Box
             sx={{
               display: "flex",
@@ -166,8 +196,11 @@ const EditCaravanPage = () => {
         </AccordionDetails>
       </Accordion>
       {/* ACC5 */}
-      <Accordion>
-        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+      <Accordion expanded={isExpanded === 4}>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          onClick={() => accordionClick(4)}
+        >
           <Box
             sx={{
               display: "flex",
@@ -188,59 +221,68 @@ const EditCaravanPage = () => {
         </AccordionDetails>
       </Accordion>
       {/* ACC6 */}
-      {/*       <Accordion expanded={openState === 5 ? true : false}>
+      <Accordion expanded={isExpanded === 5}>
         <AccordionSummary
-          expandIcon={
-            openState === 6 ? <Typography variant="h5">שינוי</Typography> : null
-          }
-          id="acc6"
-          onClick={handleBackBtn}
+          expandIcon={<ExpandMoreIcon />}
+          onClick={() => accordionClick(5)}
         >
-          <Typography variant="h5">6. תמונות הקרוואן</Typography>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              width: "100%",
+            }}
+          >
+            <Typography variant="h5">6. תמונות הקרוואן</Typography>
+            <Typography variant="h6">שינוי</Typography>
+          </Box>
         </AccordionSummary>
         <AccordionDetails>
-          <AddAcc6
+          <EditAcc6 nextBtn={handleNextBtn} carId={caravanDetails._id} />
+        </AccordionDetails>
+      </Accordion>
+      {/* ACC7 */}
+      <Accordion expanded={isExpanded === 6}>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          onClick={() => accordionClick(6)}
+        >
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              width: "100%",
+            }}
+          >
+            <Typography variant="h5">7. מיקום ושעות</Typography>
+            <Typography variant="h6">שינוי</Typography>
+          </Box>
+        </AccordionSummary>
+        <AccordionDetails>
+          <EditAcc7
             nextBtn={handleNextBtn}
-            carId={caravanDetails._id}
-            uploadTrigger={imageUploadTrigger} 
+            parentData={accDetails[6]}
+            caravanId={params.caravanId}
           />
         </AccordionDetails>
-      </Accordion> */}
-      {/* ACC7 */}
-      {/* <Accordion expanded={openState === 6 ? true : false}>
-        <AccordionSummary
-          expandIcon={
-            openState === 7 ? <Typography variant="h5">שינוי</Typography> : null
-          }
-          id="acc7"
-          onClick={handleBackBtn}
-        >
-          <Typography variant="h5">7. מיקום ושעות</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <AddAcc7 nextBtn={handleNextBtn} />
-        </AccordionDetails>
-      </Accordion> */}
+      </Accordion>
       {/* ACC8 */}
-      {/*   <Accordion expanded={openState === 7 ? true : false}>
+      <Accordion expanded={isExpanded === 7}>
         <AccordionSummary
-          expandIcon={
-            openState === 8 ? <Typography variant="h5">שינוי</Typography> : null
-          }
+          expandIcon={<ExpandMoreIcon />}
           id="acc8"
-          onClick={handleBackBtn}
+          onClick={() => accordionClick(7)}
         >
           <Typography variant="h5">8. ביטוח ורישיון רכב</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <AddAcc8
+          <EditAcc8
             nextBtn={handleNextBtn}
-            photoRemoved={updatePhotoRemoved}
+            parentData={accDetails[7]}
             caravanId={caravanDetails._id}
-            uploadTrigger={imageUploadTrigger}
           />
         </AccordionDetails>
-      </Accordion> */}
+      </Accordion>
       {/* ACC9 */}
       {/* <Accordion expanded={openState === 8 ? true : false}>
         <AccordionSummary

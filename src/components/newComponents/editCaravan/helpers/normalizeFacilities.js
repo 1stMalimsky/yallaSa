@@ -7,7 +7,7 @@ import {
 } from "../../addCaravanDetails/helpers/acc6facilitiesList.js";
 
 const normalizeFacilities = (serverData) => {
-  console.log("serverData in normaalize", serverData);
+  //console.log("serverData in normaalize", serverData);
 
   return {
     kitchen: Object.entries(serverData.kitchen || {})

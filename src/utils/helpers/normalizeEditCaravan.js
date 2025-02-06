@@ -4,8 +4,8 @@ const normalizeEditCaravan = (dataFromServer, userDetails) => {
     return console.log("Data missing from Normalize edit caravan");
   }
   const paymentTypeCheck = () => {
-    console.log("userDetails normalize caravan", userDetails);
-    console.log("dataFromServer", dataFromServer);
+    //console.log("userDetails normalize caravan", userDetails);
+    //console.log("dataFromServer", dataFromServer);
 
     if (
       userDetails.paymentDetails.bankAccount &&
@@ -19,7 +19,7 @@ const normalizeEditCaravan = (dataFromServer, userDetails) => {
     ) {
       return "2";
     } else {
-      return console.log("paymentType undefined");
+      return; //console.log("paymentType undefined");
     }
   };
 
@@ -32,7 +32,7 @@ const normalizeEditCaravan = (dataFromServer, userDetails) => {
     } else return console.log("userDetails undefined");
   };
 
-  console.log("measurements from dataFromServer", dataFromServer.measurements);
+  //console.log("measurements from dataFromServer", dataFromServer.measurements);
 
   const normalizedAccData = [
     {
@@ -66,6 +66,8 @@ const normalizeEditCaravan = (dataFromServer, userDetails) => {
       street: dataFromServer.locationDetails.street || "",
       houseNumber: dataFromServer.locationDetails.houseNumber || "",
       mapsLocation: dataFromServer.locationDetails.gpsData || "",
+      pickupTime: dataFromServer.locationDetails.pickupTime || "",
+      dropoffTime: dataFromServer.locationDetails.dropoffTime || "",
     },
     dataFromServer.licenseDetails || "",
     {
@@ -81,7 +83,7 @@ const normalizeEditCaravan = (dataFromServer, userDetails) => {
       pricePerNight: dataFromServer.priceDetails.pricePerNight,
     },
   ];
-  console.log("normalizedAccData", normalizedAccData);
+  //console.log("normalizedAccData", normalizedAccData);
 
   return normalizedAccData;
 };

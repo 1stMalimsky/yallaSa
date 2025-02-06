@@ -4,7 +4,7 @@ const getCaravanImages = async (caravanId) => {
   try {
     const caravanImages = await axios.get(`/caravans/images/${caravanId}`);
     if (caravanImages) {
-      console.log("caravanImages lodaed");
+      //console.log("caravanImages lodaed", caravanImages.data);
     }
     if (!caravanImages || caravanImages.data.caravanImages.length < 1) {
       return console.log("no caravan found");

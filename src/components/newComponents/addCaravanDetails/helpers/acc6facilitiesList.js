@@ -26,7 +26,7 @@ const safetyList = {
 
 const livingList = {
   hasTV: "טלוויזיה",
-  hasAc: "מזגן",
+  hasAC: "מזגן",
   hasAwning: "גגון צל",
   hasHose: "צינור מים נשלף",
   hasElectricity: "חשמל 220V",

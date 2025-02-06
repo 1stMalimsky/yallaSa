@@ -36,7 +36,7 @@ const EditAcc5 = ({ nextBtn, parentData, caravanId }) => {
   const bathroomRef = useRef(null);
   const safetyRef = useRef(null);
   const comfortRef = useRef(null);
-  console.log("acc5ParentDataa", parentData);
+  //console.log("acc5ParentDataa", parentData);
 
   useEffect(() => {
     setAccDetails(parentData);
@@ -107,7 +107,7 @@ const EditAcc5 = ({ nextBtn, parentData, caravanId }) => {
     });
   };
 
-  console.log("acc5Details", acc5Details);
+  //console.log("acc5Details", acc5Details);
   //console.log("parentData", parentData);
 
   return (
@@ -238,7 +238,7 @@ const EditAcc5 = ({ nextBtn, parentData, caravanId }) => {
       </Grid>
       <Box className="centerElements">
         <Button variant="contained" onClick={handleNextBtn}>
-          הבא
+          עדכן
         </Button>
       </Box>
     </Box>

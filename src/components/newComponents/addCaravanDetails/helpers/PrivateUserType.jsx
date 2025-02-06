@@ -102,7 +102,7 @@ const PrivateUserType = ({ parentData, handlePtype, handlePdetails }) => {
         <div>
           <TextField
             className="addCarTextFiled"
-            id="phoneNumber"
+            id="phone"
             label="מספר טלפון"
             onChange={(e) => handlePaymentDetailsChange(e, 2)}
           />

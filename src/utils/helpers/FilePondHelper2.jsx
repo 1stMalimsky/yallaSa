@@ -22,6 +22,8 @@ const ImageUploadComponent = ({
   const [base64Data, setBase64Data] = useState(null);
   const [imageId, setImageId] = useState("");
 
+  //console.log("indexNumnber", indexNumber);
+
   const pond = useRef(null);
 
   const handleRemoveClick = () => {
@@ -72,7 +74,7 @@ const ImageUploadComponent = ({
     if (!base64Data) {
       return;
     }
-    ///console.log("base64Data", base64Data);
+    console.log("sendUpFunc indexNumber", indexNumber);
     getBase64Data(base64Data, (base64Data) => {
       sendUpFunc(base64Data, indexNumber);
     });
