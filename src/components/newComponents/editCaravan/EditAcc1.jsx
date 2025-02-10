@@ -21,7 +21,7 @@ const EditAcc1 = ({ nextBtn, parentData, caravanId, numOfCaravansOwned }) => {
   const [privateUser, setPrivateUser] = useState(parentData.privateUser);
   const [userDetails, setUserDetails] = useState(parentData.userDetails);
   const [paymentType, setPaymentType] = useState(
-    parentData.paymentDetails.phone ? 2 : 1 || ""
+    parentData.paymentDetails.phone ? "2" : "1"
   );
   const [paymentDetails, setPaymentDetails] = useState(
     parentData.paymentDetails
@@ -32,9 +32,10 @@ const EditAcc1 = ({ nextBtn, parentData, caravanId, numOfCaravansOwned }) => {
 
   useEffect(() => {
     if (parentData) {
+      const paymentType = parentData.paymentDetails.phone;
       setPrivateUser(parentData.privateUser);
       setUserDetails(parentData.userDetails);
-      setPaymentType(parentData.paymentDetails.phone ? 2 : 1);
+      setPaymentType(paymentType ? "2" : "1");
       setPaymentDetails(parentData.paymentDetails);
       if (numOfCaravansOwned > 1) {
         setDisabled(true);
@@ -54,15 +55,26 @@ const EditAcc1 = ({ nextBtn, parentData, caravanId, numOfCaravansOwned }) => {
 
   const handleNextBtn = async () => {
     let acc1Data = {
-      ...(privateUser === "false" && { userDetails }),
+      ...(privateUser === "false" && {
+        businessDetails: {
+          companyName: userDetails.companyName,
+          companyId: userDetails.companyId,
+          phone: userDetails.phone,
+          city: userDetails.city,
+          street: userDetails.street,
+          email: userDetails.email,
+        },
+      }),
       ...(privateUser === "true" && {
         ...userDetails,
-        companyName: "",
-        companyId: "",
-        phone: "",
-        city: "",
-        street: "",
-        email: "",
+        businessDetails: {
+          companyName: "",
+          companyId: "",
+          phone: "",
+          city: "",
+          street: "",
+          email: "",
+        },
       }),
       privateUser,
       paymentType,
@@ -80,6 +92,8 @@ const EditAcc1 = ({ nextBtn, parentData, caravanId, numOfCaravansOwned }) => {
         return;
       } else {
         //const dataToUpdate = {}
+        console.log("Edit acc1Data", acc1Data);
+
         handleUpdateUserDetails(acc1Data);
         const newData = {
           ...acc1Data,
@@ -133,6 +147,7 @@ const EditAcc1 = ({ nextBtn, parentData, caravanId, numOfCaravansOwned }) => {
         //phone: "",
       };
     }
+
     try {
       //console.log("dataToUpdate", dataToUpdate);
       const paymentDetails1 = dataToUpdate.paymentDetails;
@@ -140,6 +155,9 @@ const EditAcc1 = ({ nextBtn, parentData, caravanId, numOfCaravansOwned }) => {
 
       const userResponse = await axios.put(`/users/update/${userId}`, {
         paymentDetails: dataToUpdate.paymentDetails,
+        businessDetails: dataToUpdate.businessDetails
+          ? dataToUpdate.businessDetails
+          : null,
       });
       if (!userResponse.data) {
         toast.error("הפרטים לא עודכנו");
@@ -171,6 +189,7 @@ const EditAcc1 = ({ nextBtn, parentData, caravanId, numOfCaravansOwned }) => {
       console.error("Error:", err);
     }
   };
+  //console.log("parentData in EditAcc1", parentData);
 
   if (parentData.length === 0) return <CircularProgress />;
 

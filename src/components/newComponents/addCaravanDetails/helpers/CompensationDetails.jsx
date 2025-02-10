@@ -16,7 +16,12 @@ const CompensationDetails = ({
   sessionDetails,
 }) => {
   const [paymentType, setPaymentType] = useState("");
-  const [paymentDetails, setPaymentDetails] = useState({});
+  const [paymentDetails, setPaymentDetails] = useState({
+    bankName: "",
+    bankBranch: "",
+    bankAccount: "",
+    phone: "",
+  });
 
   useEffect(() => {
     if (
@@ -33,6 +38,13 @@ const CompensationDetails = ({
     const { value } = e.target;
     setPaymentType(value);
     handlePaymentTypeChange(value);
+    const resetDetails =
+      value === "1"
+        ? { bankName: "", bankBranch: "", bankAccount: "" } // Bank transfer fields
+        : { phone: "" }; // Bit transfer fields
+
+    setPaymentDetails(resetDetails);
+    handlePaymentDetailsChange(resetDetails);
   };
 
   const handleLocalPaymentDetailsChange = (id, value) => {
@@ -41,7 +53,7 @@ const CompensationDetails = ({
     setPaymentDetails(newDetails);
     handlePaymentDetailsChange(newDetails);
   };
-  //console.log("compansationDetails", paymentType);
+  //console.log("compansationDetails", paymentDetails);
 
   return (
     <div>
@@ -56,11 +68,11 @@ const CompensationDetails = ({
             onChange={handleLocalPaymentTypeChange}
           >
             <FormControlLabel
-              value={1}
+              value={"1"}
               control={<Radio />}
               label="העברה בנקאית"
             />
-            <FormControlLabel value={2} control={<Radio />} label="ביט" />
+            <FormControlLabel value={"2"} control={<Radio />} label="ביט" />
           </RadioGroup>
         </FormControl>
       </Box>
@@ -99,8 +111,8 @@ const CompensationDetails = ({
         <div>
           <TextField
             className="addCarTextFiled"
-            id="phoneNumber"
-            value={paymentDetails.phoneNumber}
+            id="phone"
+            value={paymentDetails.phone}
             label="מספר טלפון"
             onChange={(e) =>
               handleLocalPaymentDetailsChange(e.target.id, e.target.value)

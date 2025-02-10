@@ -12,13 +12,13 @@ const CompanyUserType = ({
   const [paymentType, setPaymentType] = useState("");
   const [paymentDetails, setPaymentDetails] = useState("");
 
-  useEffect(() => {
+  /*   useEffect(() => {
     if (sessionDetails) {
       setUserDetails(sessionDetails.userDetails);
       setPaymentType(sessionDetails.paymentType);
       setPaymentDetails(sessionDetails.paymentDetails);
     }
-  }, [sessionDetails]);
+  }, [sessionDetails]); */
 
   const handleUserDetailsChange = (e) => {
     const updatedDetails = {
@@ -50,8 +50,8 @@ const CompanyUserType = ({
         />
         <TextField
           className="addCarTextFiled"
-          id="companyPhone"
-          value={userDetails.companyPhone || ""}
+          id="phone"
+          value={userDetails.phone || ""}
           label="טלפון משרד"
           onChange={handleUserDetailsChange}
         />
@@ -60,21 +60,22 @@ const CompanyUserType = ({
         <Typography variant="h6">כתובת</Typography>
         <TextField
           className="addCarTextFiled"
-          id="companyStreet"
-          value={userDetails.companyStreet || ""}
+          id="street"
+          value={userDetails.street || ""}
           label="רחוב"
           onChange={handleUserDetailsChange}
         />
         <TextField
           className="addCarTextFiled"
-          id="companyCity"
-          value={userDetails.companyCity || ""}
+          id="city"
+          value={userDetails.city || ""}
           label="עיר"
           onChange={handleUserDetailsChange}
         />
         <TextField
           className="addCarTextFiled"
-          id="companyEmail"
+          id="email"
+          value={userDetails.email || ""}
           label="מייל משרד"
           onChange={handleUserDetailsChange}
         />

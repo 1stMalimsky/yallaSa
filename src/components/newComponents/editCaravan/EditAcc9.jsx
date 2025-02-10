@@ -11,128 +11,115 @@ import {
   FormLabel,
   Radio,
 } from "@mui/material";
-import acc9Validation from "./helpers/acc9Validation";
-import checkSessionStorage from "../../../utils/helpers/checkSessionStorage";
-import FinalizeModal from "./helpers/FinalizeAddModal";
+import CircularProgress from "@mui/material/CircularProgress";
+import acc9Validation from "../addCaravanDetails/helpers/acc9Validation";
+import axios from "axios";
+import { toast } from "react-toastify";
 
-const AddAcc9 = ({ nextBtn, handleSubmit }) => {
-  const [priceDetails, setPriceDetails] = useState({
-    pricePerNight: "",
-    minimumNights: "",
-  });
-  const [isCancelationPolicy, setIsCancelationPolicy] = useState("");
-  const [cancelationPolicy, setCancelationPolicy] = useState({
-    freeCancelationDays: "",
-    cancelationPrice: "",
-    isCancelationPolicy: isCancelationPolicy,
-  });
-  const [insuranceDetails, setInsuranceDetails] = useState({
-    insuranceIncluded: "false",
-    basicInsurance: "",
-    premiumInsurance: "",
-  });
-  const [premiumAvailable, setExtraInsuranceAvailable] = useState("false");
-
-  const [modalOpenState, setModalOpenState] = useState(false);
-
+const EditAcc9 = ({ nextBtn, parentData, caravanId }) => {
+  const [acc9Data, setAcc9Data] = useState(parentData);
   useEffect(() => {
-    const sessionData = JSON.parse(checkSessionStorage(9));
-
-    if (sessionData) {
-      //console.log("session9", sessionData);
-      setInsuranceDetails({
-        insuranceIncluded: sessionData.insuranceIncluded || "false",
-        basicInsurance: sessionData.basicInsurance || "",
-        premiumInsurance: sessionData.premiumInsurance || "",
-      });
-      setPriceDetails({
-        pricePerNight: sessionData.pricePerNight || "",
-        minimumNights: sessionData.minimumNights || "",
-      });
-      setCancelationPolicy({
-        isCancelationPolicy: sessionData.isCancelationPolicy || "false",
-        freeCancelationDays: sessionData.freeCancelationDays || "",
-        cancelationPrice: sessionData.cancelationPrice || "",
-      });
-      setIsCancelationPolicy(sessionData.isCancelationPolicy || "false");
-      setExtraInsuranceAvailable(sessionData.premiumAvailable || "false");
+    if (!parentData) {
+      return console.log("no ParentData");
     }
+
+    //setAcc9Data(parentData);
+    setAcc9Data((prevData) => ({
+      ...prevData,
+      isCancelationPolicy: prevData.isCancelationPolicy.toString(),
+      insuranceIncluded: prevData.insuranceIncluded.toString(),
+      premiumAvailable: prevData.premiumAvailable.toString(),
+    }));
   }, []);
 
   useEffect(() => {
-    if (insuranceDetails.insuranceIncluded === "true") {
-      setInsuranceDetails((prevData) => {
+    if (acc9Data.insuranceIncluded === "true") {
+      setAcc9Data((prevData) => {
         return { ...prevData, basicInsurance: "", premiumInsurance: "" };
       });
     }
-    if (insuranceDetails.insuranceIncluded === "false")
-      setExtraInsuranceAvailable("false");
-  }, [insuranceDetails.insuranceIncluded]);
+    if (acc9Data.insuranceIncluded === "false")
+      setAcc9Data((prevData) => {
+        return { ...prevData, insuranceIncluded: "false" };
+      });
+  }, [acc9Data.insuranceIncluded]);
 
   useEffect(() => {
-    if (isCancelationPolicy === "true") {
-      console.log("cancel true");
+    if (acc9Data.isCancelationPolicy === "true") {
+      //console.log("cancel true");
 
-      setCancelationPolicy((prevData) => {
+      setAcc9Data((prevData) => {
         return { ...prevData, isCancelationPolicy: "true" };
       });
     }
 
-    if (isCancelationPolicy === "false") {
+    if (acc9Data.isCancelationPolicy === "false") {
       console.log("cancel false");
-      setCancelationPolicy((prevData) => {
+      setAcc9Data((prevData) => {
         return { ...prevData, isCancelationPolicy: "false" };
       });
     }
-  }, [isCancelationPolicy]);
+  }, [acc9Data.isCancelationPolicy]);
 
   const handleNextBtn = async () => {
-    const validateResponse = acc9Validation({
-      ...priceDetails,
-      ...cancelationPolicy,
-      ...insuranceDetails,
-      isCancelationPolicy,
-      premiumAvailable,
-    });
+    const dataToValidate = {
+      ...acc9Data,
+      premiumAvailable: acc9Data.premiumAvailable === "true" ? true : false,
+    };
+    const validateResponse = acc9Validation(dataToValidate);
     if (validateResponse === true) return;
-    sessionStorage.setItem(
-      "acc9Data",
-      JSON.stringify({
-        ...priceDetails,
-        ...cancelationPolicy,
-        ...insuranceDetails,
-        ...isCancelationPolicy,
-        ...premiumAvailable,
-      })
-    );
+    const normalizedDataForServer = {
+      insuranceDetails: {
+        basicIncluded: acc9Data.insuranceIncluded,
+        premiumAvailable: acc9Data.premiumAvailable,
+        basicPricePerNight: acc9Data.basicInsurance,
+        premiumPricePerNight: acc9Data.premiumInsurance,
+      },
+      cancelationPolicy: {
+        isCancelationPolicy: acc9Data.isCancelationPolicy,
+        freeCancelationWindow: acc9Data.freeCancelationDays,
+        cancelationFeePercent: acc9Data.cancelationPrice,
+      },
+      priceDetails: {
+        pricePerNight: acc9Data.pricePerNight,
+        minimumNights: acc9Data.minimumNights,
+      },
+    };
+    try {
+      const updatedData = await axios.patch(
+        `/caravans/${caravanId}`,
+        normalizedDataForServer
+      );
+      if (updatedData.status === 200) {
+        return toast.success("הקרוואן עודכן בהצלחה");
+      } else {
+        return toast.error("אירעה שגיאה בעדכון הקרוואן");
+      }
+    } catch (err) {
+      console.error("Error:", err);
+    }
+
     nextBtn(
       {
-        ...priceDetails,
-        ...cancelationPolicy,
-        ...insuranceDetails,
-        ...isCancelationPolicy,
-        ...premiumAvailable,
+        acc9Data,
       },
       8
     );
-    setModalOpenState(true);
   };
 
-  const handleChange = (e, setState) => {
+  const handleChange = (e) => {
     console.log("e", e.target.name, e.target.value);
 
-    setState((prevData) => {
-      const newData = { ...prevData };
-      newData[e.target.name] = e.target.value;
-      return newData;
-    });
+    setAcc9Data((prevAcc9Data) => ({
+      ...prevAcc9Data,
+      [e.target.name]: e.target.value,
+    }));
   };
 
-  const handleCloseModal = () => {
-    setModalOpenState(false);
-  };
+  if (!parentData) return <CircularProgress />;
+  //console.log("acc9Data", acc9Data);
 
-  //console.log("canacelationPolicy", cancelationPolicy);
+  //console.log("cancelationPolicy", typeof acc9Data.isCancelationPolicy);
   //console.log("insuraneceIncluded", insuranceDetails.insuranceIncluded);
 
   return (
@@ -150,8 +137,8 @@ const AddAcc9 = ({ nextBtn, handleSubmit }) => {
         >
           <TextField
             name="pricePerNight"
-            onChange={(e) => handleChange(e, setPriceDetails)}
-            value={priceDetails.pricePerNight}
+            onChange={(e) => handleChange(e)}
+            value={acc9Data.pricePerNight}
             className="inputFixLong"
             label="מחיר ללילה"
             sx={{ marginLeft: 1 }}
@@ -166,8 +153,8 @@ const AddAcc9 = ({ nextBtn, handleSubmit }) => {
         >
           <TextField
             name="minimumNights"
-            onChange={(e) => handleChange(e, setPriceDetails)}
-            value={priceDetails.minimumNights}
+            onChange={(e) => handleChange(e)}
+            value={acc9Data.minimumNights}
             className="inputFixExtraLong"
             label="מינימום לילות"
             sx={{ marginLeft: 1 }}
@@ -184,13 +171,13 @@ const AddAcc9 = ({ nextBtn, handleSubmit }) => {
             <RadioGroup
               row
               name="insuranceIncluded"
-              value={insuranceDetails.insuranceIncluded}
+              value={acc9Data.insuranceIncluded}
               onChange={(e) => {
                 console.log(
                   "insuranceDetails.insuranceIncluded e",
                   e.target.value
                 );
-                setInsuranceDetails((prevState) => ({
+                setAcc9Data((prevState) => ({
                   ...prevState,
                   insuranceIncluded: e.target.value,
                 }));
@@ -200,7 +187,7 @@ const AddAcc9 = ({ nextBtn, handleSubmit }) => {
               <FormControlLabel value="false" control={<Radio />} label="לא" />
             </RadioGroup>
           </FormControl>
-          {insuranceDetails.insuranceIncluded === "true" && (
+          {acc9Data.insuranceIncluded === "true" && (
             <Box>
               <Typography variant="subtitle1">
                 האם יש אפשרות לרכוש ביטוח פרמיום?
@@ -210,10 +197,16 @@ const AddAcc9 = ({ nextBtn, handleSubmit }) => {
                 <RadioGroup
                   row
                   name="premiumAvailable"
-                  value={premiumAvailable}
+                  value={acc9Data.premiumAvailable}
                   onChange={(e) => {
-                    console.log("premiumAvailable", typeof premiumAvailable);
-                    setExtraInsuranceAvailable(e.target.value);
+                    console.log(
+                      "premiumAvailable",
+                      typeof acc9Data.premiumAvailable
+                    );
+                    setAcc9Data((prevData) => ({
+                      ...prevData,
+                      premiumAvailable: e.target.value,
+                    }));
                   }}
                 >
                   <FormControlLabel
@@ -230,21 +223,21 @@ const AddAcc9 = ({ nextBtn, handleSubmit }) => {
               </FormControl>
             </Box>
           )}
-          {insuranceDetails.insuranceIncluded === "true" &&
-            premiumAvailable === "true" && (
+          {acc9Data.insuranceIncluded === "true" &&
+            acc9Data.premiumAvailable === "true" && (
               <Box sx={{ display: "flex", alignItems: "center" }}>
                 <TextField
                   className="inputFixExtraLong"
                   label="מחיר ביטוח פרמיום"
                   name="premiumInsurance"
-                  value={insuranceDetails.premiumInsurance}
+                  value={acc9Data.premiumInsurance}
                   sx={{ marginLeft: 1 }}
-                  onChange={(e) => handleChange(e, setInsuranceDetails)}
+                  onChange={(e) => handleChange(e)}
                 />
                 <Typography variant="subtitle1">ש"ח\לילה</Typography>
               </Box>
             )}
-          {insuranceDetails.insuranceIncluded === "false" && (
+          {acc9Data.insuranceIncluded === "false" && (
             <Grid container>
               <Grid
                 item
@@ -256,8 +249,8 @@ const AddAcc9 = ({ nextBtn, handleSubmit }) => {
                 <TextField
                   className="inputFixExtraLong"
                   name="basicInsurance"
-                  value={insuranceDetails.basicInsurance}
-                  onChange={(e) => handleChange(e, setInsuranceDetails)}
+                  value={acc9Data.basicInsurance}
+                  onChange={(e) => handleChange(e)}
                   label="עלות ביטוח בסיסי"
                   sx={{ marginTop: 1, marginLeft: 1 }}
                 />
@@ -273,8 +266,8 @@ const AddAcc9 = ({ nextBtn, handleSubmit }) => {
                 <TextField
                   className="inputFixExtraLong"
                   name="premiumInsurance"
-                  value={insuranceDetails.premiumInsurance}
-                  onChange={(e) => handleChange(e, setInsuranceDetails)}
+                  value={acc9Data.premiumInsurance}
+                  onChange={(e) => handleChange(e)}
                   label="עלות ביטוח פרמיום"
                   sx={{ marginTop: 1, marginLeft: 1 }}
                 />
@@ -283,6 +276,7 @@ const AddAcc9 = ({ nextBtn, handleSubmit }) => {
             </Grid>
           )}
         </Grid>
+
         <Grid item xs={12}>
           <Typography variant="h6">מדיניות ביטולים:</Typography>
         </Grid>
@@ -297,9 +291,12 @@ const AddAcc9 = ({ nextBtn, handleSubmit }) => {
             <RadioGroup
               row
               name="isCancelationPolicy"
-              value={isCancelationPolicy}
+              value={acc9Data.isCancelationPolicy}
               onChange={(e) => {
-                setIsCancelationPolicy(e.target.value);
+                setAcc9Data((prevData) => ({
+                  ...prevData,
+                  isCancelationPolicy: e.target.value,
+                }));
               }}
             >
               <FormControlLabel value="true" control={<Radio />} label="כן" />
@@ -307,19 +304,19 @@ const AddAcc9 = ({ nextBtn, handleSubmit }) => {
             </RadioGroup>
           </FormControl>
         </Grid>
-        {isCancelationPolicy === "true" && (
+        {acc9Data.isCancelationPolicy === "true" && (
           <Box>
             <Grid item xs={12}>
               <Typography variant="subtitle1">
                 כמה ימים לפני תאריך ההזמנה ניתן לבטל בחינם?
               </Typography>
               <TextField
-                value={cancelationPolicy.freeCancelationDays}
+                value={acc9Data.freeCancelationDays}
                 name="freeCancelationDays"
                 className="inputFixLong"
                 label="מספר ימים"
                 sx={{ marginLeft: 1 }}
-                onChange={(e) => handleChange(e, setCancelationPolicy)}
+                onChange={(e) => handleChange(e)}
               />
             </Grid>
             <Grid item xs={12}>
@@ -328,12 +325,12 @@ const AddAcc9 = ({ nextBtn, handleSubmit }) => {
               </Typography>
               <Box sx={{ display: "flex", alignItems: "center" }}>
                 <TextField
-                  value={cancelationPolicy.cancelationPrice}
+                  value={acc9Data.cancelationPrice}
                   name="cancelationPrice"
                   className="inputFixLong"
                   label="עלות ביטול"
                   sx={{ marginLeft: 1 }}
-                  onChange={(e) => handleChange(e, setCancelationPolicy)}
+                  onChange={(e) => handleChange(e)}
                 />
                 <Typography variant="subtitle1">% (אחוז מסך ההזמנה)</Typography>
               </Box>
@@ -343,16 +340,10 @@ const AddAcc9 = ({ nextBtn, handleSubmit }) => {
       </Grid>
       <Box sx={{ display: "flex", justifyContent: "center" }}>
         <Button variant="contained" onClick={handleNextBtn}>
-          הבא
+          עדכן
         </Button>
-
-        <FinalizeModal
-          modalOpenState={modalOpenState}
-          handleClose={handleCloseModal}
-          handleSubmit={handleSubmit}
-        />
       </Box>
     </Box>
   );
 };
-export default AddAcc9;
+export default EditAcc9;

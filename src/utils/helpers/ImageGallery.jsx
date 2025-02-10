@@ -2,11 +2,13 @@ import { useState, useEffect } from "react";
 import ImageGallery from "react-image-gallery";
 
 const ImageGalleryComponent = ({ images }) => {
+  //console.log("images entering", images);
+
   const [normalizedData, setNormalizedData] = useState([]);
 
   const normalizeImages = (imageData) => {
     const normalizedData = imageData.map((image) => {
-      const originalUrl = image.base64Data;
+      const originalUrl = image.base64Data ? image.base64Data : image.original;
       const thumbnailUrl = originalUrl;
       return {
         original: originalUrl,
@@ -22,6 +24,7 @@ const ImageGalleryComponent = ({ images }) => {
     if (!images) return;
     normalizeImages(images);
   }, [images]);
+  //console.log("normalizwd Data", normalizedData);
 
   const renderLeftNav = (onClick, disabled) => (
     <button

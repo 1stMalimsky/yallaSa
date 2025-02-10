@@ -27,10 +27,6 @@ const CheckoutSummaryComponent = ({
   const [caravanPhotos, setCaravanPhotos] = useState([]);
   const caravanId = caravanDetails._id;
 
-  /* console.log("total Price", totalPrice);
-  console.log("caravanDetails", caravanDetails);
-  console.log("checkoutCompData", checkoutCompData);
- */
   useEffect(() => {
     fetchCaravanImages(caravanId, setCaravanPhotos);
   }, []);
@@ -41,9 +37,9 @@ const CheckoutSummaryComponent = ({
   }, [checkoutCompData[5]]);
 
   //console.log("checkoutCompData", checkoutCompData);
-  //console.log("Total price arr", totalPrice);
+  //console.log("totalPrice", totalPrice);
 
-  if (!totalPrice || caravanPhotos.length < 1) {
+  if (!totalPrice || caravanPhotos.length < 1 || !checkoutCompData) {
     return <CircularProgress />;
   }
   return (

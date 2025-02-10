@@ -7,12 +7,13 @@ const getUserLocation = async () => {
     const position = await new Promise((resolve, reject) =>
       navigator.geolocation.getCurrentPosition(resolve, reject)
     );
+    console.log("position", position);
     const { latitude, longitude } = position.coords;
     //console.log("User's Location:", latitude, longitude);
     return { latitude, longitude };
   } catch (error) {
-    console.error("Error retrieving location:", error);
-    throw error;
+    console.warn("Error retrieving location:", error);
+    return { latitude: 0, longitude: 0 };
   }
 };
 

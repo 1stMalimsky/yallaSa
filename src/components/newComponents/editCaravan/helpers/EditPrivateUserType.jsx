@@ -17,7 +17,7 @@ const EditPrivateUserType = ({ parentData, handlePtype, handlePdetails }) => {
   const [paymentDetails, setPaymentDetails] = useState(
     parentData.paymentDetails || ""
   );
-  //console.log("parentData in editPrivateUser", parentData);
+  console.log("parentData in editPrivateUser", parentData);
 
   useEffect(() => {
     if (parentData) {
@@ -47,7 +47,7 @@ const EditPrivateUserType = ({ parentData, handlePtype, handlePdetails }) => {
     }
   };
 
-  //console.log("paymentType", paymentType);
+  console.log("paymentType", paymentType);
   //console.log("paymentType", paymentType);
   if (!parentData) return <CircularProgress />;
 

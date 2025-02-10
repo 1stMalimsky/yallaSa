@@ -22,18 +22,18 @@ const CaravanCard = ({ caravanDetails, chosenDates }) => {
   const [caravanPhotos, setCaravanPhotos] = useState([]);
 
   const caravanId = caravanDetails._id;
-  console.log(
+  /* console.log(
     "caravavanDetails",
     caravanDetails.ownerDetails.ownerId,
     caravanDetails.listingName
-  );
+  ); */
 
   useEffect(() => {
     const fetchCaravanImages = async (caravanId, setState) => {
       try {
         const caravanPhotos = await axios.get(`/caravans/images/${caravanId}`);
         if (caravanPhotos) {
-          console.log("caravanPhotos", caravanPhotos);
+          //console.log("caravanPhotos", caravanPhotos);
         }
         if (!caravanPhotos || caravanPhotos.data.caravanImages.length < 1) {
           return console.log("no caravan found");

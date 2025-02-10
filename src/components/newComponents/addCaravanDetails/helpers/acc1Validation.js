@@ -9,7 +9,13 @@ import { toast } from "react-toastify";
 const acc1Validation = (acc1Details) => {
   console.log("acc1 validation", acc1Details);
 
-  let { privateUser, userDetails, paymentType, paymentDetails } = acc1Details;
+  let {
+    privateUser,
+    userDetails,
+    businessDetails,
+    paymentType,
+    paymentDetails,
+  } = acc1Details;
   if (paymentDetails && paymentDetails.bankAccount) {
     paymentType = "1";
   }
@@ -55,12 +61,14 @@ const acc1Validation = (acc1Details) => {
 
     const userDetailsValidationResponse = validateInputs(
       companySchema,
-      userDetails
+      businessDetails
     );
     if (userDetailsValidationResponse) {
       return true;
     }
     if (paymentType === "1") {
+      console.log("here1");
+
       const paymentValidationResponse = validateInputs(
         paymentDetailsSchema,
         paymentDetails
@@ -70,6 +78,8 @@ const acc1Validation = (acc1Details) => {
       }
     }
     if (paymentType === "2") {
+      console.log("here 2");
+
       const phoneValidationResponse = validateInputs(
         phoneNumberSchema,
         paymentDetails.phone

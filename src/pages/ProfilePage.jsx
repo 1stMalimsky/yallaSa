@@ -99,21 +99,19 @@ const EditProfilePage = () => {
             md={4}
             sx={{ border: 1, display: "flex", justifyContent: "center" }}
           >
-            {inputState && inputState.isOwner && (
-              <Button
-                variant="contained"
-                color="primary"
-                href="/preaddcaravan"
-                sx={{
-                  marginTop: 2,
-                  marginBottom: 2,
-                  marginLeft: 2,
-                  marginRight: 2,
-                }}
-              >
-                הוספת קרוואן
-              </Button>
-            )}
+            <Button
+              variant="contained"
+              color="primary"
+              href="/preaddcaravan"
+              sx={{
+                marginTop: 2,
+                marginBottom: 2,
+                marginLeft: 2,
+                marginRight: 2,
+              }}
+            >
+              הוספת קרוואן
+            </Button>
           </Grid>
         </Grid>
       </Box>

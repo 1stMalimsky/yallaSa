@@ -86,7 +86,7 @@ const Panel3 = ({ setExpanded, onSubmit, locationData }) => {
         {/* DROPOFF TIME */}
         <Grid item xs={12} sm={6}>
           <FormControl fullWidth>
-            <InputLabel className="dropoffTimeInput">בחר שעת החזרה</InputLabel>
+            <InputLabel className="pickupTimeInput">בחר שעת החזרה</InputLabel>
             <Select
               label="dropoffTime"
               value={inputState.dropoffTime}

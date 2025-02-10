@@ -46,15 +46,22 @@ const Panel7 = ({ prevInputData, grandTotal, setExpanded }) => {
         insuranceSelected: prevInputData[4].insuranceType,
         cancelationPolicy: prevInputData[6].policyChoice,
       });
-      console.log("newReservation", newReservation);
 
+      if (newReservation.data) {
+        const reservationId = newReservation.data.newRes._id;
+        console.log("redId", reservationId);
+
+        const updateUser = await axios.put(`/users/pushReservation/${userId}`, {
+          reservationId,
+        });
+      }
       toast.success("ההזמנה נשמרה בהצלחה");
     } catch (err) {
       console.log("Panel7 err", err);
     }
     //setExpanded("panel8");
   };
-  console.log("prevInput data ", prevInputData, "grandTotal", grandTotal);
+  //console.log("prevInput data ", prevInputData, "grandTotal", grandTotal);
 
   return (
     <div>

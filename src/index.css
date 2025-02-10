@@ -1164,7 +1164,7 @@
 .inputFixShort .MuiInputLabel-root.MuiInputLabel-shrink {
   left: unset;
   right: 0;
-  margin-right: 1.4em;
+  margin-right: 1.7em;
 }
 
 .inputFixLong .MuiInputLabel-root {
@@ -1186,7 +1186,7 @@
 .inputFixExtraLong .MuiInputLabel-root.MuiInputLabel-shrink {
   left: unset;
   right: 0;
-  margin-right: 0.01em;
+  margin-right: 0.3em;
 }
 
 .inputRTL .MuiInputLabel-root {

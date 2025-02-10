@@ -81,6 +81,7 @@ const normalizeEditCaravan = (dataFromServer, userDetails) => {
       premiumInsurance:
         dataFromServer.insuranceDetails.premiumPricePerNight || "",
       pricePerNight: dataFromServer.priceDetails.pricePerNight,
+      premiumAvailable: dataFromServer.insuranceDetails.premiumAvailable,
     },
   ];
   //console.log("normalizedAccData", normalizedAccData);

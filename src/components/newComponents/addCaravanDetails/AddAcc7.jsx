@@ -22,8 +22,8 @@ const AddAcc7 = ({ nextBtn }) => {
     street: "",
     houseNumber: "",
     mapsLocation: "",
-    pickupFrom: "",
-    dropoffUntil: "",
+    pickupTime: "",
+    dropoffTime: "",
   });
 
   useEffect(() => {
@@ -42,8 +42,8 @@ const AddAcc7 = ({ nextBtn }) => {
   };
 
   const handleNextBtnClick = () => {
-    const pickup = acc7Data.pickupFrom.slice(0, -3);
-    const dropoff = acc7Data.dropoffUntil.slice(0, -3);
+    const pickup = acc7Data.pickupTime.slice(0, -3);
+    const dropoff = acc7Data.dropoffTime.slice(0, -3);
     if (pickup > dropoff) {
       toast.error("על שעת האיסוף להיות קודמת לשעת ההחזרה");
       return;
@@ -115,8 +115,8 @@ const AddAcc7 = ({ nextBtn }) => {
           <Typography variant="subtitle1">זמין לאיסוף משעה: </Typography>
           <FormControl fullWidth>
             <Select
-              value={acc7Data.pickupFrom}
-              onChange={(e) => handleInputChange(e, "pickupFrom")}
+              value={acc7Data.pickupTime}
+              onChange={(e) => handleInputChange(e, "pickupTime")}
               MenuProps={{
                 PaperProps: {
                   sx: {
@@ -137,8 +137,8 @@ const AddAcc7 = ({ nextBtn }) => {
           <Typography variant="subtitle1">החזרה עד השעה: </Typography>
           <FormControl fullWidth>
             <Select
-              value={acc7Data.dropoffUntil}
-              onChange={(e) => handleInputChange(e, "dropoffUntil")}
+              value={acc7Data.dropoffTime}
+              onChange={(e) => handleInputChange(e, "dropoffTime")}
               MenuProps={{
                 PaperProps: {
                   sx: {

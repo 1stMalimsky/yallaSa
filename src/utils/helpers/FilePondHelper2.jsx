@@ -64,6 +64,7 @@ const ImageUploadComponent = ({
   };
 
   useEffect(() => {
+    if (!base64Data) return;
     if (uploadTrigger) {
       console.log("trigger true");
       uploadFiles();
@@ -76,6 +77,8 @@ const ImageUploadComponent = ({
     }
     console.log("sendUpFunc indexNumber", indexNumber);
     getBase64Data(base64Data, (base64Data) => {
+      console.log("sendUpFunc function", sendUpFunc);
+      if (!sendUpFunc) return;
       sendUpFunc(base64Data, indexNumber);
     });
   }, [base64Data]);

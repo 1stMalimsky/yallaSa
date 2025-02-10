@@ -13,7 +13,7 @@ const calculateExtrasTotal = (inputState) => {
 };
 
 const calculateTotalPrice = async (panelData, caravanDetails) => {
-  console.log("panelData", panelData);
+  //console.log("calculatePrice", panelData);
   const initData = panelData[0];
   const numOfDays = +panelData[0].numOfDays;
   const insurance = panelData[4];

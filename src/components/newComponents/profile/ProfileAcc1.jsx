@@ -23,7 +23,7 @@ const ProfileAcc1 = ({ userDetails }) => {
     license: userDetails.license || "",
   });
 
-  console.log("userDetails", userDetails);
+  //console.log("userDetails", userDetails);
 
   const navigate = useNavigate();
   const userId = userDetails.userId;

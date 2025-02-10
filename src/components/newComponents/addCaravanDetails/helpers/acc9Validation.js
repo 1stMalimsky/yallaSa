@@ -5,14 +5,14 @@ import { toast } from "react-toastify";
 const acc9Validation = (data) => {
   //console.log("data", data);
 
-  if (data.extraInsuranceAvailable === "" || data.isCancelationPolicy === "") {
+  if (data.premiumAvailable === "" || data.isCancelationPolicy === "") {
     toast.error("אנא ענו על כל השאלות");
     return true;
   }
 
   if (
     data.insuranceIncluded === "true" &&
-    data.extraInsuranceAvailable === true &&
+    data.premiumAvailable === "true" &&
     data.premiumInsurance === ""
   ) {
     toast.error("אנא מלאו מחיר ביטוח פרמיום");
@@ -36,7 +36,6 @@ const acc9Validation = (data) => {
     }
   }
   const dataClone = { ...data };
-  delete dataClone.extraInsuranceAvailable;
   delete dataClone.isCancelationPolicy;
 
   return validateInputs(acc9ValidationSchema, dataClone);

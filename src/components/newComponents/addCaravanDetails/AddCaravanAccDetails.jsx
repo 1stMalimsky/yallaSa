@@ -22,12 +22,14 @@ import getToken from "../../../utils/helpers/getToken";
 import getUserDetails from "../../../utils/helpers/getUserDetails";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import normalizeExtras from "./helpers/normalizeExtras";
 
 const AddCaravanAcc = () => {
   const [accDetails, setAccDetails] = useState([]);
   const [openState, setOpenState] = useState(0);
   const [caravanId, setCaravanId] = useState("");
   const [imageUploadTrigger, setImageUploadTrigger] = useState(false);
+  const [extrasPrices, setExtrasPrices] = useState({});
   const [user, setUser] = useState("");
   const token = getToken();
   const navigate = useNavigate();
@@ -50,13 +52,12 @@ const AddCaravanAcc = () => {
 
   const handleSubmitBtn = async () => {
     try {
-      //console.log("user", user);
-      if (user.isOwner === false) {
+      /*    if (user.isOwner === false) {
         const userChanged = await axios.patch(`/users/update/${token.userId}`, {
           isOwner: true,
         });
         console.log("userChnaged");
-      }
+      } */
 
       const objToSend = {
         ...accDetails[0],
@@ -67,12 +68,14 @@ const AddCaravanAcc = () => {
         ...accDetails[6],
         ...accDetails[7].caravanDetails,
         ...accDetails[8],
+        ...normalizeExtras(extrasPrices),
       };
       console.log("obj to send", objToSend);
 
       const newData =
-        accDetails[0].privateUser === false
+        accDetails[0].privateUser === "false"
           ? {
+              isOwner: true,
               isBusiness: true,
               businessDetails: {
                 companyName: accDetails[0].userDetails.companyName,
@@ -82,17 +85,23 @@ const AddCaravanAcc = () => {
                 street: accDetails[0].userDetails.street,
                 email: accDetails[0].userDetails.email,
               },
+              paymentDetails: accDetails[0].paymentDetails,
             }
           : {
+              isOwner: true,
               isBusiness: false,
+              ...accDetails[0].paymentDetails,
             };
+      console.log("newData", newData);
 
       const userUpdate = await axios.put(
         `/users/update/${token.userId}`,
         newData
       );
+      console.log("update user", userUpdate);
+
       const res = await axios.post("/caravans/create", objToSend);
-      console.log("res from addCaravab", res);
+      console.log("res from addCaravan", res);
 
       const caravavnId = res.data.newCaravan._id;
       setImageUploadTrigger(true);
@@ -101,7 +110,9 @@ const AddCaravanAcc = () => {
         setImageUploadTrigger(false);
       }, 1000);
       setCaravanId(caravavnId);
-      //
+      if (userUpdate.data) {
+        localStorage.setItem("token", userUpdate.data.token);
+      }
       // sessionStorage.clear();
       toast.success("הטופס נשלח בהצלחה");
       /* setTimeout(() => {
@@ -109,7 +120,7 @@ const AddCaravanAcc = () => {
       }, 2000); */
       //console.log("caravanId", caravavnId);
     } catch (err) {
-      console.log(err.response);
+      console.log("handkeSubmit erro", err);
     }
   };
 
@@ -141,9 +152,15 @@ const AddCaravanAcc = () => {
     });
   };
 
+  const handleExtrasUpdate = (data) => {
+    setExtrasPrices(data);
+  };
+
   useEffect(() => {
     console.log("accDetails", accDetails);
   }, [accDetails]);
+
+  console.log("extrasPrices", extrasPrices);
 
   if (!user) return <CircularProgress />;
   return (
@@ -231,7 +248,7 @@ const AddCaravanAcc = () => {
             <Typography variant="h5">5. מתקנים וציוד</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <AddAcc5 nextBtn={handleNextBtn} />
+            <AddAcc5 nextBtn={handleNextBtn} extrasFunc={handleExtrasUpdate} />
           </AccordionDetails>
         </Accordion>
         {/* ACC6 */}

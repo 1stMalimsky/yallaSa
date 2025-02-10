@@ -6,7 +6,7 @@ import getToken from "../../../utils/helpers/getToken";
 import getCaravanImages from "../../../utils/helpers/getCaravanImages";
 import axios from "axios";
 
-const EditAcc6 = ({ nextBtn, carId }) => {
+const EditAcc6 = ({ nextBtn, carId, triggerFunc }) => {
   const [imageData, setImageData] = useState([
     {
       fileName: "תמונה01",
@@ -17,8 +17,8 @@ const EditAcc6 = ({ nextBtn, carId }) => {
     { fileName: "תמונה04", base64Data: "" },
   ]);
   const [caravanId, setCaravanId] = useState(carId);
-
   const [imageChangeTrigger, setImageChangeTrigger] = useState(false);
+
   useEffect(() => {
     setCaravanId(carId);
     const getImgs = async () => {
@@ -91,7 +91,7 @@ const EditAcc6 = ({ nextBtn, carId }) => {
           );
           if (imgToDel) {
             toast.success("התמונה נמחקה בהצלחה");
-            setImageChangeTrigger(!imageChangeTrigger);
+            triggerFunc(setImageChangeTrigger, !imageChangeTrigger);
           }
         }
       }

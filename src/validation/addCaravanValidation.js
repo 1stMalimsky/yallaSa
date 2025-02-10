@@ -230,6 +230,11 @@ const acc9ValidationSchema = Joi.object({
     "number.min": `"ביטוח פרימיום" צריך להיות לפחות 0 ש"ח`,
     "number.max": `"ביטוח פרימיום" צריך להיות לכל היותר 10000 ש"ח`,
   }),
+  premiumAvailable: Joi.boolean().required().messages({
+    "boolean.base": `"ביטוח פרימיום זמין" צריך להיות כן או לא`,
+    "any.required": `"ביטוח פרימיום זמין" הינו שדה חובה`,
+    "string.empty": `"ביטוח פרימיום זמין" לא יכול להיות ריק`,
+  }),
 });
 
 export {

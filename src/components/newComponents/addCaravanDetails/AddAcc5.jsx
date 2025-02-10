@@ -19,8 +19,9 @@ import {
 import { validateInputs } from "../../../validation/validation";
 import acc5ValidationSchema from "./helpers/acc5validation";
 import checkSessionStorage from "../../../utils/helpers/checkSessionStorage.js";
+import ExtrasPickerComponent from "./helpers/ExtrasPickerCompenent.jsx";
 
-const AddAcc5 = ({ nextBtn }) => {
+const AddAcc5 = ({ nextBtn, extrasFunc }) => {
   const [acc5Details, setAccDetails] = useState({
     kitchen: [],
     bathroom: [],
@@ -227,7 +228,8 @@ const AddAcc5 = ({ nextBtn }) => {
         </Grid>
       </Grid>
       <Box className="centerElements">
-        <Button variant="contained" onClick={handleNextBtn}>
+        <ExtrasPickerComponent extrasUpdate={extrasFunc} />
+        <Button variant="contained" onClick={handleNextBtn} sx={{ mr: 2 }}>
           הבא
         </Button>
       </Box>

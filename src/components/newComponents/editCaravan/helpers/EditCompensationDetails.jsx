@@ -43,7 +43,7 @@ const EditCompensationDetails = ({
 
   const handleLocalPaymentDetailsChange = (id, value) => {
     const newDetails = { ...paymentDetails, [id]: value };
-    console.log("paymentDetails", newDetails);
+    //console.log("paymentDetails", newDetails);
     setPaymentDetails(newDetails);
     handlePaymentDetailsChange(newDetails);
   };

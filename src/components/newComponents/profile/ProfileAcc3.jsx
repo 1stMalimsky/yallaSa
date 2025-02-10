@@ -42,7 +42,7 @@ const ProfileAcc3 = ({ userData }) => {
     getCaravans();
   }, []);
 
-  console.log("caravaArr", caravanArr);
+  //console.log("caravaArr", caravanArr);
 
   return (
     <Accordion

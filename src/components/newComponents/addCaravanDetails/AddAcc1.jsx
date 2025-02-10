@@ -110,9 +110,9 @@ const AddAcc1 = ({ nextBtn, user }) => {
     setPaymentDetails(paymentDetails);
   };
 
-  console.log("user", user);
-  console.log("privateUser", privateUser);
-  console.log("userDisableType", typeof userTypeDisabled);
+  //console.log("user", user);
+  // console.log("privateUser", privateUser);
+  // console.log("userDisableType", typeof userTypeDisabled);
 
   return (
     <Box>

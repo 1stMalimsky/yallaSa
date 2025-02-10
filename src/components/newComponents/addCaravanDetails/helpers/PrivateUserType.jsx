@@ -13,9 +13,14 @@ import {
 
 const PrivateUserType = ({ parentData, handlePtype, handlePdetails }) => {
   const [paymentType, setPaymentType] = useState(
-    parentData.paymentType.toString() || null
+    parentData?.paymentType.toString() || "3"
   );
-  const [paymentDetails, setPaymentDetails] = useState(null);
+  const [paymentDetails, setPaymentDetails] = useState({
+    phone: "",
+    bankAccount: "",
+    bankBranch: "",
+    bankName: "",
+  });
   const [disableRadio, setDisableRadio] = useState(true);
 
   useEffect(() => {
@@ -27,18 +32,25 @@ const PrivateUserType = ({ parentData, handlePtype, handlePdetails }) => {
   }, [parentData]);
 
   const handlePaymentTypeChange = (e) => {
-    handlePtype(e.target.value);
-    setPaymentType(e.target.value);
+    const newPaymentType = e.target.value;
+    setPaymentType(newPaymentType);
+    handlePtype(newPaymentType);
+    const resetDetails =
+      newPaymentType === "1"
+        ? { bankName: "", bankBranch: "", bankAccount: "" }
+        : { phone: "" };
+
+    setPaymentDetails(resetDetails);
+    handlePdetails(resetDetails);
   };
   const handlePaymentDetailsChange = (e, paymentType) => {
     const prevState = { ...paymentDetails };
     if (paymentType === 1) {
-      delete prevState.phoneNumber;
+      delete prevState.phone;
       setPaymentDetails(() => ({
         ...prevState,
         [e.target.id]: e.target.value,
       }));
-
       handlePdetails({ ...prevState, [e.target.id]: e.target.value });
     }
     if (paymentType === 2) {
@@ -46,7 +58,7 @@ const PrivateUserType = ({ parentData, handlePtype, handlePdetails }) => {
       handlePdetails({ [e.target.id]: e.target.value });
     }
   };
-  //console.log("parentData", parentData);
+  console.log("parentData", parentData);
   //console.log("disabaled", disableRadio);
   //console.log("paymentType");
 
@@ -76,23 +88,26 @@ const PrivateUserType = ({ parentData, handlePtype, handlePdetails }) => {
           </RadioGroup>
         </FormControl>
       </Box>
-      {paymentType === "1" && disableRadio && (
+      {paymentType === "1" && !disableRadio && (
         <div>
           <TextField
             className="addCarTextFiled"
             id="bankName"
+            value={paymentDetails.bankName}
             label="שם הבנק"
             onChange={(e) => handlePaymentDetailsChange(e, 1)}
           />
           <TextField
             className="addCarTextFiled"
             id="bankBranch"
+            value={paymentDetails.bankBranch}
             label="מספר סניף"
             onChange={(e) => handlePaymentDetailsChange(e, 1)}
           />
           <TextField
             className="addCarTextFiled"
             id="bankAccount"
+            value={paymentDetails.bankAccount}
             label="מספר חשבון"
             onChange={(e) => handlePaymentDetailsChange(e, 1)}
           />
@@ -103,6 +118,7 @@ const PrivateUserType = ({ parentData, handlePtype, handlePdetails }) => {
           <TextField
             className="addCarTextFiled"
             id="phone"
+            value={paymentDetails.phone}
             label="מספר טלפון"
             onChange={(e) => handlePaymentDetailsChange(e, 2)}
           />

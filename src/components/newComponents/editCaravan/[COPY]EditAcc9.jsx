@@ -11,16 +11,19 @@ import {
   FormLabel,
   Radio,
 } from "@mui/material";
-import acc9Validation from "./helpers/acc9Validation";
-import checkSessionStorage from "../../../utils/helpers/checkSessionStorage";
-import FinalizeModal from "./helpers/FinalizeAddModal";
+import CircularProgress from "@mui/material/CircularProgress";
+import acc9Validation from "../addCaravanDetails/helpers/acc9Validation";
 
-const AddAcc9 = ({ nextBtn, handleSubmit }) => {
+const EditAcc9 = ({ nextBtn, handleSubmit, parentData }) => {
+  const [acc9Data, setAcc9Data] = useState(parentData);
+
   const [priceDetails, setPriceDetails] = useState({
     pricePerNight: "",
     minimumNights: "",
   });
-  const [isCancelationPolicy, setIsCancelationPolicy] = useState("");
+  const [isCancelationPolicy, setIsCancelationPolicy] = useState(
+    parentData.isCancelationPolicy.toString()
+  );
   const [cancelationPolicy, setCancelationPolicy] = useState({
     freeCancelationDays: "",
     cancelationPrice: "",
@@ -31,32 +34,35 @@ const AddAcc9 = ({ nextBtn, handleSubmit }) => {
     basicInsurance: "",
     premiumInsurance: "",
   });
-  const [premiumAvailable, setExtraInsuranceAvailable] = useState("false");
+  const [extraInsuranceAvailable, setExtraInsuranceAvailable] =
+    useState("false");
 
   const [modalOpenState, setModalOpenState] = useState(false);
 
   useEffect(() => {
-    const sessionData = JSON.parse(checkSessionStorage(9));
-
-    if (sessionData) {
-      //console.log("session9", sessionData);
-      setInsuranceDetails({
-        insuranceIncluded: sessionData.insuranceIncluded || "false",
-        basicInsurance: sessionData.basicInsurance || "",
-        premiumInsurance: sessionData.premiumInsurance || "",
-      });
-      setPriceDetails({
-        pricePerNight: sessionData.pricePerNight || "",
-        minimumNights: sessionData.minimumNights || "",
-      });
-      setCancelationPolicy({
-        isCancelationPolicy: sessionData.isCancelationPolicy || "false",
-        freeCancelationDays: sessionData.freeCancelationDays || "",
-        cancelationPrice: sessionData.cancelationPrice || "",
-      });
-      setIsCancelationPolicy(sessionData.isCancelationPolicy || "false");
-      setExtraInsuranceAvailable(sessionData.premiumAvailable || "false");
+    if (!parentData) {
+      return console.log("no ParentData");
     }
+
+    setAcc9Data(parentData);
+    setInsuranceDetails({
+      insuranceIncluded: parentData.insuranceIncluded || "false",
+      basicInsurance: parentData.basicInsurance || "",
+      premiumInsurance: parentData.premiumInsurance || "",
+    });
+    setPriceDetails({
+      pricePerNight: parentData.pricePerNight || "",
+      minimumNights: parentData.minimumNights || "",
+    });
+    setCancelationPolicy({
+      isCancelationPolicy: parentData.isCancelationPolicy.toString() || "false",
+      freeCancelationDays: parentData.freeCancelationDays || "",
+      cancelationPrice: parentData.cancelationPrice || "",
+    });
+    setIsCancelationPolicy(
+      parentData.isCancelationPolicy.toString() || "false"
+    );
+    setExtraInsuranceAvailable(parentData.extraInsuranceAvailable || "");
   }, []);
 
   useEffect(() => {
@@ -92,7 +98,7 @@ const AddAcc9 = ({ nextBtn, handleSubmit }) => {
       ...cancelationPolicy,
       ...insuranceDetails,
       isCancelationPolicy,
-      premiumAvailable,
+      extraInsuranceAvailable,
     });
     if (validateResponse === true) return;
     sessionStorage.setItem(
@@ -102,7 +108,7 @@ const AddAcc9 = ({ nextBtn, handleSubmit }) => {
         ...cancelationPolicy,
         ...insuranceDetails,
         ...isCancelationPolicy,
-        ...premiumAvailable,
+        ...extraInsuranceAvailable,
       })
     );
     nextBtn(
@@ -111,7 +117,7 @@ const AddAcc9 = ({ nextBtn, handleSubmit }) => {
         ...cancelationPolicy,
         ...insuranceDetails,
         ...isCancelationPolicy,
-        ...premiumAvailable,
+        ...extraInsuranceAvailable,
       },
       8
     );
@@ -132,7 +138,10 @@ const AddAcc9 = ({ nextBtn, handleSubmit }) => {
     setModalOpenState(false);
   };
 
-  //console.log("canacelationPolicy", cancelationPolicy);
+  if (!parentData) return <CircularProgress />;
+  console.log("acc9Data", acc9Data);
+
+  console.log("canacelationPolicy", typeof isCancelationPolicy);
   //console.log("insuraneceIncluded", insuranceDetails.insuranceIncluded);
 
   return (
@@ -209,10 +218,13 @@ const AddAcc9 = ({ nextBtn, handleSubmit }) => {
                 <FormLabel component="legend" />
                 <RadioGroup
                   row
-                  name="premiumAvailable"
-                  value={premiumAvailable}
+                  name="extraInsuranceAvailable"
+                  value={extraInsuranceAvailable}
                   onChange={(e) => {
-                    console.log("premiumAvailable", typeof premiumAvailable);
+                    console.log(
+                      "extraInsuranceavailable",
+                      typeof extraInsuranceAvailable
+                    );
                     setExtraInsuranceAvailable(e.target.value);
                   }}
                 >
@@ -231,7 +243,7 @@ const AddAcc9 = ({ nextBtn, handleSubmit }) => {
             </Box>
           )}
           {insuranceDetails.insuranceIncluded === "true" &&
-            premiumAvailable === "true" && (
+            extraInsuranceAvailable === "true" && (
               <Box sx={{ display: "flex", alignItems: "center" }}>
                 <TextField
                   className="inputFixExtraLong"
@@ -283,6 +295,7 @@ const AddAcc9 = ({ nextBtn, handleSubmit }) => {
             </Grid>
           )}
         </Grid>
+
         <Grid item xs={12}>
           <Typography variant="h6">מדיניות ביטולים:</Typography>
         </Grid>
@@ -345,14 +358,8 @@ const AddAcc9 = ({ nextBtn, handleSubmit }) => {
         <Button variant="contained" onClick={handleNextBtn}>
           הבא
         </Button>
-
-        <FinalizeModal
-          modalOpenState={modalOpenState}
-          handleClose={handleCloseModal}
-          handleSubmit={handleSubmit}
-        />
       </Box>
     </Box>
   );
 };
-export default AddAcc9;
+export default EditAcc9;

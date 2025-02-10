@@ -29,13 +29,13 @@ const EditCaravanCard = ({ caravanDetails }) => {
       try {
         const caravanPhotos = await axios.get(`/caravans/images/${caravanId}`);
         if (caravanPhotos) {
-          console.log("caravanPhotos", caravanPhotos);
+          //console.log("caravanPhotos", caravanPhotos);
+          setState(caravanPhotos.data.caravanImages);
+          return caravanPhotos.data.caravanImages;
         }
         if (!caravanPhotos || caravanPhotos.data.caravanImages.length < 1) {
           return console.log("no caravan found");
         }
-        setState(caravanPhotos.data.caravanImages);
-        return caravanPhotos.data.caravanImages;
       } catch (err) {
         console.log("caravan photo search error", err);
       }

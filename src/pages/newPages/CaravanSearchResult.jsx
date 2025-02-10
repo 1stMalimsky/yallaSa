@@ -87,7 +87,7 @@ const CaravanSearchResults = () => {
   };
 
   const handleSortClick = async () => {
-    console.log("sortState", sortState);
+    //console.log("sortState", sortState);
 
     if (!sortState || sortState === "None") {
       return;
@@ -98,7 +98,6 @@ const CaravanSearchResults = () => {
       searchResults,
       userLocation
     );
-    console.log("sortClickFunc", sortedArray);
 
     //setSearchResults(sortedArray);
   };
@@ -178,13 +177,13 @@ const CaravanSearchResults = () => {
             spacing={1}
             sx={{
               display: "flex",
-              flexDirection: "column",
+              /* flexDirection: "column", */
               /* pb: "2em", */
               justifyContent: "center",
             }}
           >
             {searchResults.map((caravan) => (
-              <Grid key={caravan._id} item xs={12} sx={{ marginBottom: "1em" }}>
+              <Grid key={caravan._id} item xs={12}>
                 <CaravanCard
                   caravanDetails={caravan}
                   chosenDates={chosenDates}

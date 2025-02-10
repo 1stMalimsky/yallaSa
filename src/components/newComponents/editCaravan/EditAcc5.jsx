@@ -22,8 +22,11 @@ import normalizeFacilities from "./helpers/normalizeFacilities.js";
 import axios from "axios";
 import normalizeForServer from "./helpers/acc5NormalizeForServer.js";
 import { toast } from "react-toastify";
+import EditExtrasPickerComponent from "./helpers/EditExtrasPickerCompenent.jsx";
 
-const EditAcc5 = ({ nextBtn, parentData, caravanId }) => {
+const EditAcc5 = ({ nextBtn, parentData, caravanId, extras }) => {
+  //console.log("parent data in 5", parentData);
+
   const [acc5Details, setAccDetails] = useState({
     kitchen: parentData.kitchen || [],
     bathroom: parentData.bathroom || [],
@@ -237,7 +240,8 @@ const EditAcc5 = ({ nextBtn, parentData, caravanId }) => {
         </Grid>
       </Grid>
       <Box className="centerElements">
-        <Button variant="contained" onClick={handleNextBtn}>
+        <EditExtrasPickerComponent extrasObj={extras} carId={caravanId} />
+        <Button variant="contained" onClick={handleNextBtn} sx={{ mr: 2 }}>
           עדכן
         </Button>
       </Box>

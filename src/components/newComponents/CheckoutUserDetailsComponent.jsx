@@ -36,6 +36,8 @@ const CheckoutUserDetailsComponent = ({
     setPanelData((prevData) => {
       const updatedData = [...prevData];
       updatedData[panelNumber] = data;
+      console.log("updatedData", updatedData);
+
       return updatedData;
     });
   };
@@ -72,6 +74,7 @@ const CheckoutUserDetailsComponent = ({
   }, [panelData[5]]);
 
   //console.log("totalPrice", totalPrice);
+  //console.log("caravanDetails", caravanDetails);
 
   if (!totalPrice) {
     return <CircularProgress />;
@@ -203,6 +206,7 @@ const CheckoutUserDetailsComponent = ({
         </AccordionSummary>
         <AccordionDetails>
           <Panel5
+            extraPrices={caravanDetails.extras}
             expandedState={isExpanded}
             setExpanded={setIsExpanded}
             onSubmit={(data) => handlePanelData(5, data)}

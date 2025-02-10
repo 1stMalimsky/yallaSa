@@ -1,10 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ExtrasComponent from "./helpers/ExtrasComponent";
 import extrasList from "./helpers/extrasList";
-import { Grid, Button } from "@mui/material";
+import { Grid, Button, Typography } from "@mui/material";
+import CircularProgress from "@mui/material/CircularProgress";
 
-const Panel5 = ({ setExpanded, onSubmit }) => {
+const Panel5 = ({ setExpanded, onSubmit, extraPrices }) => {
   const [inputState, setInputState] = useState({});
+  //const [filteredExtras, setFilteredExtras] = useState([]);
+  const [list, setList] = useState(extrasList);
 
   const handleExtrasUpdate = (name, extraSum, price) => {
     //console.log("extraSum", extraSum);
@@ -24,44 +27,79 @@ const Panel5 = ({ setExpanded, onSubmit }) => {
     });
   };
 
+  useEffect(() => {
+    if (extraPrices) {
+      const filteredExtras = list.filter(
+        (item) => extraPrices[item.english]?.isAvailable
+      );
+
+      const updatedExtras = filteredExtras.map((extra) => ({
+        ...extra,
+        pricePerUnit: extraPrices[extra.english]?.price ?? extra.pricePerUnit,
+      }));
+      setList(updatedExtras);
+    }
+  }, [extraPrices]);
+
   const handlePanel5Submit = () => {
     onSubmit(inputState);
     setExpanded("panel6");
     //console.log("inputState", inputState);
   };
 
+  //console.log("extra prices", extraPrices);
+  //console.log("list", list);
+
+  /* if (!extraPrices) {
+    return <CircularProgress />;
+  } */
+
   return (
     <div>
-      <Grid container spacing={1}>
-        {extrasList.map((extra) => (
-          <Grid
-            key={extra.name}
-            item
-            xs={12}
-            sm={6}
-            md={4}
-            lg={3}
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              border: "1px solid white",
-              borderRadius: "10px",
-              height: "100%",
-              mb: 1,
-            }}
-          >
-            <ExtrasComponent
-              extraName={extra.name}
-              extraDescription={extra.description}
-              iconImg={extra.iconImg}
-              maxExtras={extra.maxExtras}
-              pricePerUnit={extra.pricePerUnit}
-              onUpdate={handleExtrasUpdate}
-            />
+      {extraPrices && (
+        <Grid container spacing={1}>
+          {list.map((extra) => (
+            <Grid
+              key={extra.name}
+              item
+              xs={12}
+              sm={6}
+              md={4}
+              lg={3}
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                border: "1px solid white",
+                borderRadius: "10px",
+                height: "100%",
+                mb: 1,
+              }}
+            >
+              <ExtrasComponent
+                extraName={extra.name}
+                extraDescription={extra.description}
+                iconImg={extra.iconImg}
+                maxExtras={extra.maxExtras}
+                pricePerUnit={extra.pricePerUnit}
+                onUpdate={handleExtrasUpdate}
+              />
+            </Grid>
+          ))}
+          <Grid item xs={12} sx={{ display: "flex", justifyContent: "center" }}>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handlePanel5Submit}
+            >
+              הבא
+            </Button>
           </Grid>
-        ))}
-        <Grid item xs={12} sx={{ display: "flex", justifyContent: "center" }}>
+        </Grid>
+      )}
+      {!extraPrices && (
+        <div>
+          <Typography variant="h6">אין אפשרות לתוספות</Typography>
           <Button
             variant="contained"
             color="primary"
@@ -69,8 +107,8 @@ const Panel5 = ({ setExpanded, onSubmit }) => {
           >
             הבא
           </Button>
-        </Grid>
-      </Grid>
+        </div>
+      )}
     </div>
   );
 };

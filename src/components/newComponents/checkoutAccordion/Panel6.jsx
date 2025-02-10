@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import {
   Alert,
   Card,
@@ -48,42 +48,44 @@ const Panel6 = ({ setExpanded, onSubmit, caravanDetails }) => {
         <Card variant="outlined" sx={{ p: 2, mb: 2 }}>
           <Grid container>
             {cancelationPolicy.isCancelationPolicy && (
-              <Grid item xs={12} display={"flex"} alignItems={"center"}>
-                <FormControlLabel
-                  value="basic"
-                  checked={inputState.policyChoice === "basic" ? true : false}
-                  control={<Radio />}
-                  label="בסיסי"
-                  onChange={handlePickCancelation}
-                  sx={{
-                    "& .MuiFormControlLabel-label": {
-                      display: "none",
-                    },
-                  }}
-                />
-                <Box
-                  sx={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    width: "50%",
-                  }}
-                >
-                  <Typography variant="h6">&nbsp;בסיסי&nbsp;</Typography>
-                  <Typography variant="subtitle" color="green">
-                    כלול במחיר
+              <Fragment>
+                <Grid item xs={12} display={"flex"} alignItems={"center"}>
+                  <FormControlLabel
+                    value="basic"
+                    checked={inputState.policyChoice === "basic" ? true : false}
+                    control={<Radio />}
+                    label="בסיסי"
+                    onChange={handlePickCancelation}
+                    sx={{
+                      "& .MuiFormControlLabel-label": {
+                        display: "none",
+                      },
+                    }}
+                  />
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      width: "50%",
+                    }}
+                  >
+                    <Typography variant="h6">&nbsp;בסיסי&nbsp;</Typography>
+                    <Typography variant="subtitle" color="green">
+                      כלול במחיר
+                    </Typography>
+                  </Box>
+                </Grid>
+                <Grid item xs={12}>
+                  <Typography variant="subtitle">
+                    - המבטלים {cancelationPolicy.freeCancelWindow} ימים לפני
+                    ההזמנה יקבלו החזר מלא.
+                    <br /> - המבטלים שלא במסגרת תנאי הביטול ישלמו{" "}
+                    {cancelationPolicy.cancelationFeePercent} אחוז מסך ההזמנה
                   </Typography>
-                </Box>
-              </Grid>
+                </Grid>
+              </Fragment>
             )}
-            <Grid item xs={12}>
-              <Typography variant="subtitle">
-                - המבטלים {cancelationPolicy.freeCancelWindow} ימים לפני ההזמנה
-                יקבלו החזר מלא.
-                <br /> - המבטלים שלא במסגרת תנאי הביטול ישלמו{" "}
-                {cancelationPolicy.cancelationFeePercent} אחוז מסך ההזמנה
-              </Typography>
-            </Grid>
           </Grid>
         </Card>
         {/* Flexible Plan */}
