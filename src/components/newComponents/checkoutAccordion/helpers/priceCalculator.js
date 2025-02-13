@@ -51,7 +51,7 @@ const calculateTotalPrice = async (panelData, caravanDetails) => {
       totalRentalPrice: numOfDays * +currnetCaravan.priceDetails.pricePerNight,
       totalInsurance: insuranceCalc(),
       totalExtras: calculateExtrasTotal(panelData),
-      totalCancellation:
+      totalCancelation:
         cancelPolicy.policyChoice === "basic" ? 0 : numOfDays * 10,
     };
     let grandTotal = Object.values(totals).reduce(

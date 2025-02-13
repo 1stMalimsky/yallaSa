@@ -257,6 +257,7 @@ const CheckoutUserDetailsComponent = ({
         </AccordionSummary>
         <AccordionDetails>
           <Panel7
+            caravanDetails={caravanDetails}
             expandedState={isExpanded}
             setExpanded={setIsExpanded}
             prevInputData={panelData}

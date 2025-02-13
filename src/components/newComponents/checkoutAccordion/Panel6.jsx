@@ -14,20 +14,22 @@ import { toast } from "react-toastify";
 
 const Panel6 = ({ setExpanded, onSubmit, caravanDetails }) => {
   const [inputState, setInputState] = useState({
-    policyChoice: "basic",
+    policyChoice: caravanDetails.cancelationPolicy.isCancelationPolicy
+      ? "flexible"
+      : "strict",
     pricePerNight: 0,
   });
   //console.log("caravanDetails", caravanDetails);
-
   const [cancelationPolicy, setCancelationPolicy] = useState(
     caravanDetails.cancelationPolicy
   );
+
   const handlePickCancelation = (e) => {
     setInputState({ policyChoice: e.target.value });
   };
 
   const handlePanel6Submit = () => {
-    if (inputState.policyChoice === null) {
+    /* if (inputState.policyChoice === null) {
       toast.error("בחר תנאי ביטול");
       return;
     }
@@ -36,72 +38,21 @@ const Panel6 = ({ setExpanded, onSubmit, caravanDetails }) => {
         ...prevState,
         pricePerNight: "75",
       }));
-    }
-    onSubmit(inputState);
+    } */
+    onSubmit(cancelationPolicy);
     setExpanded("panel7");
   };
 
   return (
     <div>
       <RadioGroup>
-        {/* Basic Plan */}
         <Card variant="outlined" sx={{ p: 2, mb: 2 }}>
           <Grid container>
-            {cancelationPolicy.isCancelationPolicy && (
-              <Fragment>
-                <Grid item xs={12} display={"flex"} alignItems={"center"}>
-                  <FormControlLabel
-                    value="basic"
-                    checked={inputState.policyChoice === "basic" ? true : false}
-                    control={<Radio />}
-                    label="בסיסי"
-                    onChange={handlePickCancelation}
-                    sx={{
-                      "& .MuiFormControlLabel-label": {
-                        display: "none",
-                      },
-                    }}
-                  />
-                  <Box
-                    sx={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      width: "50%",
-                    }}
-                  >
-                    <Typography variant="h6">&nbsp;בסיסי&nbsp;</Typography>
-                    <Typography variant="subtitle" color="green">
-                      כלול במחיר
-                    </Typography>
-                  </Box>
-                </Grid>
-                <Grid item xs={12}>
-                  <Typography variant="subtitle">
-                    - המבטלים {cancelationPolicy.freeCancelWindow} ימים לפני
-                    ההזמנה יקבלו החזר מלא.
-                    <br /> - המבטלים שלא במסגרת תנאי הביטול ישלמו{" "}
-                    {cancelationPolicy.cancelationFeePercent} אחוז מסך ההזמנה
-                  </Typography>
-                </Grid>
-              </Fragment>
-            )}
-          </Grid>
-        </Card>
-        {/* Flexible Plan */}
-        <Card variant="outlined" sx={{ p: 2, mb: 2 }}>
-          <Grid container spacing={1}>
             <Grid item xs={12} display={"flex"} alignItems={"center"}>
               <FormControlLabel
-                value="flexible"
+                value={cancelationPolicy.cancelationPolicy}
+                checked={true}
                 control={<Radio />}
-                label="גמיש"
-                onChange={handlePickCancelation}
-                sx={{
-                  "& .MuiFormControlLabel-label": {
-                    display: "none",
-                  },
-                }}
               />
               <Box
                 sx={{
@@ -111,17 +62,20 @@ const Panel6 = ({ setExpanded, onSubmit, caravanDetails }) => {
                   width: "50%",
                 }}
               >
-                <Typography variant="h6">&nbsp;גמיש&nbsp;</Typography>
+                <Typography variant="h6" sx={{ mr: 1 }}>
+                  {cancelationPolicy.isCancelationPolicy ? "גמיש" : "ללא החזר"}
+                </Typography>
                 <Typography variant="subtitle" color="green">
-                  {cancelationPolicy.cancelationFeePercent}₪
+                  כלול במחיר
                 </Typography>
               </Box>
             </Grid>
             <Grid item xs={12}>
               <Typography variant="subtitle">
-                - המבטלים שבועייים לפני ההזמנה יקבלו %100 החזר.
-                <br /> - המבטלים בין שבועיים לשבוע יקבלו %50 מכספם חזרה
-                <br /> - המבטלים בין שבוע ליום ההשמנה יקבלו %25 מכספם חזרה
+                - המבטלים {cancelationPolicy.freeCancelWindow} ימים לפני ההזמנה
+                יקבלו החזר מלא.
+                <br /> - המבטלים שלא במסגרת תנאי הביטול ישלמו{" "}
+                {cancelationPolicy.cancelationFeePercent} אחוז מסך ההזמנה
               </Typography>
             </Grid>
           </Grid>

@@ -15,8 +15,9 @@ import getToken from "../../../utils/helpers/getToken";
 import dayjs from "dayjs";
 import { toast } from "react-toastify";
 
-const Panel7 = ({ prevInputData, grandTotal, setExpanded }) => {
+const Panel7 = ({ prevInputData, grandTotal, setExpanded, caravanDetails }) => {
   //console.log("panelData", prevInputData, "Gradn Total", grandTotal);
+  //console.log("prevInputData", prevInputData);
 
   const [extrasDetails, setExtrasDetails] = useState(null);
   const userId = getToken().userId;
@@ -37,24 +38,42 @@ const Panel7 = ({ prevInputData, grandTotal, setExpanded }) => {
       dropoffTime: prevInputData[3].dropoffTime,
     };
     try {
-      const newReservation = await axios.post("/reservations/create", {
+      const objToSend = {
+        listingName: caravanDetails.listingName,
+        userName: prevInputData[1].fullName,
         userId: userId,
+        ownerId: caravanDetails.ownerDetails.ownerId,
         caravanId: prevInputData[0].id,
         dates: dateData,
-        priceDetails: grandTotal,
-        extras: prevInputData[5],
+        priceDetails: {
+          grandTotal: grandTotal.grandTotal,
+          totalExtras: grandTotal.totalExtras,
+          insurance: grandTotal.totalInsurance,
+          cancelation: grandTotal.totalCancelation,
+        },
+        extras: prevInputData[5] || [],
+        insuranceSelected: prevInputData[4].insuranceType,
+        cancelationPolicy: prevInputData[6].policyChoice,
+      };
+      console.log("objTosEnd", objToSend);
+
+      const newReservation = await axios.post("/reservations/create", {
+        listingName: caravanDetails.listingName,
+        userName: prevInputData[1].fullName,
+        userId: userId,
+        ownerId: caravanDetails.ownerDetails.ownerId,
+        caravanId: prevInputData[0].id,
+        dates: dateData,
+        priceDetails: {
+          grandTotal: grandTotal.grandTotal,
+          totalExtras: grandTotal.totalExtras,
+          insurance: grandTotal.totalInsurance,
+          cancelation: grandTotal.totalCancelation,
+        },
+        extras: prevInputData[5] || [],
         insuranceSelected: prevInputData[4].insuranceType,
         cancelationPolicy: prevInputData[6].policyChoice,
       });
-
-      if (newReservation.data) {
-        const reservationId = newReservation.data.newRes._id;
-        console.log("redId", reservationId);
-
-        const updateUser = await axios.put(`/users/pushReservation/${userId}`, {
-          reservationId,
-        });
-      }
       toast.success("ההזמנה נשמרה בהצלחה");
     } catch (err) {
       console.log("Panel7 err", err);
@@ -164,12 +183,27 @@ const Panel7 = ({ prevInputData, grandTotal, setExpanded }) => {
               שירותים נוספים
             </Typography>
             <Typography id="total3" variant="h6">
-              {grandTotal.totalInsurance + grandTotal.totalCancellation}
+              {grandTotal.totalInsurance}
             </Typography>
           </Box>
         </AccordionSummary>
         <AccordionDetails>
           <Box>
+            {prevInputData[4].basicIncluded &&
+              prevInputData[4].insuranceType === "basic" && (
+                <Box
+                  sx={{
+                    width: "93%",
+                    display: "flex",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <Typography variant="body1" sx={{ marginBottom: "10px" }}>
+                    ביטוח בסיסי
+                  </Typography>
+                  <Typography variant="body1">כלול במחיר</Typography>
+                </Box>
+              )}
             {prevInputData[4] && grandTotal.totalInsurance > 0 && (
               <Box
                 sx={{
@@ -187,7 +221,7 @@ const Panel7 = ({ prevInputData, grandTotal, setExpanded }) => {
                 </Typography>
               </Box>
             )}
-            {prevInputData[6] && grandTotal.totalCancellation > 0 && (
+            {prevInputData[6] && grandTotal.totalCancelation > 0 && (
               <Box
                 sx={{
                   width: "93%",
@@ -197,10 +231,9 @@ const Panel7 = ({ prevInputData, grandTotal, setExpanded }) => {
               >
                 <Typography variant="body1">
                   מדיניות ביטולים <br />
-                  {prevInputData[6].policyChoice}
                 </Typography>
                 <Typography variant="body1">
-                  {grandTotal.totalCancellation}
+                  {prevInputData[6].isCancelationPolicy ? "גמיש" : "ללא החזר"}
                 </Typography>
               </Box>
             )}

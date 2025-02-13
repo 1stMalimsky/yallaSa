@@ -31,6 +31,15 @@
   //flex-direction: column;
 }
 
+.elevatedNoHover {
+  //transition: box-shadow 0.3s ease-in-out; /* Smooth transition for the shadow */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08); /* Multiple layers of shadows for more depth */
+}
+
+.elevated {
+  transition: box-shadow 0.3s ease-in-out; /* Smooth transition for the shadow */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08); /* Multiple layers of shadows for more depth */
+}
 .elevated {
   transition: box-shadow 0.3s ease-in-out; /* Smooth transition for the shadow */
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08); /* Multiple layers of shadows for more depth */
@@ -49,6 +58,18 @@
       left: unset;
       right: 0;
       margin-right: 1.7em;
+    }
+  }
+}
+.inputFixMed {
+  .MuiInputLabel-root {
+    left: unset;
+    right: 0;
+    margin-right: 1.7em;
+    &.MuiInputLabel-shrink {
+      left: unset;
+      right: 0;
+      margin-right: 1.2em;
     }
   }
 }

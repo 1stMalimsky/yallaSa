@@ -112,6 +112,19 @@ const EditProfilePage = () => {
             >
               הוספת קרוואן
             </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              href={`/resmanagement/${inputState.userId}`}
+              sx={{
+                marginTop: 2,
+                marginBottom: 2,
+                marginLeft: 2,
+                marginRight: 2,
+              }}
+            >
+              ניהול הזמנות
+            </Button>
           </Grid>
         </Grid>
       </Box>

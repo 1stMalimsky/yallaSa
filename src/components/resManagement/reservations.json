@@ -1,0 +1,137 @@
+[
+  {
+    "listingName": "Desert Explorer",
+    "userName": "number four",
+    "userId": "6761380a1ca29a109c77d443",
+    "caravanId": "67a35f9124fcb708dc2b2a0b",
+    "ownerId": "679bc7fd09069cc3de420db2",
+    "dates": {
+      "month": 2,
+      "year": 2025,
+      "start": 1739620800,
+      "end": 1739815200,
+      "numOfDays": 2,
+      "pickupTime": "12:00",
+      "dropoffTime": "18:00"
+    },
+    "priceDetails": {
+      "grandTotal": 5550,
+      "totalExtras": 0,
+      "insurance": 0,
+      "cancelation": 0
+    },
+    "extras": {},
+    "insuranceSelected": "basic",
+    "cancelationPolicy": "strict"
+  },
+  {
+    "listingName": "Mountain Retreat",
+    "userName": "alon Malimsky",
+    "userId": "679885a308b798b5d929ca0c",
+    "caravanId": "67a8a8aefa80dec228c7e4f7",
+    "ownerId": "679bc7fd09069cc3de420db2",
+    "dates": {
+      "month": 2,
+      "year": 2025,
+      "start": 1739876400,
+      "end": 1740070800,
+      "numOfDays": 3,
+      "pickupTime": "11:00",
+      "dropoffTime": "17:00"
+    },
+    "priceDetails": {
+      "grandTotal": 1220,
+      "totalExtras": 500,
+      "insurance": 0,
+      "cancelation": 0
+    },
+    "extras": {
+      "bbq": { "isAvailable": true, "price": 123 },
+      "tent": { "isAvailable": true, "price": 132 }
+    },
+    "insuranceSelected": "basic",
+    "cancelationPolicy": "flexible"
+  },
+  {
+    "listingName": "Coastal Adventure",
+    "userName": "Al Malimsky",
+    "userId": "679bc7fd09069cc3de420db2",
+    "caravanId": "67a35f9124fcb708dc2b2a0b",
+    "ownerId": "679bc7fd09069cc3de420db2",
+    "dates": {
+      "month": 2,
+      "year": 2025,
+      "start": 1740225600,
+      "end": 1740420000,
+      "numOfDays": 3,
+      "pickupTime": "12:00",
+      "dropoffTime": "18:00"
+    },
+    "priceDetails": {
+      "grandTotal": 5550,
+      "totalExtras": 200,
+      "insurance": 0,
+      "cancelation": 0
+    },
+    "extras": {
+      "cleaningService": { "isAvailable": true, "price": 132 }
+    },
+    "insuranceSelected": "premium",
+    "cancelationPolicy": "moderate"
+  },
+  {
+    "listingName": "City Escape",
+    "userName": "test test",
+    "userId": "67a9afcba140c0a97136c031",
+    "caravanId": "67a8a8aefa80dec228c7e4f7",
+    "ownerId": "679bc7fd09069cc3de420db2",
+    "dates": {
+      "month": 2,
+      "year": 2025,
+      "start": 1740481200,
+      "end": 1740762000,
+      "numOfDays": 4,
+      "pickupTime": "11:00",
+      "dropoffTime": "17:00"
+    },
+    "priceDetails": {
+      "grandTotal": 1220,
+      "totalExtras": 400,
+      "insurance": 0,
+      "cancelation": 0
+    },
+    "extras": {
+      "extraLinen": { "isAvailable": true, "price": 123 },
+      "extraGas": { "isAvailable": true, "price": 123 }
+    },
+    "insuranceSelected": "basic",
+    "cancelationPolicy": "flexible"
+  },
+  {
+    "listingName": "Riverside Getaway",
+    "userName": "number four",
+    "userId": "6761380a1ca29a109c77d443",
+    "caravanId": "67a35f9124fcb708dc2b2a0b",
+    "ownerId": "679bc7fd09069cc3de420db2",
+    "dates": {
+      "month": 2,
+      "year": 2025,
+      "start": 1740744000,
+      "end": 1740852000,
+      "numOfDays": 1,
+      "pickupTime": "12:00",
+      "dropoffTime": "18:00"
+    },
+    "priceDetails": {
+      "grandTotal": 5550,
+      "totalExtras": 100,
+      "insurance": 0,
+      "cancelation": 0
+    },
+    "extras": {
+      "picnicSet": { "isAvailable": true, "price": 123 }
+    },
+    "insuranceSelected": "premium",
+    "cancelationPolicy": "strict"
+  }
+]

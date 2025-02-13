@@ -22,6 +22,9 @@ import Test from "../pages/newPages/Test";
 import BecomeOwnerRedirect from "../pages/newPages/BecomeRedirect";
 import AddCaravan from "../pages/newPages/AddCaravan";
 import EditCaravanPage from "../pages/newPages/EditCaravanPage";
+import ResManagmentPage from "../pages/newPages/ResManagmentPage";
+import ReservationPage from "../pages/newPages/ReservationPage";
+
 const Router = () => {
   return (
     <Routes>
@@ -30,7 +33,10 @@ const Router = () => {
         path={"profile/editcaravan/:caravanId"}
         element={<EditCaravanPage />}
       />
-
+      {/* RESERVATION MANAGEMENT PAGE*/}
+      <Route path="/resmanagement/:ownerId" element={<ResManagmentPage />} />
+      {/* RESERVATION PAGE */}
+      <Route path="/reservationPage/:resId" element={<ReservationPage />} />
       <Route path={"/maptest"} element={<Test />} />
       <Route
         path="/addcaravan/:location/:vehicleType"

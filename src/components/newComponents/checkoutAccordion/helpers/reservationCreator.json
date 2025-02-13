@@ -1,0 +1,84 @@
+{
+  "listingName": "Car 3",
+  "userName": "Al Mal",
+  "userId": "67a9afcba140c0a97136c031",
+  "ownerId": "679bc7fd09069cc3de420db2",
+  "phone":"0533303677",
+"email":"a@gmail.com",
+  "caravanId": "67ac816488fecc10201bf569",
+  "dates": {
+    "month": "02",
+    "year": "2025",
+    "start": "1739311200",
+    "end": "1739397600",
+    "numOfDays": "1",
+    "pickupTime": "13:00",
+    "dropoffTime": "15:00"
+  },
+  "priceDetails": {
+    "grandTotal": 860,
+    "totalExtras": 50,
+    "insurance": 0,
+    "cancelation": 10
+  },
+  "extras": {
+    "מנגל": {
+      "extraSum": 1,
+      "totalPrice": 50
+    }
+  },
+  "insuranceSelected": "basic"
+},
+  {
+    "listingName": "CAR #5",
+    "userName": "yael malim",
+    "userId": "67a9afcba140c0a97136c031",
+    "ownerId": "679bc7fd09069cc3de420db2",
+    "caravanId": "67ac816488fecc10201bf569",
+    "phone":"097650111",
+    "email":"yam@gmail.com",
+    "dates": {
+      "month": "02",
+      "year": "2025",
+      "start": "1739570400",
+      "end": "1739743200",
+      "numOfDays": "2",
+      "pickupTime": "14:00",
+      "dropoffTime": "16:00"
+    },
+    "priceDetails": {
+      "grandTotal": 1620,
+      "totalExtras": 0,
+      "insurance": 600,
+      "cancelation": 20
+    },
+    "extras": {},
+    "insuranceSelected": "premium",
+    "cancelationPolicy": "flexible"
+  }
+,
+  {
+    "listingName": "CAR #4",
+    "userName": "NAve malim",
+    "userId": "67a9afcba140c0a97136c031",
+    "ownerId": "67a9afcba140c0a97136c031",
+    "caravanId": "67ac43a55431296d05470aa6",
+    "dates": {
+      "month": "03",
+      "year": "2025",
+      "start": "1740866400",
+      "end": "1741125600",
+      "numOfDays": "3",
+      "pickupTime": "13:00",
+      "dropoffTime": "16:00"
+    },
+    "priceDetails": {
+      "grandTotal": 1530,
+      "totalExtras": 0,
+      "insurance": 0,
+      "cancelation": 30
+    },
+    "extras": {},
+    "insuranceSelected": "basic",
+    "cancelationPolicy": "basic"
+  }

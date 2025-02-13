@@ -29,6 +29,7 @@ const Panel1 = ({ setExpanded, onSubmit }) => {
     phone: "",
     birthDate: null,
     age: "",
+    email: "",
   });
 
   const [errorState, setErrorState] = useState("");
@@ -153,7 +154,8 @@ const Panel1 = ({ setExpanded, onSubmit }) => {
           {/* PHONE */}
           <Grid item xs={12} sm={6}>
             <TextField
-              className="textFieldInputsPhone"
+              className="inputFixShort"
+              /* className="textFieldInputsPhone" */
               id="phoneNumber"
               value={inputState.phone}
               label="מספר טלפון נייד"
@@ -169,6 +171,31 @@ const Panel1 = ({ setExpanded, onSubmit }) => {
             {isError ? (
               errorState.phone ? (
                 <Alert severity="error">{errorState.phone}</Alert>
+              ) : (
+                <Alert
+                  severity="error"
+                  sx={{
+                    display: { xs: "none", sm: "flex" },
+                    visibility: "hidden",
+                  }}
+                ></Alert>
+              )
+            ) : null}
+          </Grid>
+          {/* EMAIL */}
+          <Grid item xs={12} sm={6}>
+            <TextField
+              className="textFieldInputsPhone"
+              id="email"
+              value={inputState.email}
+              label="מייל"
+              variant="outlined"
+              fullWidth
+              onChange={(e) => handleInputChange(e, "email")}
+            />
+            {isError ? (
+              errorState.phone ? (
+                <Alert severity="error">{errorState.email}</Alert>
               ) : (
                 <Alert
                   severity="error"

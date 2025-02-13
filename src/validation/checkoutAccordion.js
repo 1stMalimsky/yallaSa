@@ -34,6 +34,14 @@ const panel1Schema = Joi.object({
     "number.min": "הנך חייב להיות מעל גיל 25 להזמנה",
     "number.max": "הנך חייב להיות מתחת לגיל 70 להזמנה",
   }),
+  email: Joi.string()
+    .email({ tlds: { allow: false } })
+    .required()
+    .messages({
+      "string.empty": "אנא הכנס מייל",
+      "string.email": "אנא הכנס מייל תקין",
+      "any.required": "אנא ודא שמילאת את כל הפרטים",
+    }),
 });
 
 const validatePanel1 = (userInput) => {

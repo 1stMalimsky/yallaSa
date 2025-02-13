@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Modal, Button, Box, Typography, Grid, TextField } from "@mui/material";
 import extrasList from "../../checkoutAccordion/helpers/extrasList";
 import checkSessionStorage from "../../../../utils/helpers/checkSessionStorage";
+import normalizeExtras from "./normalizeExtras";
 
 const ExtrasPickerComponent = ({ extrasUpdate }) => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -28,6 +29,8 @@ const ExtrasPickerComponent = ({ extrasUpdate }) => {
   };
 
   const handleSubmit = () => {
+    console.log("nrmalized", normalizeExtras(prices));
+
     sessionStorage.setItem("acc5extras", JSON.stringify(prices));
     console.log("submitting prices", prices);
     if (!prices) {

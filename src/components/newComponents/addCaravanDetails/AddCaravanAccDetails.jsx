@@ -22,7 +22,7 @@ import getToken from "../../../utils/helpers/getToken";
 import getUserDetails from "../../../utils/helpers/getUserDetails";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import normalizeExtras from "./helpers/normalizeExtras";
+import normalizeExtras from "./helpers/[COPY]normalizeExtras";
 
 const AddCaravanAcc = () => {
   const [accDetails, setAccDetails] = useState([]);
@@ -105,7 +105,6 @@ const AddCaravanAcc = () => {
 
       const caravavnId = res.data.newCaravan._id;
       setImageUploadTrigger(true);
-      //console.log("main trigger", imageUploadTrigger);
       setTimeout(() => {
         setImageUploadTrigger(false);
       }, 1000);
@@ -118,7 +117,6 @@ const AddCaravanAcc = () => {
       /* setTimeout(() => {
         navigate("/profile");
       }, 2000); */
-      //console.log("caravanId", caravavnId);
     } catch (err) {
       console.log("handkeSubmit erro", err);
     }

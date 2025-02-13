@@ -1,0 +1,421 @@
+/* CAR 1 */
+
+{
+    "0": "f",
+    "1": "a",
+    "2": "l",
+    "3": "s",
+    "4": "e",
+    "privateUser": "true",
+    "userDetails": {
+      "0": "6",
+      "1": "7",
+      "2": "9",
+      "3": "b",
+      "4": "c",
+      "5": "7",
+      "6": "f",
+      "7": "d",
+      "8": "0",
+      "9": "9",
+      "10": "0",
+      "11": "6",
+      "12": "9",
+      "13": "c",
+      "14": "c",
+      "15": "3",
+      "16": "d",
+      "17": "e",
+      "18": "4",
+      "19": "2",
+      "20": "0",
+      "21": "d",
+      "22": "b",
+      "23": "2",
+      "userId": "679bc7fd09069cc3de420db2"
+    },
+    "paymentType": 2,
+    "paymentDetails": {
+      "phone": "0533303677"
+    },
+    "listingName": "Car 3",
+    "description": "Lorem ipsum odor amet, consectetuer adipiscing elit. Diam ad mus mi tincidunt id volutpat nisi sollicitudin potenti id habitasse nisi sit curae ",
+    "location": "צפון",
+    "vehicleType": "towCaravan",
+    "numOfseats": 3,
+    "numOfbeds": 3,
+    "numOfsleepers": 2,
+    "kitchen": [
+      {
+        "hasSink": "מטבח עם כיור"
+      },
+      {
+        "hasKitchenware": "כלי מטבח"
+      },
+      {
+        "hasStove": "כיריים"
+      }
+    ],
+    "bathroom": [
+      {
+        "hasToilet": "שירותים"
+      }
+    ],
+    "safety": [
+      {
+        "hasFirstAidKit": "תיק עזרה ראשונה"
+      },
+      {
+        "hasFireExtinguisher": "מטף"
+      },
+      {
+        "hasTowHitch": "וו גרירה"
+      }
+    ],
+    "comfort": [
+      {
+        "hasTV": "טלוויזיה"
+      },
+      {
+        "hasGPS": "מערכת ניווט"
+      }
+    ],
+    "measurements": {
+      "weight": "210",
+      "length": "211",
+      "width": "122",
+      "licenseClass": "B",
+      "minimumAge": "26"
+    },
+    "city": "kfar saba",
+    "street": "herztl",
+    "houseNumber": "77",
+    "mapsLocation": "",
+    "pickupTime": "08:00",
+    "dropoffTime": "22:00",
+    "licenseNumber": "4865675",
+    "carModel": "mobile 2",
+    "carYear": "1999",
+    "pricePerNight": "800",
+    "minimumNights": "2",
+    "isCancelationPolicy": "false",
+    "freeCancelationDays": "",
+    "cancelationPrice": "",
+    "insuranceIncluded": "true",
+    "basicInsurance": "",
+    "premiumInsurance": "",
+    "extras": {
+      "bbq": {
+        "isAvailable": false,
+        "price": 0
+      },
+      "extraLinen": {
+        "isAvailable": false,
+        "price": 0
+      },
+      "tent": {
+        "isAvailable": false,
+        "price": 0
+      },
+      "extraGas": {
+        "isAvailable": false,
+        "price": 0
+      },
+      "picnicSet": {
+        "isAvailable": false,
+        "price": 0
+      },
+      "cleaningService": {
+        "isAvailable": false,
+        "price": 0
+      }
+    }
+  }
+
+  /* CAR 2 */
+
+  {
+    "0": "t",
+    "1": "r",
+    "2": "u",
+    "3": "e",
+    "privateUser": "true",
+    "userDetails": {
+        "0": "6",
+        "1": "7",
+        "2": "a",
+        "3": "9",
+        "4": "a",
+        "5": "f",
+        "6": "c",
+        "7": "b",
+        "8": "a",
+        "9": "1",
+        "10": "4",
+        "11": "0",
+        "12": "c",
+        "13": "0",
+        "14": "a",
+        "15": "9",
+        "16": "7",
+        "17": "1",
+        "18": "3",
+        "19": "6",
+        "20": "c",
+        "21": "0",
+        "22": "3",
+        "23": "1",
+        "userId": "67a9afcba140c0a97136c031"
+    },
+    "paymentType": "1",
+    "paymentDetails": {
+        "bankName": "leumi",
+        "bankBranch": "762",
+        "bankAccount": "78965432"
+    },
+    "listingName": "CAR #4",
+    "description": "Lorem ipsum odor amet, consectetuer adipiscing elit. Diam ad mus mi tincidunt id volutpat nisi sollicitudin potenti id habitasse nisi sit curae ",
+    "location": "מרכז",
+    "vehicleType": "fullCaravan",
+    "numOfseats": 2,
+    "numOfbeds": 2,
+    "numOfsleepers": 2,
+    "kitchen": [
+        {
+            "hasSink": "מטבח עם כיור"
+        },
+        {
+            "hasKitchenware": "כלי מטבח"
+        },
+        {
+            "hasStove": "כיריים"
+        }
+    ],
+    "bathroom": [
+        {
+            "hasOutdoorShower": "מקלחת חיצונית"
+        }
+    ],
+    "safety": [
+        {
+            "hasTowHitch": "וו גרירה"
+        },
+        {
+            "hasFirstAidKit": "תיק עזרה ראשונה"
+        }
+    ],
+    "comfort": [
+        {
+            "hasAC": "מזגן"
+        },
+        {
+            "hasBikeRack": "מתקן אופניים"
+        }
+    ],
+    "measurements": {
+        "weight": "2000",
+        "length": "100",
+        "width": "1000",
+        "licenseClass": "B",
+        "minimumAge": "26"
+    },
+    "city": "raanana",
+    "street": "hertzl",
+    "houseNumber": "31",
+    "mapsLocation": "",
+    "pickupTime": "12:00",
+    "dropoffTime": "17:00",
+    "licenseNumber": "48624223",
+    "carModel": "MOdel 6",
+    "carYear": "2021",
+    "pricePerNight": "500",
+    "minimumNights": "1",
+    "freeCancelationDays": "7",
+    "cancelationPrice": "100",
+    "isCancelationPolicy": "true",
+    "insuranceIncluded": "true",
+    "basicInsurance": "",
+    "premiumInsurance": "300",
+    "extras": {
+        "bbq": {
+            "isAvailable": false,
+            "price": 0
+        },
+        "extraLinen": {
+            "isAvailable": false,
+            "price": 0
+        },
+        "tent": {
+            "isAvailable": false,
+            "price": 0
+        },
+        "extraGas": {
+            "isAvailable": false,
+            "price": 0
+        },
+        "picnicSet": {
+            "isAvailable": false,
+            "price": 0
+        },
+        "cleaningService": {
+            "isAvailable": false,
+            "price": 0
+        }
+    }
+}
+
+
+  /* CAR 3 */
+
+  {
+    "0": "f",
+    "1": "a",
+    "2": "l",
+    "3": "s",
+    "4": "e",
+    "privateUser": "true",
+    "userDetails": {
+      "0": "6",
+      "1": "7",
+      "2": "a",
+      "3": "9",
+      "4": "a",
+      "5": "f",
+      "6": "c",
+      "7": "b",
+      "8": "a",
+      "9": "1",
+      "10": "4",
+      "11": "0",
+      "12": "c",
+      "13": "0",
+      "14": "a",
+      "15": "9",
+      "16": "7",
+      "17": "1",
+      "18": "3",
+      "19": "6",
+      "20": "c",
+      "21": "0",
+      "22": "3",
+      "23": "1",
+      "userId": "67a9afcba140c0a97136c031"
+    },
+    "paymentType": 1,
+    "paymentDetails": {
+      "bankName": "leumi",
+      "bankBranch": "354",
+      "bankAccount": "65481",
+      "phone": ""
+    },
+    "listingName": "Car5",
+    "description": "Lorem ipsum odor amet, consectetuer adipiscing elit. Diam ad mus mi tincidunt id volutpat nisi sollicitudin potenti id habitasse nisi sit curae ",
+    "location": "מרכז",
+    "vehicleType": "fullCaravan",
+    "numOfseats": 3,
+    "numOfbeds": 5,
+    "numOfsleepers": 6,
+    "kitchen": [
+      {
+        "hasSink": "מטבח עם כיור"
+      },
+      {
+        "hasKitchenware": "כלי מטבח"
+      },
+      {
+        "hasStove": "כיריים"
+      },
+      {
+        "hasOven": "תנור"
+      }
+    ],
+    "bathroom": [
+      {
+        "hasToilet": "שירותים"
+      }
+    ],
+    "safety": [
+      {
+        "hasFirstAidKit": "תיק עזרה ראשונה"
+      },
+      {
+        "hasFireExtinguisher": "מטף"
+      },
+      {
+        "hasTowHitch": "וו גרירה"
+      },
+      {
+        "hasSmokeDetector": "גלאי עשן"
+      },
+      {
+        "hasBackupCamera": "מצלמת רוורס"
+      }
+    ],
+    "comfort": [
+      {
+        "hasTV": "טלוויזיה"
+      },
+      {
+        "hasGPS": "מערכת ניווט"
+      },
+      {
+        "hasAwning": "גגון צל"
+      },
+      {
+        "hasHose": "צינור מים נשלף"
+      },
+      {
+        "hasSolar": "פאנלים סולריים"
+      }
+    ],
+    "measurements": {
+      "weight": "210",
+      "length": "211",
+      "width": "122",
+      "licenseClass": "B",
+      "minimumAge": "26"
+    },
+    "city": "Katzrin",
+    "street": "Zavitan",
+    "houseNumber": "69",
+    "mapsLocation": "",
+    "pickupTime": "09:00",
+    "dropoffTime": "18:00",
+    "licenseNumber": "4865675",
+    "carModel": "mobile8 ",
+    "carYear": "1999",
+    "pricePerNight": "700",
+    "minimumNights": "2",
+    "isCancelationPolicy": "false",
+    "freeCancelationDays": "",
+    "cancelationPrice": "",
+    "insuranceIncluded": "true",
+    "basicInsurance": "",
+    "premiumInsurance": "",
+    "extras": {
+      "bbq": {
+        "isAvailable": true,
+        "price": 55
+      },
+      "extraLinen": {
+        "isAvailable": true,
+        "price": 100
+      },
+      "tent": {
+        "isAvailable": true,
+        "price": 50
+      },
+      "extraGas": {
+        "isAvailable": true,
+        "price": 75
+      },
+      "picnicSet": {
+        "isAvailable": false,
+        "price": 0
+      },
+      "cleaningService": {
+        "isAvailable": false,
+        "price": 0
+      }
+    }
+  }

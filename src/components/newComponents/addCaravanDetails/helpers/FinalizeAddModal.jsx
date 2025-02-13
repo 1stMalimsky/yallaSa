@@ -19,9 +19,9 @@ const FinalizeModal = ({ modalOpenState, handleClose, handleSubmit }) => {
   };
 
   const handleClick = async () => {
+    closeModal();
     try {
       await handleSubmit();
-      closeModal();
     } catch (err) {
       console.log("finalAdd click error", err);
     }
@@ -48,15 +48,15 @@ const FinalizeModal = ({ modalOpenState, handleClose, handleSubmit }) => {
       >
         <Box
           sx={{
-            width: "60%", // Adjust width as necessary
+            width: "60%",
             display: "flex",
             flexDirection: "column",
-            justifyContent: "center", // Center children vertically in the box
-            alignItems: "center", // Center children horizontally in the box
-            backgroundColor: (theme) => theme.palette.background.default, // Use theme for background color
-            padding: 3, // Add padding around the content
-            boxShadow: 24, // Optional: adds shadow for better focus
-            borderRadius: 1, // Optional: rounds corners of the inner box
+            justifyContent: "center",
+            alignItems: "center",
+            backgroundColor: (theme) => theme.palette.background.default,
+            padding: 3,
+            boxShadow: 24,
+            borderRadius: 1,
           }}
         >
           <Typography
